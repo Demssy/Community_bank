@@ -1,0 +1,17 @@
+{% extends 'todo/base.html' %}
+
+Completed
+{% block content %}
+<ul>
+    {% for todo in todos %}
+    <li>
+        <a href="{% url 'viewtodo' todo.id %}">    <!-- making todos clickble -->
+        {% if todo.important %}<b>{% endif %}{{ todo.title }}{% if todo.important %}</b>{% endif %} <!--display title of todo and if its importand display iy bolder-->
+        {% if todo.memo %} - {{ todo.memo }}{% endif %}   <!--if todo have memo display it with '-'-->
+        {{ todo.datecompleted|date:'M j Y H:i'}}           <!--display date when todo was complete-->
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

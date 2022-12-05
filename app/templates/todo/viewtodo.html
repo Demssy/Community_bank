@@ -1,0 +1,30 @@
+{% extends 'todo/base.html' %}      <!--if user loged in display his name. logout, sign up, ets like in base-->
+
+
+{% block content %}
+
+{{ error }}                       <!--display error-->
+
+{{ todo.title }}                  <!--display title of todo-->
+
+<form method="POST">
+    {% csrf_token %}   
+    {{ form.as_p}}                <!--display form of todo-->
+    <button type="submit">Save</button>    <!--save button for editing-->
+
+</form>
+
+<form method="POST" action="{% url 'completetodo' todo.id %}">   <!--send user to current todos-->
+    {% csrf_token %}   
+    <button type="submit">Complete</button>    <!--save button for editing-->
+
+</form>
+
+<form method="POST" action="{% url 'deletetodo' todo.id %}">   <!--send user to current todos-->
+    {% csrf_token %}   
+    <button type="submit">Delete</button>    <!--save button for editing-->
+
+</form>
+
+
+{% endblock %}

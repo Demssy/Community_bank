@@ -1,0 +1,43 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 3rem;
+  flex-direction: column;
+}
+
+.login-form {
+  padding: 1rem;
+  width: 25rem;
+}
+
+.register-form {
+  width: 30rem;
+  padding: 1rem;
+}
+
+.form-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+@media (max-width: 425px) {
+  body {
+    padding-top: 1rem;
+  }
+
+  .login-form {
+    width: 95%;
+  }
+
+  .register-form {
+    width: 95%;
+  }
+}

@@ -1,0 +1,74 @@
+{% extends 'todo/base.html' %} {% block content %}
+
+<h1>Sign Up</h1>
+
+<h2>{{ error }}</h2>
+<div class="card register-form">
+  <form method="post" class="form-container">
+    {% csrf_token %}
+    <!-- {{form.as_p}} -->
+
+    <!-- <button type="submit">Sign Up</button> -->
+    <div class="input-group mb-1">
+      <input
+        maxlength="150"
+        autocapitalize="none"
+        autocomplete="username"
+        autofocus
+        required
+        name="username"
+        type="text"
+        class="form-control"
+        placeholder="Username"
+        aria-label="Username"
+        aria-describedby="basic-addon1"
+      />
+    </div>
+    <div class="input-group my-1">
+      <input
+        name="password1"
+        autocomplete="new-password"
+        type="password"
+        class="form-control"
+        placeholder="Password"
+        aria-label="Password"
+        aria-describedby="basic-addon1"
+      />
+    </div>
+    <div class="text-dark" style="width: 95%">
+      <span style="font-weight: 500">Note: </span>
+      <span>Make sure your password fits following criteria</span>
+      <ul class="text-muted" style="list-style-type: circle">
+        <li>
+          Your password can’t be too similar to your other personal information.
+        </li>
+        <li>Your password must contain at least 8 characters.</li>
+        <li>Your password can’t be a commonly used password.</li>
+        <li>Your password can’t be entirely numeric.</li>
+      </ul>
+    </div>
+    <div class="input-group mt-1 mb-3">
+      <input
+        name="password2"
+        type="password"
+        autocomplete="new-password"
+        class="form-control"
+        placeholder="Confirm Password"
+        aria-label="Password"
+        aria-describedby="basic-addon1"
+      />
+    </div>
+    <button
+      type="submit"
+      class="btn btn-success"
+      style="margin-bottom: 0.5rem; width: 50%"
+    >
+      Sign Up
+    </button>
+    <a href="/login" class="btn btn-primary" style="width: 50%"
+      >Sign In With an Existing Account</a
+    >
+  </form>
+</div>
+
+{% endblock %}
