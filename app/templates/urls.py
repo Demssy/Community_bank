@@ -14,11 +14,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import include, path
-from app import views   
-from django.conf.urls.static import static    
-from django.conf import settings   
-from portfolio.views import userPortfolio
+from django.urls import path
+from app import views         
 
 urlpatterns = [
     path('admin/', admin.site.urls),                              #admin path
@@ -26,20 +23,13 @@ urlpatterns = [
     path('signup/', views.signupuser, name='signupuser'),         #auth path
     path('login/', views.loginuser, name='loginuser'),            #login path
     path('logout/', views.logoutuser, name='logoutuser'),         #logout path
-    #Home
+    #Todos
     path('', views.home, name='home'),                            #home page path 
-    #Personal area
-    path('PersonalArea/', views.PersonalArea, name='PersonalArea'),
-    #app portfolio
-    path('Portfolio/', include('portfolio.urls')),
-    #app blog
-    path('blog/', include('blog.urls')),
     # path('create/', views.createtodo, name='createtodo'),         #create todo
     # path('current/', views.currenttodos, name='currenttodos'),    #current path
     # path('completed/', views.completedtodos, name='completedtodos'),
-    # path('<int:todo_pk>', views.viewtodo, name='viewtodo'),  #todo view(open page vith specific todo)
-    # path('<int:todo_pk>/complete', views.completetodo, name='completetodo'), #complete todo
-    # path('<int:todo_pk>/delete', views.deletetodo, name='deletetodo'),  #delete todo
+    # path('todo/<int:todo_pk>', views.viewtodo, name='viewtodo'),  #todo view(open page vith specific todo)
+    # path('todo/<int:todo_pk>/complete', views.completetodo, name='completetodo'), #complete todo
+    # path('todo/<int:todo_pk>/delete', views.deletetodo, name='deletetodo'),  #delete todo
 ]
 
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

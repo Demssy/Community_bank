@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractBaseUser
 
 # class Todo(models.Model):
 #     title = models.CharField(max_length=100)  #title of todo
@@ -12,15 +12,15 @@ from django.contrib.auth.models import AbstractUser
 #     def __str__(self):            #func to see tittle name inthe tasks list
 #         return self.title
 
-# class User(AbstractUser):
-#     STUDENT = 1
-#     INVESTOR = 2
-#     ADMIN = 3
+class User(AbstractBaseUser):
+    STUDENT = 1
+    INVESTOR = 2
+    ADMIN = 3
 
-#     ROLE_CHOICES = (
-#         (STUDENT, 'Student'),
-#         (INVESTOR, 'Investor'),
-#         (ADMIN, 'Admin')
-#     )
+    ROLE_CHOICES = (
+        (STUDENT, 'Student'),
+        (INVESTOR, 'Investor'),
+        (ADMIN, 'Admin')
+    )
 
-#     role = models.PositiveSmallIntegerField(choices=ROLE_CHOICES, blank=False, null=False)
+    role = models.PositiveSmallIntegerField(choices=ROLE_CHOICES, blank=False, null=False)

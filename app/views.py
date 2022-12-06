@@ -7,6 +7,7 @@ from django.contrib.auth import login, logout, authenticate
 # from .models import Todo
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
+from portfolio.models import Project
 
 @login_required
 def home(request): #p
@@ -16,6 +17,9 @@ def home(request): #p
     """
     return render(request, 'home.html')
 
+@login_required
+def PersonalArea(request): #p
+    return render(request, 'PersonalArea.html')
 
 
 def signupuser(request): #p

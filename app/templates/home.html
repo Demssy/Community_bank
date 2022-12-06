@@ -3,5 +3,9 @@
 
 {% block content %}
 Home
-
+<form action="{% url 'PersonalArea' %}" method="POST">
+    {% csrf_token %}
+    <button type="submit">Personal area</button>
+    <!--logout button-->
+</form>
 {% endblock %}
