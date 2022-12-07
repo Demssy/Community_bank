@@ -74,7 +74,7 @@ def contactus(request): #p
     else:
         form = ContactUsForm(request.POST)
         message = 'Message was sent successfuly'
-        hasError=False
+        hasError = False
         if form.is_valid():
             form.save()
             form = ContactUsForm()
