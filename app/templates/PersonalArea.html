@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+Pesonal Area
+<form action="{% url 'userPortfolio' %}" method="POST">
+    {% csrf_token %}
+    <button type="submit">Portfolio</button>
+    <!--logout button-->
+</form>
+<form action="{% url 'all_blogs' %}" method="POST">
+    {% csrf_token %}
+    <button type="submit">Blog</button>
+    <!--logout button-->
+</form>
+{% endblock %}

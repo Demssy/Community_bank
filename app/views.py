@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
+from portfolio.models import Project
 
 from .forms import ContactUsForm
 
@@ -15,6 +16,11 @@ def home(request): #p
     Get request and retrun home page
     """
     return render(request, 'home.html')
+
+@login_required
+def PersonalArea(request): #p
+    return render(request, 'PersonalArea.html')
+
 
 def signupuser(request): #p
     """
