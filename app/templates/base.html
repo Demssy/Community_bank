@@ -8,6 +8,8 @@
     integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
     crossorigin="anonymous"
   />
+  <!-- Fontawesome CDN Link -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
   <link rel="stylesheet" href="{% static 'main.css' %}" />
 </head>
 <body>
@@ -18,24 +20,25 @@
   ></script>
   {% if user.is_authenticated %}
   <!--if user loged in display his name-->
-  Logged In as {{ user.username }}
-
-  <!--link for create todo-->
-
-  <!--link for current todo-->
-
-  <!--link for completed todo-->
-
-  <form action="{% url 'logoutuser' %}" method="POST">
-    {% csrf_token %}
-    <button type="submit">Logout</button>
-    <!--logout button-->
-  </form>
-
+  
+  <nav>
+    <ul>
+      <li>
+        <a href="/">Home</a>
+      </li>
+      <li>
+        <a href="/contactus">Contact us</a>
+      </li>
+      <li class="spacer"></li>
+      <li>
+        Logged In as {{ user.username }}
+        <form action="{% url 'logoutuser' %}" method="POST">
+          {% csrf_token %}
+          <button type="submit">Logout</button>
+        </form>
+      </li>
+    </ul>
+  </nav>
   {% else %}
-  <!-- <a href="{% url 'signupuser' %}">Sign Up</a> -->
-  <!--if user not authenticated display sign up and login user and path to them-->
-  <!-- <a href="{% url 'loginuser' %}">Login</a> -->
-
   {% endif %} {% block content %}{% endblock %}
 </body>

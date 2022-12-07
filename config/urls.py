@@ -23,13 +23,9 @@ urlpatterns = [
     path('signup/', views.signupuser, name='signupuser'),         #auth path
     path('login/', views.loginuser, name='loginuser'),            #login path
     path('logout/', views.logoutuser, name='logoutuser'),         #logout path
-    #Todos
+    #Rest
     path('', views.home, name='home'),                            #home page path 
-    # path('create/', views.createtodo, name='createtodo'),         #create todo
-    # path('current/', views.currenttodos, name='currenttodos'),    #current path
-    # path('completed/', views.completedtodos, name='completedtodos'),
-    # path('todo/<int:todo_pk>', views.viewtodo, name='viewtodo'),  #todo view(open page vith specific todo)
-    # path('todo/<int:todo_pk>/complete', views.completetodo, name='completetodo'), #complete todo
-    # path('todo/<int:todo_pk>/delete', views.deletetodo, name='deletetodo'),  #delete todo
+    path('contactus/', views.contactus, name='contactus'),                            #contact us path 
+    path('home/', views.home, name='home'),
 ]
 
