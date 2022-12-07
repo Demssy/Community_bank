@@ -1,7 +1,7 @@
-# from django.forms import ModelForm
-# from .models import Todo
+from django import forms
+from .models import ContactUsModel
 
-# class TodoForm(ModelForm):
-#     class Meta:
-#         model=Todo
-#         fields = ['title', 'memo','important']
+class ContactUsForm(forms.ModelForm):
+    class Meta:
+        model = ContactUsModel
+        fields = ["name", "email", "subject", "message"]

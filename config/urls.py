@@ -21,25 +21,21 @@ from django.conf import settings
 from portfolio.views import userPortfolio
 
 urlpatterns = [
-    path('admin/', admin.site.urls),                              #admin path
+    path('admin/', admin.site.urls),
     #Auth
-    path('signup/', views.signupuser, name='signupuser'),         #auth path
-    path('login/', views.loginuser, name='loginuser'),            #login path
-    path('logout/', views.logoutuser, name='logoutuser'),         #logout path
+    path('signup/', views.signupuser, name='signupuser'),
+    path('login/', views.loginuser, name='loginuser'),
+    path('logout/', views.logoutuser, name='logoutuser'),
     #Home
-    path('', views.home, name='home'),                            #home page path 
+    path('', views.home, name='home'),
+    #Contactus
+    path('contactus/', views.contactus, name='contactus'),
     #Personal area
     path('PersonalArea/', views.PersonalArea, name='PersonalArea'),
     #app portfolio
     path('Portfolio/', include('portfolio.urls')),
     #app blog
     path('blog/', include('blog.urls')),
-    # path('create/', views.createtodo, name='createtodo'),         #create todo
-    # path('current/', views.currenttodos, name='currenttodos'),    #current path
-    # path('completed/', views.completedtodos, name='completedtodos'),
-    # path('<int:todo_pk>', views.viewtodo, name='viewtodo'),  #todo view(open page vith specific todo)
-    # path('<int:todo_pk>/complete', views.completetodo, name='completetodo'), #complete todo
-    # path('<int:todo_pk>/delete', views.deletetodo, name='deletetodo'),  #delete todo
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
