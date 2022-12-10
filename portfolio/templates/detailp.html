@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{{ error }}
+
+
+<h1>{{ project.title }}</h1>
+<img src="{{ project.image.url }}">
+{% if project.url %}
+<br><a href="{{ project.url }}">Link</a>
+{% endif %}
+{{ project.description|safe }}
+
+
+<a href="{% url 'editProject' project.id %}">Edit Project</a>
+
+<form method="POST" action="{% url 'deleteProject' project.id %}">   <!--send user to current todos-->
+    {% csrf_token %}   
+    <button type="submit">Delete</button>    <!--save button for editing-->
+
+</form>
+
+{% endblock %}

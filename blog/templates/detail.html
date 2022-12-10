@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{{ error }}
+
+
+<h1>{{ blog.title }}</h1>
+<h2>--{{ blog.date|date:'F jS Y'}}--</h2>
+{{ blog.description|safe }}
+
+
+<a href="{% url 'editBlog' blog.id %}">Edit blog</a>
+
+<form method="POST" action="{% url 'deleteBlog' blog.id %}">   <!--send user to current todos-->
+    {% csrf_token %}   
+    <button type="submit">Delete</button>    <!--save button for editing-->
+
+</form>
+
+{% endblock %}

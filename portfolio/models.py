@@ -13,4 +13,5 @@ class Project(models.Model):
         super(Project, self).delete(*args, **kwargs)
         # Delete the file after the model
         storage.delete(path)
-
+    def __str__(self):            #func to see tittle name inthe tasks list
+        return self.title 
