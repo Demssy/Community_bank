@@ -40,7 +40,10 @@ INSTALLED_APPS = [
     'app',
     'blog',
     'portfolio',
+    'accounts',
 ]
+
+AUTH_USER_MODEL = 'accounts.CustomUser'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -69,6 +72,13 @@ TEMPLATES = [
         },
     },
 ]
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'serj.moskovec@gmail.com'
+EMAIL_HOST_PASSWORD = 'xcbutilzzbvwnywm'
 
 WSGI_APPLICATION = 'config.wsgi.application'
 

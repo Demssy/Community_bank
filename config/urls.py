@@ -32,6 +32,7 @@ urlpatterns = [
     path('contactus/', views.contactus, name='contactus'),
     #Personal area
     path('PersonalArea/', views.PersonalArea, name='PersonalArea'),
+    path('userSettings/', views.userSettings, name = 'userSettings'),
     #app portfolio
     path('Portfolio/', include('portfolio.urls')),
     #app blog

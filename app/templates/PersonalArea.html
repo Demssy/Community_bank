@@ -11,4 +11,9 @@ Pesonal Area
     <button type="submit">Blog</button>
     <!--logout button-->
 </form>
+<form action="{% url 'userSettings' %}" method="GET">
+    {% csrf_token %}
+    <button type="submit">User settings</button>
+    <!--logout button-->
+</form>
 {% endblock %}

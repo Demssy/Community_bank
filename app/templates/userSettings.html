@@ -1,0 +1,13 @@
+
+
+
+<form method="POST">
+    {% csrf_token %}   
+    {{ form.as_p}}                <!--display form of todo-->
+    <label for="password1">password</label>
+    <input id="password1" name="password1" type="password" />
+    <label for="password2">repeat password</label>
+    <input id="password2" name="password2" type="password" />
+    <button type="submit">Save</button>    <!--save button for editing-->
+
+</form>
