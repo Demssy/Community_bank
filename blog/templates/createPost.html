@@ -1,19 +1,63 @@
-{% extends 'base.html' %}
-
-
-{% block content %}
-
-
-<h1>Create</h1>
-
-<h2>{{ error }}</h2>
-
-<form method="POST">
-{% csrf_token %}    
-{{form.as_p}}
-<button type="submit">Create</button>
-</form>
-
-
-
+{% extends 'base.html' %} {% block content %}
+<section class="page">
+  <h1 class="h1-responsive font-weight-bold text-center my-4">
+    Create Blog Post
+  </h1>
+  {% include 'global/error.html' %}
+  <div class="row content">
+    <form method="POST">
+      {% csrf_token %}
+      <div class="row">
+        <div class="col-md-6">
+          <div class="md-form mb-0">
+            <label for="title" class="">Title</label>
+            <input
+              type="text"
+              id="title"
+              name="title"
+              class="form-control"
+              value="{{form.title.value}}"
+            />
+            {%if form.errors.title %}
+            <p>{{ form.errors.title }}</p>
+            {% endif %}
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="md-form mb-0">
+            <label for="date" class="">Date</label>
+            <input
+              type="date"
+              id="date"
+              name="date"
+              class="form-control"
+              value="{{form.date.value}}"
+            />
+            {%if form.errors.date %}
+            <p>{{ form.errors.date }}</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="md-form mb-0">
+            <label for="description" class="">Description</label>
+            <textarea
+              type="text"
+              rows="4"
+              id="description"
+              name="description"
+              class="form-control"
+              value="{{form.description.value}}"></textarea>
+            {%if form.errors.description %}
+            <p>{{ form.errors.description }}</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary">Create</button>
+    </form>
+  </div>
+</section>
 {% endblock %}

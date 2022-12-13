@@ -1,19 +1,20 @@
-{% extends 'base.html' %}
-{% block content %}
-Pesonal Area
-<form action="{% url 'userPortfolio' %}" method="POST">
-    {% csrf_token %}
-    <button type="submit">Portfolio</button>
-    <!--logout button-->
-</form>
-<form action="{% url 'all_blogs' %}" method="POST">
-    {% csrf_token %}
-    <button type="submit">Blog</button>
-    <!--logout button-->
-</form>
-<form action="{% url 'userSettings' %}" method="GET">
-    {% csrf_token %}
-    <button type="submit">User settings</button>
-    <!--logout button-->
-</form>
+{% extends 'base.html' %} {% block content %}
+
+<div class="page">
+  <h1 class="h1-responsive font-weight-bold text-center my-4">Pesonal Area</h1>
+  <div class="row justify-center content mt-3">
+    <form class="col text-center" action="{% url 'userPortfolio' %}" method="POST">
+      {% csrf_token %}
+      <button class="page-btn" type="submit">Portfolio</button>
+    </form>
+    <form class="col text-center" action="{% url 'all_blogs' %}" method="POST">
+      {% csrf_token %}
+      <button class="page-btn" type="submit">Blog</button>
+    </form>
+    <form class="col text-center" action="{% url 'userSettings' %}" method="GET">
+      {% csrf_token %}
+      <button class="page-btn" type="submit">User settings</button>
+    </form>
+  </div>
+</div>
 {% endblock %}

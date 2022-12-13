@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+
 * {
   margin: 0;
   padding: 0;
@@ -32,6 +34,7 @@ body {
   flex-direction: column;
 }
 
+/* Navbar */
 nav {
   width: 100%;
 }
@@ -65,33 +68,105 @@ nav ul li.spacer {
   flex: 1;
 }
 
+nav li.last {
+  display: flex;
+  align-items: center;
+  column-gap: 12px;
+  padding: 0 15px;
+}
+nav .last button {
+  border: none;
+  background: white;
+  margin: 0;
+  padding: 8px;
+  outline: none;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+}
+nav .last button:hover {
+  color: white;
+  background: black;
+}
 
 .message {
-    text-align: center;
-    margin: 30px 0;
-    border: 1px solid;
-    border-radius: 30px;
+  text-align: center;
+  margin: 30px 0;
+  border: 1px solid;
+  border-radius: 30px;
+  padding: 0 15px;
 }
 .message.error {
-    text-align: center;
-    margin: 30px 0;
-    border-color: var(--bs-danger);
-    color: var(--bs-red);
+  text-align: center;
+  margin: 30px 0;
+  border-color: var(--bs-danger);
+  color: var(--bs-red);
 }
 .message.success {
-    text-align: center;
-    margin: 30px 0;
-    border-color: var(--bs-success);
-    color: var(--bs-success);
+  text-align: center;
+  margin: 30px 0;
+  border-color: var(--bs-success);
+  color: var(--bs-success);
 }
 
 ul.errorlist {
-    position: absolute;
-    bottom: 0;
-    color: var(--bs-red);
-    font-size: 12px;
-    list-style: none;
-    padding: 0;
+  position: absolute;
+  bottom: 0;
+  color: var(--bs-red);
+  font-size: 12px;
+  list-style: none;
+  padding: 0;
+}
+
+/* Page */
+.page {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  height: calc(100% - 52px);
+  width: 100%;
+  padding: 3rem;
+}
+
+.page h1 {
+  text-align: center;
+  color: var(--bs-primary);
+}
+
+.page .md-form {
+  position: relative;
+  padding: 0 0 20px 0;
+}
+
+section.page > .row {
+  padding: 30px;
+  box-shadow: 0 0 25px -18px;
+  border-radius: 30px;
+  border: 1px solid var(--bs-gray-200);
+}
+
+.page .content {
+  display: flex;
+  align-items: center;
+  row-gap: 1rem;
+  padding: 2rem;
+}
+
+.page .page-btn {
+  padding: 30px;
+  border-radius: 15px;
+  background-color: white;
+  transition: background-color 0.3s ease;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.page .page-btn:hover {
+  background-color: black;
+  color: white;
+}
+
+.page.edit-project .image-preview {
+  max-width: 100px;
 }
 
 @media (max-width: 425px) {

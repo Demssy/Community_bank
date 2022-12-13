@@ -19,26 +19,7 @@
     crossorigin="anonymous"
   ></script>
   {% if user.is_authenticated %}
-  <!--if user loged in display his name-->
-  
-  <nav>
-    <ul>
-      <li>
-        <a href="/">Home</a>
-      </li>
-      <li>
-        <a href="/contactus">Contact us</a>
-      </li>
-      <li class="spacer"></li>
-      <li>
-        Logged In as {{ user.username }}
-        <form action="{% url 'logoutuser' %}" method="POST">
-          {% csrf_token %}
-          <button type="submit">Logout</button>
-        </form>
-      </li>
-    </ul>
-  </nav>
-  {% else %}
-  {% endif %} {% block content %}{% endblock %}
+    {% include 'global/navbar.html' %}
+  {% endif %} 
+  {% block content %}{% endblock %}
 </body>

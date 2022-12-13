@@ -1,0 +1,18 @@
+<nav>
+    <ul>
+      <li>
+        <a href="/">Home</a>
+      </li>
+      <li>
+        <a href="/contactus">Contact us</a>
+      </li>
+      <li class="spacer"></li>
+      <li class="last">
+        <span>Logged In as {{ user.username }}</span>
+        <form action="{% url 'logoutuser' %}" method="POST">
+          {% csrf_token %}
+          <button type="submit" title="logout"><i class="fas fa-sign-out-alt"></i></button>
+        </form>
+      </li>
+    </ul>
+  </nav>
