@@ -1,8 +1,13 @@
 {% extends 'base.html' %} {% block content %}
 <div class="page">
-  <h1 class="h1-responsive font-weight-bold text-center my-4">Blog</h1>
-  <h2>{{ user.username }} has written {{ blogs.count }} blog{{blogs.count|pluralize }}</h2>
-  <p><a href="{% url 'createBlog' %}">create blog</a></p>
+  <div class="top">
+    {% include 'global/goBack.html' %}
+    <h1 class="h1-responsive font-weight-bold text-center my-4">Blog</h1>
+    <h2>
+      {{ user.username }} has written {{ blogs.count }}blog{{blogs.count|pluralize }}
+    </h2>
+    <p><a href="{% url 'createBlog' %}">create blog</a></p>
+  </div>
   <div class="content">
     {% for blog in blogs %}
     <div class="card" style="width: 18rem">
@@ -11,7 +16,9 @@
           <a href="{% url 'detail' blog.id %}">{{ blog.title }}</a>
         </h5>
         <p class="card-text">{{ blog.date|date:'M d Y'|upper }}</p>
-        <p class="card-text">{{ blog.description|striptags|truncatechars:200 }}</p>
+        <p class="card-text">
+          {{ blog.description|striptags|truncatechars:200 }}
+        </p>
       </div>
     </div>
     {% endfor %}

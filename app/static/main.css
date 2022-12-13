@@ -128,6 +128,12 @@ ul.errorlist {
   padding: 3rem;
 }
 
+.page .top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .page h1 {
   text-align: center;
   color: var(--bs-primary);

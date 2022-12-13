@@ -1,9 +1,14 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="page">
-  <h1 class="h1-responsive font-weight-bold text-center my-4">Portfolio</h1>
-  <h2>{{ user.username }} has written {{ projects.count }} project{{ project.count|pluralize }}</h2>
-  <p><a href="{% url 'createPortfolio' %}">create project</a></p>
+  <div class="top">
+    {% include 'global/goBack.html' %}
+    <h1 class="h1-responsive font-weight-bold text-center my-4">
+      Portfolio
+    </h1>
+    <h2>{{ user.username }} has written {{ projects.count }} project{{ project.count|pluralize }}</h2>
+    <p><a href="{% url 'createPortfolio' %}">create project</a></p>
+  </div>
   <div class="content">
      {% for project in projects %}
      <div class="card" style="width: 18rem">
