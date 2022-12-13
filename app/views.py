@@ -1,13 +1,13 @@
 from django.db import IntegrityError
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth.models import User
+from accounts.models import CustomUser
 from django.contrib.auth import login, logout, authenticate
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from portfolio.models import Project
-
-from .forms import ContactUsForm
+from django.core.mail import send_mail
+from .forms import ContactUsForm, UserSetting
 
 @login_required
 def home(request): #p
@@ -21,6 +21,27 @@ def home(request): #p
 def PersonalArea(request): #p
     return render(request, 'PersonalArea.html')
 
+def validator(val1, val2):
+    if val1 != '' and val1 == val2:
+        return True
+    return False    
+
+#@login_required
+def userSettings(request):
+    user = get_object_or_404(CustomUser, pk = request.user.id)
+    if request.method =='GET':
+        form = UserSetting(instance=user)
+        return render(request, 'userSettings.html', {'user':user, 'form':form})
+    else:
+        try:
+            form = UserSetting(request.POST, instance=user)
+            form.save(user)
+            if validator(request.POST['password1'], request.POST['password2']):
+                user.set_password(request.POST['password1'])
+                user.save()
+            return redirect('PersonalArea')
+        except ValueError:
+            return render(request, 'userSettings.html', {'user':user, 'form':form, 'error': 'Bad info'}) 
 
 def signupuser(request): #p
     """
@@ -32,7 +53,7 @@ def signupuser(request): #p
     else:
         if request.POST['password1'] == request.POST['password2']:       #if first and second password equal create new user
             try:
-                user = User.objects.create_user(request.POST['username'], password=request.POST['password1']) #create user
+                user = CustomUser.objects.create_user(request.POST['username'], password=request.POST['password1']) #create user
                 user.save()  #save user
                 login(request, user)
                 return redirect('home')     #return current page
@@ -82,6 +103,11 @@ def contactus(request): #p
             form.fields['email'] = ''
             form.fields['subject'] = ''
             form.fields['message'] = ''
+            recipients = ['serj.moskovec@gmail.com']
+            subject = request.POST.get('subject', '')
+            message = request.POST.get('message', '')
+            from_email = request.POST.get('email', '')
+            send_mail(subject, message, from_email, recipients)
         else:
             hasError = True
             message = 'Please make sure all fields are valid'

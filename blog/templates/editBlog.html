@@ -1,0 +1,22 @@
+{% extends 'base.html' %}      <!--if user loged in display his name. logout, sign up, ets like in base-->
+
+
+{% block content %}
+
+{{ error }}                       <!--display error-->
+
+{{ blog.title }}                  <!--display title of todo-->
+
+<form method="POST">
+    {% csrf_token %}   
+    {{ form.as_p}}                <!--display form of todo-->
+    <button type="submit">Save</button>    <!--save button for editing-->
+
+</form>
+
+
+
+
+
+
+{% endblock %}
