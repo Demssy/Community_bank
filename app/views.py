@@ -67,7 +67,7 @@ def logoutuser(request): #p
 def contactus(request): #p
     """
     Contact US func
-    Get request and retrun contactus page
+    Get request and return contactus page
     """
     if request.method == 'GET':
         return render(request, 'contactus.html')
@@ -84,10 +84,7 @@ def contactus(request): #p
             form.fields['message'] = ''
         else:
             hasError = True
-            message = 'Please make sure all field are valid'
+            message = 'Please make sure all fields are valid'
             
     return render(request, 'contactus.html', {'form': form, 'message': message, 'hasError': hasError })
-
-def hintTemplate(key, errors):
-    return key.capitalize() + ' ' + errors[key]
 
