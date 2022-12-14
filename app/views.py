@@ -18,8 +18,8 @@ def home(request):
     return render(request, 'home.html')
 
 @login_required
-def PersonalArea(request):
-    return render(request, 'PersonalArea.html')
+def personalArea(request):
+    return render(request, 'personalArea.html')
 
 @login_required
 def logoutuser(request): #p
@@ -40,7 +40,7 @@ def userSettings(request):
             if validator(request.POST['password1'], request.POST['password2']):
                 user.set_password(request.POST['password1'])
                 user.save()
-            return redirect('PersonalArea')
+            return redirect('personalArea')
         except ValueError:
             return render(request, 'userSettings.html', {'user':user, 'form':form, 'error': 'Bad info'}) 
 

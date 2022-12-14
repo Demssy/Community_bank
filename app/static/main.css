@@ -125,13 +125,14 @@ ul.errorlist {
   align-items: center;
   height: calc(100% - 52px);
   width: 100%;
+  max-width: 900px;
   padding: 3rem;
 }
 
-.page .top {
+.page .header .top .header-top-content {
   display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: space-between;
 }
 
 .page h1 {
@@ -173,6 +174,7 @@ section.page > .row {
 }
 
 .page .page-btn {
+  width: 100%;
   padding: 30px;
   border-radius: 15px;
   background-color: white;
@@ -185,7 +187,7 @@ section.page > .row {
   color: white;
 }
 
-.page.edit-project .image-preview {
+.edit-project .image-preview {
   max-width: 100px;
 }
 

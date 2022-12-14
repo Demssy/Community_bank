@@ -1,95 +1,90 @@
-{% extends 'base.html' %}
-{% block content %}
-<section class="page edit-project">
-  <div class="top">
-    {% include 'global/goBack.html' %}
-    <h1 class="h1-responsive font-weight-bold text-center my-4">
-      {{ project.title }}
-    </h1>
-    {% include 'global/error.html' %}
+{% extends 'global/page.html' %} {% block page_header_top %}
+<div class="header-top-content">
+  <h1 class="h1-responsive font-weight-bold">
+    {{ project.title }}
+  </h1>
+  {% include 'global/goBack.html' %}
+</div>
+{% endblock %} {% block page_content %}
+<form method="POST" enctype="multipart/form-data" class="edit-project">
+  {% csrf_token %}
+  <div class="row">
+    <div class="col-md-6">
+      <div class="md-form mb-0">
+        <label for="title" class="">Title</label>
+        <input
+          type="text"
+          id="title"
+          name="title"
+          class="form-control"
+          value="{{form.title.value}}"
+        />
+        {%if form.errors.title %}
+        <p>{{ form.errors.title }}</p>
+        {% endif %}
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="md-form mb-0">
+        <label for="url" class="">Url</label>
+        <input
+          type="text"
+          id="url"
+          name="url"
+          class="form-control"
+          value="{{form.url.value}}"
+        />
+        {%if form.errors.url %}
+        <p>{{ form.errors.url }}</p>
+        {% endif %}
+      </div>
+    </div>
   </div>
-  <div class="row content">
-    <form method="POST" enctype="multipart/form-data">
-      {% csrf_token %}
-      <div class="row">
-        <div class="col-md-6">
-          <div class="md-form mb-0">
-            <label for="title" class="">Title</label>
-            <input
-              type="text"
-              id="title"
-              name="title"
-              class="form-control"
-              value="{{form.title.value}}"
-            />
-            {%if form.errors.title %}
-            <p>{{ form.errors.title }}</p>
-            {% endif %}
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="md-form mb-0">
-            <label for="url" class="">Url</label>
-            <input
-              type="text"
-              id="url"
-              name="url"
-              class="form-control"
-              value="{{form.url.value}}"
-            />
-            {%if form.errors.url %}
-            <p>{{ form.errors.url }}</p>
-            {% endif %}
-          </div>
-        </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="md-form mb-0">
+        <label for="image" class="">Image</label>
+        <input
+          type="file"
+          id="image"
+          name="image"
+          class="form-control"
+          value="{{form.image.value}}"
+        />
+        {%if form.errors.image %}
+        <p>{{ form.errors.image }}</p>
+        {% endif %}
       </div>
-      <div class="row">
-        <div class="col-md-6">
-          <div class="md-form mb-0">
-            <label for="image" class="">Image</label>
-            <input
-              type="file"
-              id="image"
-              name="image"
-              class="form-control"
-              value="{{form.image.value}}"
-            />
-            {%if form.errors.image %}
-            <p>{{ form.errors.image }}</p>
-            {% endif %}
-          </div>
-        </div>
-        <div class="image-preview col-md-6">
-          <div class="md-form mb-0">
-            <span>Preview:</span>
-            <img
-              class="card-img-top"
-              src="{{ project.image.url }}"
-              alt="project image"
-            />
-          </div>
-        </div>
+    </div>
+    <div class="image-preview col-md-6">
+      <div class="md-form mb-0">
+        <span>Preview:</span>
+        <img
+          class="card-img-top"
+          src="{{ project.image.url }}"
+          alt="project image"
+        />
       </div>
-      <div class="row">
-        <div class="col-md-12">
-          <div class="md-form mb-0">
-            <label for="description" class="">Description</label>
-            <textarea
-              type="text"
-              rows="4"
-              id="description"
-              name="description"
-              class="form-control"
-              value="{{form.description.value}}"
-            ></textarea>
-            {%if form.errors.description %}
-            <p>{{ form.errors.description }}</p>
-            {% endif %}
-          </div>
-        </div>
-      </div>
-      <button type="submit" class="btn btn-primary">Save changes</button>
-    </form>
+    </div>
   </div>
-</section>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="md-form mb-0">
+        <label for="description" class="">Description</label>
+        <textarea
+          type="text"
+          rows="4"
+          id="description"
+          name="description"
+          class="form-control"
+          value="{{form.description.value}}"
+        ></textarea>
+        {%if form.errors.description %}
+        <p>{{ form.errors.description }}</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-primary">Save changes</button>
+</form>
 {% endblock %}

@@ -1,16 +1,19 @@
-{% extends 'base.html' %}
-{% block content %}
-<div class="page">
-  <div class="top">
-    {% include 'global/goBack.html' %}
-    <h1 class="h1-responsive font-weight-bold text-center my-4">
-      Portfolio
-    </h1>
+{% extends 'global/page.html' %} {% block page_header_top %}
+<div class="header-top-content">
+  <h1 class="h1-responsive font-weight-bold">Projects</h1>
+  {% include 'global/goBack.html' %}
+</div>
+{% endblock %} {% block page_content %}
+<div class="card">
+  <div class="card-body">
     <h2>{{ user.username }} has written {{ projects.count }} project{{ project.count|pluralize }}</h2>
     <p><a href="{% url 'createPortfolio' %}">create project</a></p>
   </div>
-  <div class="content">
-     {% for project in projects %}
+</div>
+{% if projects %}
+<div class="cards p-0">
+  <h4 class="mb-2">Projects list:</h4>
+  {% for project in projects %}
      <div class="card" style="width: 18rem">
        <img class="card-img-top" src="{{ project.image.url }}" alt="Card image cap">
       <div class="card-body">
@@ -24,6 +27,5 @@
       </div>
     </div>
     {% endfor %}
-  </div>
 </div>
-{% endblock %}
+{% endif %} {% endblock %}

@@ -31,10 +31,10 @@ urlpatterns = [
     #Contactus
     path('contactus/', views.contactus, name='contactus'),
     #Personal area
-    path('PersonalArea/', views.PersonalArea, name='PersonalArea'),
+    path('personalArea/', views.personalArea, name='personalArea'),
     path('userSettings/', views.userSettings, name = 'userSettings'),
     #app portfolio
-    path('Portfolio/', include('portfolio.urls')),
+    path('portfolio/', include('portfolio.urls')),
     #app blog
     path('blog/', include('blog.urls')),
     path('SmmaryDataBank/', views.SmmaryDataBank, name='SmmaryDataBank'),

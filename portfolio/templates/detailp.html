@@ -1,27 +1,23 @@
-{% extends 'base.html' %} {% block content %}
-<div class="page">
-  <div class="top">
-    {% include 'global/goBack.html' %}
-    <h1 class="h1-responsive font-weight-bold text-center my-4">
-      {{ project.title }}
-    </h1>
-    {% include 'global/error.html' %}
-  </div>
-  <div class="row content">
-    <div class="card">
-       <img class="card-img-top" src="{{ project.image.url }}" alt="project image">
-      <div class="card-body">
-        <p class="card-text">{{ project.description|safe }}</p>
-        {% if project.url %}
-          <p class="card-text"><a href="{{ project.url }}">Link</a></p>
-        {% endif %} 
-      </div>
-    </div>
-    <form method="POST" action="{% url 'deleteProject' project.id %}">
-      {% csrf_token %}
-      <button class="btn btn-danger" type="submit">Delete project</button>
-      <a class="btn btn-info" href="{% url 'editProject' project.id %}">Edit project</a>
-    </form>
+{% extends 'global/page.html' %} {% block page_header_top %}
+<div class="header-top-content">
+  <h1 class="h1-responsive font-weight-bold">{{ project.title }}</h1>
+  {% include 'global/goBack.html' %}
+</div>
+{% endblock %} {% block page_content %}
+<div class="card">
+  <img class="card-img-top" src="{{ project.image.url }}" alt="project image" />
+  <div class="card-body">
+    <p class="card-text">{{ project.description|safe }}</p>
+    {% if project.url %}
+    <p class="card-text"><a href="{{ project.url }}">Link</a></p>
+    {% endif %}
   </div>
 </div>
+<form method="POST" action="{% url 'deleteProject' project.id %}" class="text-center">
+  {% csrf_token %}
+  <button class="btn btn-danger" type="submit">Delete project</button>
+  <a class="btn btn-info" href="{% url 'editProject' project.id %}"
+    >Edit project</a
+  >
+</form>
 {% endblock %}
