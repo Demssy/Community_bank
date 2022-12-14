@@ -15,11 +15,13 @@ def home(request): #p
     Home page func
     Get request and retrun home page
     """
-    return render(request, 'home.html')
+    return render(request, 'app/home.html')
 
+def SmmaryDataBank(request):
+    return render(request,'app/SmmaryDataBank.html')
 @login_required
 def PersonalArea(request): #p
-    return render(request, 'PersonalArea.html')
+    return render(request, 'app/PersonalArea.html')
 
 def validator(val1, val2):
     if val1 != '' and val1 == val2:
@@ -116,4 +118,6 @@ def contactus(request): #p
 
 def hintTemplate(key, errors):
     return key.capitalize() + ' ' + errors[key]
+
+
 
