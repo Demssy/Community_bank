@@ -37,6 +37,7 @@ urlpatterns = [
     path('Portfolio/', include('portfolio.urls')),
     #app blog
     path('blog/', include('blog.urls')),
+    path('SmmaryDataBank/', views.SmmaryDataBank, name='SmmaryDataBank'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
