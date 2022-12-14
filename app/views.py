@@ -10,23 +10,22 @@ from django.core.mail import send_mail
 from .forms import ContactUsForm, UserSetting
 
 @login_required
-def home(request): #p
+def home(request):
     """
     Home page func
     Get request and retrun home page
     """
-    return render(request, 'app/home.html')
+    return render(request, 'home.html')
 
-def SmmaryDataBank(request):
-    return render(request,'app/SmmaryDataBank.html')
 @login_required
-def PersonalArea(request): #p
-    return render(request, 'app/PersonalArea.html')
+def PersonalArea(request):
+    return render(request, 'PersonalArea.html')
 
-def validator(val1, val2):
-    if val1 != '' and val1 == val2:
-        return True
-    return False    
+@login_required
+def logoutuser(request): #p
+    if request.method == 'POST':       #method post!!!
+        logout(request)
+        return redirect('home')   #return home page after logout
 
 #@login_required
 def userSettings(request):
@@ -45,7 +44,15 @@ def userSettings(request):
         except ValueError:
             return render(request, 'userSettings.html', {'user':user, 'form':form, 'error': 'Bad info'}) 
 
-def signupuser(request): #p
+def validator(val1, val2):
+    if val1 != '' and val1 == val2:
+        return True
+    return False    
+
+def SmmaryDataBank(request):
+    return render(request,'SmmaryDataBank.html')
+
+def signupuser(request): 
     """
     Sign up func
 
@@ -63,10 +70,9 @@ def signupuser(request): #p
                 return render(request, 'signupuser.html', {'form':UserCreationForm(), 'error':'That username has already been taken.Please try again'})
                 #if user create login that exist send error massege
         else:  
-            return render(request, 'signupuser.html', {'form':UserCreationForm(), 'error':'Passwords did not match'})
-            #if user made mistake in entering second password
+            return render(request, 'signupuser.html', {'form':UserCreationForm(), 'error':'Passwords did not match'})      
 
-def loginuser(request):#p
+def loginuser(request):
     if request.method == 'GET':
         return render(request, 'loginuser.html', {'form':AuthenticationForm()}) #Authentication Form
     else:
@@ -80,14 +86,7 @@ def loginuser(request):#p
             else:
                 return redirect('home') #return current page    
 
-@login_required
-def logoutuser(request): #p
-    if request.method == 'POST':       #method post!!!
-        logout(request)
-        return redirect('home')   #return home page after logout
-
-
-def contactus(request): #p
+def contactus(request): 
     """
     Contact US func
     Get request and return contactus page
