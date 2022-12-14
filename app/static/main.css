@@ -129,9 +129,9 @@ ul.errorlist {
 }
 
 .page .top {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .page h1 {
@@ -156,6 +156,20 @@ section.page > .row {
   align-items: center;
   row-gap: 1rem;
   padding: 2rem;
+  flex-wrap: wrap;
+  column-gap: 15px;
+  justify-content: center;
+}
+
+.page .content > .card {
+  text-align: center;
+  margin: auto;
+  display: flex;
+  align-items: center;
+}
+
+.page .content > .card .card-img-top {
+  max-width: 200px;
 }
 
 .page .page-btn {
