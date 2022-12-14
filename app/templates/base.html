@@ -1,5 +1,4 @@
 {% load static %}
-
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link
@@ -8,7 +7,6 @@
     integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
     crossorigin="anonymous"
   />
-  <!-- Fontawesome CDN Link -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
   <link rel="stylesheet" href="{% static 'main.css' %}" />
 </head>
@@ -19,26 +17,7 @@
     crossorigin="anonymous"
   ></script>
   {% if user.is_authenticated %}
-  <!--if user loged in display his name-->
-  
-  <nav>
-    <ul>
-      <li>
-        <a href="/">Home</a>
-      </li>
-      <li>
-        <a href="/contactus">Contact us</a>
-      </li>
-      <li class="spacer"></li>
-      <li>
-        Logged In as {{ user.username }}
-        <form action="{% url 'logoutuser' %}" method="POST">
-          {% csrf_token %}
-          <button type="submit">Logout</button>
-        </form>
-      </li>
-    </ul>
-  </nav>
-  {% else %}
-  {% endif %} {% block content %}{% endblock %}
+    {% include 'global/navbar.html' %}
+  {% endif %} 
+  {% block content %}{% endblock %}
 </body>

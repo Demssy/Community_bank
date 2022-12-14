@@ -10,7 +10,7 @@ from django.core.mail import send_mail
 from .forms import ContactUsForm, UserSetting
 
 @login_required
-def home(request): #p
+def home(request):
     """
     Home page func
     Get request and retrun home page
@@ -18,13 +18,14 @@ def home(request): #p
     return render(request, 'home.html')
 
 @login_required
-def PersonalArea(request): #p
-    return render(request, 'PersonalArea.html')
+def personalArea(request):
+    return render(request, 'personalArea.html')
 
-def validator(val1, val2):
-    if val1 != '' and val1 == val2:
-        return True
-    return False    
+@login_required
+def logoutuser(request): #p
+    if request.method == 'POST':       #method post!!!
+        logout(request)
+        return redirect('home')   #return home page after logout
 
 #@login_required
 def userSettings(request):
@@ -39,11 +40,19 @@ def userSettings(request):
             if validator(request.POST['password1'], request.POST['password2']):
                 user.set_password(request.POST['password1'])
                 user.save()
-            return redirect('PersonalArea')
+            return redirect('personalArea')
         except ValueError:
             return render(request, 'userSettings.html', {'user':user, 'form':form, 'error': 'Bad info'}) 
 
-def signupuser(request): #p
+def validator(val1, val2):
+    if val1 != '' and val1 == val2:
+        return True
+    return False    
+
+def SmmaryDataBank(request):
+    return render(request,'SmmaryDataBank.html')
+
+def signupuser(request): 
     """
     Sign up func
 
@@ -61,10 +70,9 @@ def signupuser(request): #p
                 return render(request, 'signupuser.html', {'form':UserCreationForm(), 'error':'That username has already been taken.Please try again'})
                 #if user create login that exist send error massege
         else:  
-            return render(request, 'signupuser.html', {'form':UserCreationForm(), 'error':'Passwords did not match'})
-            #if user made mistake in entering second password
+            return render(request, 'signupuser.html', {'form':UserCreationForm(), 'error':'Passwords did not match'})      
 
-def loginuser(request):#p
+def loginuser(request):
     if request.method == 'GET':
         return render(request, 'loginuser.html', {'form':AuthenticationForm()}) #Authentication Form
     else:
@@ -78,17 +86,10 @@ def loginuser(request):#p
             else:
                 return redirect('home') #return current page    
 
-@login_required
-def logoutuser(request): #p
-    if request.method == 'POST':       #method post!!!
-        logout(request)
-        return redirect('home')   #return home page after logout
-
-
-def contactus(request): #p
+def contactus(request): 
     """
     Contact US func
-    Get request and retrun contactus page
+    Get request and return contactus page
     """
     if request.method == 'GET':
         return render(request, 'contactus.html')
@@ -110,10 +111,7 @@ def contactus(request): #p
             send_mail(subject, message, from_email, recipients)
         else:
             hasError = True
-            message = 'Please make sure all field are valid'
+            message = 'Please make sure all fields are valid'
             
     return render(request, 'contactus.html', {'form': form, 'message': message, 'hasError': hasError })
-
-def hintTemplate(key, errors):
-    return key.capitalize() + ' ' + errors[key]
 

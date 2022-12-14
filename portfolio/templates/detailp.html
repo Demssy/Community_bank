@@ -1,24 +1,23 @@
-{% extends 'base.html' %}
-
-{% block content %}
-
-{{ error }}
-
-
-<h1>{{ project.title }}</h1>
-<img src="{{ project.image.url }}">
-{% if project.url %}
-<br><a href="{{ project.url }}">Link</a>
-{% endif %}
-{{ project.description|safe }}
-
-
-<a href="{% url 'editProject' project.id %}">Edit Project</a>
-
-<form method="POST" action="{% url 'deleteProject' project.id %}">   <!--send user to current todos-->
-    {% csrf_token %}   
-    <button type="submit">Delete</button>    <!--save button for editing-->
-
+{% extends 'global/page.html' %} {% block page_header_top %}
+<div class="header-top-content">
+  <h1 class="h1-responsive font-weight-bold">{{ project.title }}</h1>
+  {% include 'global/goBack.html' %}
+</div>
+{% endblock %} {% block page_content %}
+<div class="card">
+  <img class="card-img-top" src="{{ project.image.url }}" alt="project image" />
+  <div class="card-body">
+    <p class="card-text">{{ project.description|safe }}</p>
+    {% if project.url %}
+    <p class="card-text"><a href="{{ project.url }}">Link</a></p>
+    {% endif %}
+  </div>
+</div>
+<form method="POST" action="{% url 'deleteProject' project.id %}" class="text-center">
+  {% csrf_token %}
+  <button class="btn btn-danger" type="submit">Delete project</button>
+  <a class="btn btn-info" href="{% url 'editProject' project.id %}"
+    >Edit project</a
+  >
 </form>
-
 {% endblock %}

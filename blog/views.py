@@ -17,7 +17,7 @@ def detail(request, blog_id):
 @login_required
 def createBlog(request):
     if request.method == 'GET':
-        return render(request, 'createPost.html', {'form':BlogForm()})
+        return render(request, 'createPost.html')
     else:
         try:
             form = BlogForm(request.POST)       #edit form

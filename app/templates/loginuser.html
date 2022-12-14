@@ -1,16 +1,11 @@
 {% extends 'base.html' %} {% block content %}
-
-<div id="login">
-  <h1>Login</h1>
-  {%if error %}
-    <div class="message {{error|yesno:"error, success, ''"}}">
-        {{ error }}
-    </div>
-  {% endif %}
-  <div class="card login-form">
+<div id="login" class="page">
+  <h1 class="h1-responsive font-weight-bold">Login</h1>
+  {% include 'global/error.html' %}
+  <div class="row content">
+    <div class="card login-form">
     <form method="POST" class="form-container">
       {% csrf_token %}
-      <!-- {{form.as_p}} -->
       <div class="input-group mb-3">
         <input
           name="username"
@@ -43,6 +38,7 @@
       </button>
       <a href="/signup" class="btn btn-primary" style="width: 50%"> Register </a>
     </form>
-    {% endblock %}
   </div>
 </div>
+</div>
+{% endblock %}

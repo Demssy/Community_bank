@@ -17,7 +17,7 @@ def detailp(request, project_id):
 @login_required
 def createPortfolio(request):
     if request.method == 'GET':
-        return render(request, 'createPortfolio.html', {'form':PortfolioForm()})
+        return render(request, 'createPortfolio.html')
     else:
         try:
             form = PortfolioForm(request.POST, request.FILES)       #edit form

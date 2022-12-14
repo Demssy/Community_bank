@@ -1,19 +1,21 @@
-{% extends 'base.html' %}
-{% block content %}
-Pesonal Area
-<form action="{% url 'userPortfolio' %}" method="POST">
-    {% csrf_token %}
-    <button type="submit">Portfolio</button>
-    <!--logout button-->
+{% extends 'global/page.html' %} {% block page_header_top %}
+<div class="header-top-content">
+  <h1 class="h1-responsive font-weight-bold my-4">Pesonal Area</h1>
+  {% include 'global/goBack.html' %}
+</div>
+{% endblock %} {% block page_content %}
+<div class="row justify-content-between">
+  <form class="col text-center" action="{% url 'userPortfolio' %}" method="POST">
+  {% csrf_token %}
+  <button class="page-btn" type="submit">Projects</button>
 </form>
-<form action="{% url 'all_blogs' %}" method="POST">
-    {% csrf_token %}
-    <button type="submit">Blog</button>
-    <!--logout button-->
+<form class="col text-center" action="{% url 'all_blogs' %}" method="POST">
+  {% csrf_token %}
+  <button class="page-btn" type="submit">Blog</button>
 </form>
-<form action="{% url 'userSettings' %}" method="GET">
-    {% csrf_token %}
-    <button type="submit">User settings</button>
-    <!--logout button-->
+<form class="col text-center" action="{% url 'userSettings' %}" method="GET">
+  {% csrf_token %}
+  <button class="page-btn" type="submit">User settings</button>
 </form>
+</div>
 {% endblock %}
