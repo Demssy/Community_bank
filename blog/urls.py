@@ -1,6 +1,6 @@
-from django.contrib import admin
-from django.urls import include , path
 
+from django.urls import include, path
+from . import views     
 
 
 
@@ -12,5 +12,4 @@ urlpatterns = [
     path('create/', views.createBlog, name='createBlog'),         #create todo
     path('<int:blog_id>/edit', views.editBlog, name = 'editBlog'),
     path('<int:blog_id>/delete', views.deleteBlog, name = 'deleteBlog'),
-    path('',include(,app.urls)),
 ]
