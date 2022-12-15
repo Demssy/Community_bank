@@ -1,11 +1,12 @@
 from django.test import TestCase
 
+
 class MyTestCase(TestCase):
     @classmethod
     def setUpTestData(cls):
         # This method is run only once, before any other test.
         # It's purpose is to set data needed on a class-level.
-        print('setUpTestData')
+        pass
 
     def setUp(self):
         # This method is run before each test.

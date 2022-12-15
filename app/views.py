@@ -95,7 +95,7 @@ def contactus(request):
         return render(request, 'contactus.html')
     else:
         form = ContactUsForm(request.POST)
-        message = 'Message was sent successfuly'
+        message = 'Message was sent successfully'
         hasError = False
         if form.is_valid():
             form.save()
