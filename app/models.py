@@ -10,6 +10,12 @@ class ContactUsModel(models.Model):
     def __str__(self):            #func to see email inthe tasks list
         return self.email
 
+class ContactAdmin(models.Model):
+    subject = models.CharField(max_length=100)
+    message = models.TextField(max_length=500)
+    def __str__(self):            #func to see email inthe tasks list
+        return self.subject        
+
 # class userProfile(models.Model):
 #     name = models.CharField(max_length=100)
 #     emai = models.EmailField()
