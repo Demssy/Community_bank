@@ -8,4 +8,5 @@ class CustomUser(AbstractUser):
     mailing_address = models.CharField(max_length=200, blank=True)
     college = models.CharField(max_length=30)
     major = models.CharField(max_length=30)
-    
+    # first_name=models.CharField(max_length=50)
+    # last_name=models.CharField(max_length=50)

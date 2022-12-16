@@ -1,17 +1,10 @@
 {% extends 'global/page.html' %} {% block page_header_top %}
 <div class="header-top-content">
   <div>
-    <h1 class="h1-responsive font-weight-bold">Contact Us</h1>
+    <h1 class="h1-responsive font-weight-bold">Contact Admin</h1>
     <p class="text-center w-responsive mx-auto">
-      Do you have any questions? Please do not hesitate to contact us. Our team
-      will get back to you within A matter of hours to help you.
+     Report any bugs or "bad data"
     </p>
-    <p class="text-center w-responsive mx-auto">
-      If you want to report abut bugs or "bad data" please contact Admin <li>
-        <a href="/contactadmin">Contact admin</a>
-      </li>
-    </p>
-    
   </div>
 </div>
 {% endblock %} {% block page_content %}
@@ -19,38 +12,7 @@
   <div class="col-md-12 mb-md-0 mb-5">
     <form id="contact-form" name="contact-form" method="POST">
       {% csrf_token %}
-      <div class="row">
-        <div class="col-md-6">
-          <div class="md-form mb-0">
-            <label for="name" class="">Name</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              class="form-control"
-              value="{{form.name.value}}"
-            />
-            {%if form.errors.name %}
-            <p>{{ form.errors.name }}</p>
-            {% endif %}
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="md-form mb-0">
-            <label for="email" class="">Email</label>
-            <input
-              type="text"
-              id="email"
-              name="email"
-              class="form-control"
-              value="{{form.email.value}}"
-            />
-            {%if form.errors.email %}
-            <p>{{ form.errors.email }}</p>
-            {% endif %}
-          </div>
-        </div>
-      </div>
+     </div>
       <div class="row">
         <div class="col-md-12">
           <div class="md-form mb-0">

@@ -30,6 +30,8 @@ urlpatterns = [
     path('', views.home, name='home'),
     #Contactus
     path('contactus/', views.contactus, name='contactus'),
+    #contactAdmin
+    path('contactadmin/', views.contactadmin, name='contactadmin'),
     #Personal area
     path('personalArea/', views.personalArea, name='personalArea'),
     path('userSettings/', views.userSettings, name = 'userSettings'),
@@ -37,7 +39,14 @@ urlpatterns = [
     path('portfolio/', include('portfolio.urls')),
     #app blog
     path('blog/', include('blog.urls')),
-    path('SmmaryDataBank/', views.SmmaryDataBank, name='SmmaryDataBank'),
+    #comments
+    path('comment/', include('comment.urls')),
+    path('api/', include('comment.api.urls')),  # only required for API Framework
+    #search
+    path('search', views.search, name = 'search'),
+    #scholarship
+    path('scholarship/', include('scholarship.urls'), name = 'scholarships'),
+    #path('SmmaryDataBank/', views.SmmaryDataBank, name='SmmaryDataBank'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
