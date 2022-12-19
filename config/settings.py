@@ -41,11 +41,11 @@ INSTALLED_APPS = [
     'blog',
     'portfolio',
     'accounts',
-    'comment',
+
     'scholarship',
 
 ]
-
+#delete comment
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
 MIDDLEWARE = [

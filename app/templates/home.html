@@ -8,8 +8,15 @@
   {% csrf_token %}
   <button class="page-btn" type="submit">Personal area</button>
 </form>
+<form class="col text-center" action="{% url 'scholarship' %}" method="POST">
+  {% csrf_token %}
+  <button class="page-btn" type="submit">scholarship</button>
+</form><br>
+<form class="col text-center" action="{% url 'SmmaryDataBank' %}" method="POST">
+  {% csrf_token %}
+  <button class="page-btn" type="submit">smmary files</button>
+</form>
 
-<a href="{% url 'scholarship' %}" >Scholarship</a>
 
 
 {% endblock %}

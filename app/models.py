@@ -1,4 +1,3 @@
-
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 
@@ -36,3 +35,12 @@ class User(AbstractBaseUser):
     )
 
     role = models.PositiveSmallIntegerField(choices=ROLE_CHOICES, blank=False, null=False)
+
+class SmmaryDataBank(models.Model):
+    name=models.CharField(verbose_name='Subject name',max_length=10)
+    file=models.FileField(verbose_name='summary files',upload_to='file/')
+    active=models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.name
+

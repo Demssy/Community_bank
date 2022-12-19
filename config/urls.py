@@ -40,13 +40,14 @@ urlpatterns = [
     #app blog
     path('blog/', include('blog.urls')),
     #comments
-    path('comment/', include('comment.urls')),
-    path('api/', include('comment.api.urls')),  # only required for API Framework
+    # path('comment/', include('comment.urls')),
+    # path('api/', include('comment.api.urls')),  # only required for API Framework
     #search
     path('search', views.search, name = 'search'),
     #scholarship
     path('scholarship/', include('scholarship.urls'), name = 'scholarships'),
-    #path('SmmaryDataBank/', views.SmmaryDataBank, name='SmmaryDataBank'),
+    path('SmmaryDataBank/', views.SmmaryDataBank, name='SmmaryDataBank'),
+
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

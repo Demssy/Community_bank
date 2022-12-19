@@ -1,0 +1,23 @@
+{% extends 'global/page.html' %}
+
+{% block page_header_top %}
+
+
+{% for x in data %}
+
+
+<h1><button onclick="myFunction()">{{ x.name }}</button><br></h1>
+
+<script>
+function myFunction() {
+  document.open();
+  document.write("<br><h3>{{ x.file.url }}</h3>");
+  document.close();
+}
+</script>
+
+
+
+    {% endfor %}
+
+{% endblock %}
