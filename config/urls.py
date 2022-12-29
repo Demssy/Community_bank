@@ -47,6 +47,8 @@ urlpatterns = [
     #scholarship
     path('scholarship/', include('scholarship.urls'), name = 'scholarships'),
     path('SmmaryDataBank/', views.SmmaryDataBank, name='SmmaryDataBank'),
+    #donations
+    path('donations/', views.donations, name='donations'),
 
 ]
 

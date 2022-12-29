@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import TextInput
-from .models import ContactUsModel, ContactAdmin
+from .models import ContactUsModel, ContactAdmin, DonationsModel
 from accounts.models import CustomUser
 
 class ContactUsForm(forms.ModelForm):
@@ -13,8 +13,6 @@ class ContactAdminForm(forms.ModelForm):
         model = ContactAdmin
         fields = ["subject", "message"]
 
-
-
 class UserSetting(forms.ModelForm):
     class Meta:
         model = CustomUser
@@ -22,3 +20,8 @@ class UserSetting(forms.ModelForm):
         # widgets={
         # 'password1':TextInput(attrs={'type':'password'})
         # }
+
+class DonationsForm(forms.ModelForm):
+    class Meta:
+        model = DonationsModel
+        fields = ["amount", "scholarship", "reason", "email", "message"]

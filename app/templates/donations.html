@@ -1,0 +1,132 @@
+{% extends 'global/page.html' %} {% block page_header_top %}
+<div class="header-top-content">
+  <div>
+    <h1 class="h1-responsive font-weight-bold">Donations</h1>
+    <p class="text-center w-responsive mx-auto">
+      Thank you for considering making a donation to [Organization Name]. Your
+      generosity helps us to continue our important work [insert brief overview
+      of organization's mission or purpose]. Every donation, no matter the size,
+      makes a difference and helps us to [insert specific examples of how
+      donations are used to make a positive impact]. We rely on the support of
+      people like you to keep our programs running and to make a lasting
+      difference in the lives of those we serve. If you would like to make a
+      donation, please use the form below. All donations are tax-deductible and
+      receipts will be provided for tax purposes. Thank you for your support.
+      Together, we can make a positive impact in our community and beyond.
+    </p>
+  </div>
+</div>
+{% endblock %} {% block page_content %}
+<div class="row">
+  <div class="col-md-12 mb-md-0 mb-5">
+    <form id="donations-form" name="donations-form" method="POST">
+      {% csrf_token %}
+      <div class="row">
+        <div class="col-md-6">
+          <div class="md-form mb-0">
+            <label for="amount" class="">Amount</label>
+            <div class="input-group mb-2 mr-sm-2">
+              <div class="input-group-prepend">
+                <div class="input-group-text">$</div>
+              </div>
+              <input
+                type="number"
+                id="amount"
+                name="amount"
+                class="form-control"
+                value="{{form.amount.value}}"
+              />
+            </div>
+            {%if form.errors.amount %}
+            <p>{{ form.errors.amount }}</p>
+            {% endif %}
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="md-form mb-0">
+            <label for="scholarship" class="">Scholarship</label>
+            <select
+              required
+              class="form-control custom-select"
+              id="scholarship"
+              name="scholarship"
+              value="{{form.scholarship.value}}"
+            >
+              <option value="" selected>Choose scholarship...</option>
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </select>
+            {%if form.errors.scholarship %}
+            <p>{{ form.errors.scholarship }}</p>
+            {%endif %}
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="md-form mb-0">
+            <label for="reason" class="">Why donate?</label>
+            <input
+              type="text"
+              id="reason"
+              name="reason"
+              class="form-control"
+              value="{{form.reason.value}}"
+            />
+            {%if form.errors.reason %}
+            <p>{{ form.errors.reason }}</p>
+            {% endif %}
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="md-form mb-0">
+            <label for="email" class="">Email</label>
+            <div class="input-group mb-2 mr-sm-2">
+              <div class="input-group-prepend">
+                <div class="input-group-text">@</div>
+              </div>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                class="form-control"
+                value="{{form.email.value}}"
+              />
+            </div>
+            {%if form.errors.email %}
+            <p>{{ form.errors.email }}</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="md-form">
+            <label for="message">Free Text</label>
+            <textarea
+              type="text"
+              id="message"
+              name="message"
+              rows="2"
+              class="form-control md-textarea"
+              value="{{form.message.value}}"
+            ></textarea>
+            {%if form.errors.message %}
+            <p>{{ form.errors.message }}</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </form>
+    <div class="text-center text-md-left">
+      <a
+        class="btn btn-primary"
+        onclick="document.getElementById('donations-form').submit();"
+        >Send</a
+      >
+    </div>
+    <div class="status"></div>
+  </div>
+</div>
+{% endblock %}
