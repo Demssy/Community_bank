@@ -5,8 +5,8 @@ from .forms import ScholarshipForm
 
 @login_required
 def scholarship(request): #p
-    #scholarship = Scholarship.objects.filter(all).order_by('-date')
-    return render(request, 'scholarships.html')
+    scholarship = Scholarship.objects.filter().order_by('title')
+    return render(request, 'scholarships.html', {'scholarship':scholarship})
 
 
 

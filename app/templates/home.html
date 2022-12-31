@@ -4,12 +4,30 @@
   <h1 class="h1-responsive font-weight-bold my-4">Home</h1>
 </div>
 {% endblock %} {% block page_content %}
-<form class="col text-center" action="{% url 'personalArea' %}" method="POST">
+<div>
+<form class="col text-center" action="{% url 'personalArea' %}" method="GET">
   {% csrf_token %}
   <button class="page-btn" type="submit">Personal area</button>
 </form>
-
-<a href="{% url 'scholarship' %}" >Scholarship</a>
+</div>
+<div>
+<form class="col text-center" action="{% url 'scholarship' %}" method="GET">
+  {% csrf_token %}
+  <button class="page-btn" type="submit">Scholarship</button>
+</form>
+</div>
+<div>
+  <form class="col text-center" action="{% url 'blogs_page' %}" method="GET">
+    {% csrf_token %}
+    <button class="page-btn" type="submit">Blogs</button>
+  </form>
+  </div>
+  <div>
+    <form class="col text-center" action="{% url 'projects_page' %}" method="GET">
+      {% csrf_token %}
+      <button class="page-btn" type="submit">Projects</button>
+    </form>
+    </div>
 
 
 {% endblock %}

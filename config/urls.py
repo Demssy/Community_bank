@@ -38,7 +38,7 @@ urlpatterns = [
     #app portfolio
     path('portfolio/', include('portfolio.urls')),
     #app blog
-    path('blog/', include('blog.urls')),
+    path('blog/', include('blog.urls'), name = 'blog'),
     #comments
     path('comment/', include('comment.urls')),
     path('api/', include('comment.api.urls')),  # only required for API Framework
@@ -47,6 +47,10 @@ urlpatterns = [
     #scholarship
     path('scholarship/', include('scholarship.urls'), name = 'scholarships'),
     #path('SmmaryDataBank/', views.SmmaryDataBank, name='SmmaryDataBank'),
+    #messages
+    path('messages/', include('postman.urls', namespace='postman')),
+    #user_profile
+    path('user_profile/', include('accounts.urls'), name= 'accounts'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

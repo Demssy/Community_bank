@@ -6,6 +6,9 @@
 {% endblock %} {% block page_content %}
 <div class="card">
   <div class="card-body">
+    <div class="row my-3 p-3 justify-content-center">
+      <img class="rounded-circle account-img" src="{{ user.user_avatar.url }}" style="cursor: pointer; width: 200px; height: 200px; padding: 0;"/>
+        <div class="form-group row justify-content-center">
     <h2>{{ user.username }} has written {{ projects.count }} project{{ project.count|pluralize }}</h2>
     <p><a href="{% url 'createPortfolio' %}">create project</a></p>
   </div>

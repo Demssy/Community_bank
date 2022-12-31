@@ -1,9 +1,37 @@
+
 {% extends 'global/page.html' %} {% block page_header_top %}
+{% load postman_tags %}
+{% postman_unread as unread_count %}
+{% load static %}
 <div class="header-top-content">
-  <h1 class="h1-responsive font-weight-bold my-4">Pesonal Area</h1>
+  <h1 class="h1-responsive font-weight-bold my-4">Personal Area</h1>
   {% include 'global/goBack.html' %}
 </div>
 {% endblock %} {% block page_content %}
+<div class="row my-3 p-3 justify-content-center">
+  <img class="rounded-circle account-img" src="{{ user.user_avatar.url }}" style="cursor: pointer; width: 300px; height: 300px; padding: 0;"/>
+    <div class="form-group row justify-content-center">
+    {% if user.bio %} {{ user.bio }} {% endif %}
+    <hr>
+    {% if unread_count %}
+   <p> You have <strong>{{ unread_count }}</strong> unread messages.</p>
+   <hr>
+    {% endif %}
+      <div class="col-md-3 ">
+      <a href="{% url 'postman:inbox' %}" class="page-btn-link">Inbox</a>
+      </div>
+      <div class="col-md-3 ">
+        <a href="{% url 'postman:sent' %}" class="page-btn-link">Sent</a>
+        </div>
+        <div class="col-md-3 ">
+          <a href="{% url 'postman:trash' %}" class="page-btn-link">Spam</a>
+          </div>
+          <div class="col-md-3 ">
+            <a href="{% url 'postman:inbox' %}?unread" class="page-btn-link">Unread messages</a>
+            </div>
+          
+    </div>
+</div>
 <div class="row justify-content-between">
   <form class="col text-center" action="{% url 'userPortfolio' %}" method="POST">
   {% csrf_token %}
@@ -19,3 +47,4 @@
 </form>
 </div>
 {% endblock %}
+
