@@ -6,3 +6,4 @@ class ScholarshipConfig(AppConfig):
     name = 'scholarship'
 
 
+    
