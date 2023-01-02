@@ -41,7 +41,7 @@ urlpatterns = [
     path('blog/', include('blog.urls'), name = 'blog'),
     #comments
     path('comment/', include('comment.urls', namespace = 'comment')),
-    # path('api/', include('comment.api.urls')),  # only required for API Framework
+    path('api/', include('comment.api.urls')),  # only required for API Framework
     #search
     path('search', views.search, name = 'search'),
     #scholarship
@@ -53,6 +53,7 @@ urlpatterns = [
     path('user_profile/', include('accounts.urls'), name= 'accounts'),
     path('SmmaryDataBank/', views.SmmaryDataBank, name='SmmaryDataBank'),
 
+    
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
