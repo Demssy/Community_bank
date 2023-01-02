@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'comment',
     'scholarship',
     'postman',
-    'rest_framework',
 
 ]
 #delete comment
