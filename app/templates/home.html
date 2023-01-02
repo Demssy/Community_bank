@@ -27,6 +27,10 @@
       {% csrf_token %}
       <button class="page-btn" type="submit">Projects</button>
     </form>
+    < class="col text-center" action="{% url 'SmmaryDataBank' %}" method="POST">
+  {% csrf_token %}
+  <button class="page-btn" type="submit">smmary files</button>
+</form>
     </div>
 
 

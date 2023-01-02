@@ -3,6 +3,11 @@ from django.contrib.auth.decorators import login_required
 from .models import Blog
 from .forms import BlogForm
 
+def SmmaryDataBank(request):
+    x={'data':SmmaryDataBank.SmmaryDataBank.all()}
+    return render(request,'SmmaryDataBank.html',context=x)
+
+
 @login_required
 def all_blogs(request):
     blogs = Blog.objects.filter(user = request.user).order_by('-date')

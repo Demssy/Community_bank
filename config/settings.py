@@ -41,12 +41,12 @@ INSTALLED_APPS = [
     'blog',
     'portfolio',
     'accounts',
-    'comment',
+
     'scholarship',
     'postman',
 
 ]
-
+#delete comment
 AUTH_USER_MODEL = 'accounts.CustomUser'
 POSTMAN_AUTO_MODERATE_AS = True
 
@@ -142,7 +142,7 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
+#####
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
