@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'blog',
     'portfolio',
     'accounts',
-
+    'comment',
     'scholarship',
     'postman',
 

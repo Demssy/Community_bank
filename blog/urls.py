@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from app import views
+from app import views as appviews
 urlpatterns = [                         
     path('', views.all_blogs, name='all_blogs'),
     path('<int:blog_id>/', views.detail, name='detail'),
@@ -8,5 +8,5 @@ urlpatterns = [
     path('<int:blog_id>/edit', views.editBlog, name = 'editBlog'),
     path('<int:blog_id>/delete', views.deleteBlog, name = 'deleteBlog'),
     path('blogs_page', views.blogs_page, name = 'blogs_page'),
-    path('SmmaryDataBank/', views.SmmaryDataBank, name='SmmaryDataBank'),
+    path('SmmaryDataBank/', appviews.SmmaryDataBank, name='SmmaryDataBank'),
 ]
