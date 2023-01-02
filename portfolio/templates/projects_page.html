@@ -1,0 +1,32 @@
+{% extends 'global/page.html' %} {% block page_header_top %}
+
+
+
+
+<div class="header-top-content">
+    <h1 class="h1-responsive font-weight-bold">Projects</h1>
+    {% include 'global/goBack.html' %}
+  </div>
+  {% endblock %} {% block page_content %}
+  {% if projects %}
+<div class="cards p-0">
+  <h4 class="mb-2">Projects list:</h4>
+  {% for project in projects %}
+     <div class="card" style="width: 18rem">
+       <img class="card-img-top" src="{{ project.image.url }}" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title">
+          <a href="{% url 'detailp' project.id %}"><h2>{{ project.title }}</h2></a>
+        </h5>
+        <p class="card-text">{{ project.description }}</p>
+        {% if project.url %}
+          <p class="card-text"><br /><a href="{{ project.url }}">Link</a></p>
+        {% endif %} 
+        <p>
+            {{ project.user.username }}
+        </p>
+      </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %} {% endblock %}

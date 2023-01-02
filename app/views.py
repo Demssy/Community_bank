@@ -28,12 +28,14 @@ def home(request):
     """
     return render(request, 'home.html')
 
+@login_required
 def search(request):
     if request.method =='POST':  
         searched  = request.POST['searched']
         proj = Project.objects.filter(title__contains = searched)
         blog = Blog.objects.filter(title__contains = searched)
-        return render(request, 'search.html', {'searched': searched, 'projects':proj, 'blogs':blog})
+        user = CustomUser.objects.filter(username__contains = searched)
+        return render(request, 'search.html', {'searched': searched, 'projects':proj, 'blogs':blog, 'users':user})
     else:
          return render(request, 'search.html')
 
@@ -56,8 +58,8 @@ def userSettings(request):
         return render(request, 'userSettings.html', {'user':user, 'form':form})
     else:
         try:
-            form = UserSetting(request.POST, instance=user)
-            form.save(user)
+            form = UserSetting(request.POST,request.FILES, instance=user)
+            form.save()
             if validator(request.POST['password1'], request.POST['password2']):
                 user.set_password(request.POST['password1'])
                 user.save()
@@ -104,10 +106,10 @@ def signupuser(request):
     else:
         if request.POST['password1'] == request.POST['password2']:       #if first and second password equal create new user
             try:
-                user = CustomUser.objects.create_user(request.POST['username'], password=request.POST['password1'], first_name = request.POST['first_name'], last_name = request.POST['last_name'],college = request.POST['college'], email = request.POST['email'], major = request.POST['major']) #create user
+                user = CustomUser.objects.create_user(request.POST['username'], password=request.POST['password1'], first_name = request.POST['first_name'], last_name = request.POST['last_name'],college = request.POST['college'], date_of_birth = request.POST['date_of_birth'], gender = request.POST['gender'], email = request.POST['email'], major = request.POST['major'],) #create user
                 user.save()  #save user
                 login(request, user)
-                messages.success(request, ("Registartion Successful!"))
+                messages.success(request, ("Registration Successful!"))
                 return redirect('home')     #return current page
             except IntegrityError : 
                 return render(request, 'signupuser.html', {'form':RegisterUserForm(), 'error':'That username has already been taken.Please try again'})

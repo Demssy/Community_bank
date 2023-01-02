@@ -14,6 +14,6 @@ class Blog(models.Model):
     def __str__(self):            #func to see tittle name inthe tasks list
         return self.title    
     def get_absolute_url(self):
-        return reverse('post_detail_url', kwargs={'slug': self.slug})
+        return reverse('detail', kwargs={'slug': self.slug})
 
 

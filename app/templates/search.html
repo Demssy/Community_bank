@@ -5,17 +5,30 @@
     {% if searched %}
 <h1>you search for {{ searched }}</h1>
 <br/>
+{% if blogs %}
+<h2>found blogs</h2>
 {% for blog in blogs %}
    <a href="{% url 'detail' blog.id %}">{{ blog.title }}</a><br/>
 {% endfor %}
+{% endif %}
+
+{% if projects %}
+<h2>found projects</h2>
 {% for project in projects %}
    <a href="{% url 'detailp' project.id %}">{{ project.title }}</a><br/>
 {% endfor %}
-{% for scholarship in scholarships %}
-<a href="{% url 'detail' scolarship.id %}">{{ scholarship.title }}</a><br/>
+{% endif %}
+
+
+{% if users %}
+<h2>found people</h2>
+{% for user in users %}
+   <a href="{% url 'user_profile' user.id %}">{{ user.username }}</a><br/>
 {% endfor %}
-{% else  %}
-<h1>Hey you forgot to search</h1>
+{% endif %}
+
+
+
 {% endif %}
 
 

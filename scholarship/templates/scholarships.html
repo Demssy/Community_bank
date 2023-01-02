@@ -1,41 +1,45 @@
+{% extends 'global/page.html' %} {% block page_header_top %}
 
-{% extends 'base.html' %}
-{% block content %}
-Scholarship111
-
-Scholarship
-
-<html>
-<body>
-
-<h1>all scolarships</h1>
-
-<details>
-  <summary>1. scholarship with teenagers, helping with studies with an emphasis on a mathematical subject.</summary>
-  <p>A little about the scholarship: we work for our community! We want to promote students who wish to become stronger in the world of programming, in addition we will encourage the community to gain knowledge in different programming languages.
-    Location: Community center.")
-    Prerequisite: 2nd year student or higher studying computer science or a related field.
-    The effort included: study permit, registration, interview, grade point average above 85.
-    Amount: Varies, up to $5,000")
-    Working hours: 140 hours per year. 4 hours per week plus 2 hours enrichment workshops.
-</p>
-</details>
-<details>
-  <summary>2. scholarship with teenagers, helping with studies with an emphasis on a mathematical subject.</summary>
-  <p>A little about the scholarship: we work for our community! We want to promote students who wish to become stronger in the world of programming, in addition we will encourage the community to gain knowledge in different programming languages.
-    Location: Community center.")
-    Prerequisite: 2nd year student or higher studying computer science or a related field.
-    The effort included: study permit, registration, interview, grade point average above 85.
-    Amount: Varies, up to $5,000")
-    Working hours: 140 hours per year. 4 hours per week plus 2 hours enrichment workshops.
-</p>
-</details>
-
-</body>
-</html>
-
-
-
-{% endblock %}
-
-
+<div class="header-top-content">
+  <h1 class="h1-responsive font-weight-bold">Scholarships</h1>
+  {% include 'global/goBack.html' %}
+</div>
+{% endblock %} {% block page_content %}
+<div class="card">
+  <div class="card-body">
+    <h2>
+       
+      {{scholarships.count}}scholarship{{scholarships.count|pluralize}}
+    </h2>
+  </div>
+</div>
+{% if scholarships %}
+<div class="cards p-0">
+  <h4 class="mb-2">Scholarships list:</h4>
+  {% for scholarship in Scholarships %}
+  <div class="card" style="width: 18rem">
+    <div class="card-body">
+      <h5 class="card-title">
+        <a href="">{{ scholarship.title }}</a>
+      </h5>
+      <div class="card" style="width: 18rem">
+        <img class="card-img-top" src="{{ scholarship.image.url }}" alt="Card image cap">
+       <div class="card-body">
+         <h5 class="card-title">
+           <a href=""><h2>{{ scholarship.title }}</h2></a>
+         </h5>
+         <p class="card-text">{{ scholarship.content }}</p>
+         <p class="card-text">{{ scholarship.Location }}</p>
+         <p class="card-text">{{ scholarship.requirements }}</p>
+         <p class="card-text">{{ scholarship.Amount }}</p>
+         <p class="card-text">{{ scholarship.Hours }}</p>
+         
+       </div>
+     </div>
+      </p>
+    </div>
+  </div>
+  
+  {% endfor %}
+</div>
+{% endif %} {% endblock %}

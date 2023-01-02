@@ -10,8 +10,13 @@ def userPortfolio(request): #p
     return render(request, 'userPortfolio.html', {'projects':projects})   
 
 @login_required
+def projects_page(request):
+    projects = Project.objects.order_by('title')
+    return render(request,'projects_page.html', {'projects':projects})
+
+@login_required
 def detailp(request, project_id):
-    project = get_object_or_404(Project, pk=project_id, user=request.user)
+    project = get_object_or_404(Project, pk=project_id)
     return render(request, 'detailp.html', {'project':project}) 
 
 @login_required
@@ -38,7 +43,7 @@ def editProject(request, project_id):
         return render(request, 'editProject.html', {'project':project, 'form':form})
     else:
         try:
-            form = PortfolioForm(request.POST, instance=project)
+            form = PortfolioForm(request.POST, request.FILES, instance=project)
             form.save(project)
             return redirect('detailp', project_id)
         except ValueError:

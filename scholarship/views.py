@@ -6,10 +6,9 @@ from functools import wraps
 
 
 @login_required
-def scholarship(request):
-    data = ScholarshipForm()
-    data.save()
-    return render(request, 'scholarships.html', {'form': form})
+def scholarship(request): #p
+    scholarship = Scholarship.objects.filter().order_by('title')
+    return render(request, 'scholarships.html', {'scholarship':scholarship})
 
 def create_schlarship(request):
     form = ScholarshipForm()
