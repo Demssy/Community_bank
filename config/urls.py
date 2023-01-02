@@ -40,7 +40,7 @@ urlpatterns = [
     #app blog
     path('blog/', include('blog.urls'), name = 'blog'),
     #comments
-    # path('comment/', include('comment.urls')),
+    path('comment/', include('comment.urls', namespace = 'comment')),
     # path('api/', include('comment.api.urls')),  # only required for API Framework
     #search
     path('search', views.search, name = 'search'),
