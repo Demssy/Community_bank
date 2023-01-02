@@ -11,6 +11,9 @@
 {% for project in projects %}
    <a href="{% url 'detailp' project.id %}">{{ project.title }}</a><br/>
 {% endfor %}
+{% for scholarship in scholarships %}
+<a href="{% url 'detail' scolarship.id %}">{{ scholarship.title }}</a><br/>
+{% endfor %}
 {% else  %}
 <h1>Hey you forgot to search</h1>
 {% endif %}
