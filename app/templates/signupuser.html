@@ -6,7 +6,7 @@
 {% endif %}
 <div class="page">
   <h1 class="h1-responsive font-weight-bold">Sign Up</h1>
-  {% include 'global/error.html' %}
+  {% include 'global/responseMessage.html' %}
   <div class="row content">
     <div class="card register-form">
       <form method="post" class="form-container">
@@ -72,6 +72,34 @@
           <input
             maxlength="150"
             autocapitalize="none"
+            autocomplete="date_of_birth"
+            required
+            name="date_of_birth"
+            type="date"
+            class="form-control"
+            placeholder="date_of_birth"
+            aria-label="date_of_birth"
+            aria-describedby="basic-addon1"
+          />
+        </div>
+        <div class="input-group mb-1">
+          <input
+            maxlength="150"
+            autocapitalize="none"
+            autocomplete="gender"
+            required
+            name="gender"
+            type="text"
+            class="form-control"
+            placeholder="gender"
+            aria-label="gender"
+            aria-describedby="basic-addon1"
+          />
+        </div>
+        <div class="input-group mb-1">
+          <input
+            maxlength="150"
+            autocapitalize="none"
             autocomplete="college"
             required
             name="college"
@@ -81,6 +109,7 @@
             aria-label="college"
             aria-describedby="basic-addon1"
           />
+        </div>
           <div class="input-group mb-1">
             <input
               maxlength="150"

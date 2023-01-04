@@ -1,0 +1,19 @@
+{% extends 'global/page.html' %}
+
+{% block page_header_top %}
+
+{% for x in scholardata %}
+    <details>
+    <summary>{{ x.title}}</summary>
+         {% csrf_token %}
+           <h3>{{ x.content }}</h3><br>
+        <h3>{{ x.Location }}</h3><br>
+       <h3>{{ x.requirements }}</h3><br>
+        <h3>{{ x.Amount }}</h3><br>
+        <h3>{{ x.Hours }}</h3><br>
+
+    </details>
+
+    {% endfor %}
+
+{% endblock page_header_top %}

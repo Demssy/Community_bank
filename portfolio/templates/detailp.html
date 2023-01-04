@@ -1,4 +1,6 @@
 {% extends 'global/page.html' %} {% block page_header_top %}
+{% load comment_tags %}  
+{% include_bootstrap %} 
 <div class="header-top-content">
   <h1 class="h1-responsive font-weight-bold">{{ project.title }}</h1>
   {% include 'global/goBack.html' %}
@@ -13,11 +15,13 @@
     {% endif %}
   </div>
 </div>
+{% if project.user.id == user.id %}
 <form method="POST" action="{% url 'deleteProject' project.id %}" class="text-center">
   {% csrf_token %}
   <button class="btn btn-danger" type="submit">Delete project</button>
   <a class="btn btn-info" href="{% url 'editProject' project.id %}"
-    >Edit project</a
-  >
+    >Edit project</a>
 </form>
+{% endif %}
+{% render_comments project request %}
 {% endblock %}

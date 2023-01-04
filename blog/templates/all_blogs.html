@@ -8,6 +8,9 @@
 <div class="card">
   <div class="card-body">
     <h2>
+      <div class="row my-3 p-3 justify-content-center">
+  <img class="rounded-circle account-img" src="{{ user.user_avatar.url }}" style="cursor: pointer; width: 200px; height: 200px; padding: 0;"/>
+    <div class="form-group row justify-content-center">
       {{ user.username }} has written
       {{blogs.count}}blog{{blogs.count|pluralize}}
     </h2>

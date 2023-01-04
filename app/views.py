@@ -5,19 +5,24 @@ from accounts.models import CustomUser
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail, mail_admins
-from .forms import ContactUsForm, UserSetting, ContactAdminForm
+from .forms import ContactUsForm, DonationsForm, UserSetting, ContactAdminForm
 from django.http import HttpResponse
 from portfolio.models import Project
 from blog.models import Blog
 from app import models
 from django.contrib import messages
 from accounts.form import RegisterUserForm
+from .models import SmmaryDataBank
+from .models import Scholarship
+from app import models
+from blog import urls
 
 
 
-def SmmaryDataBank(request):
-    x={'data':SmmaryDataBank.SmmaryDataBank.all()}
-    return render(request,'SmmaryDataBank.html',context=x)
+
+def Scholarship(request):
+    # scholarship = Scholarship.objects.filter().order_by('title')
+    return render(request, 'Scholarship.html', {'scholardata': models.Scholarship.objects.all()})
 
 
 @login_required
@@ -28,50 +33,56 @@ def home(request):
     """
     return render(request, 'home.html')
 
+
+@login_required
 def search(request):
-    if request.method =='POST':  
-        searched  = request.POST['searched']
-        proj = Project.objects.filter(title__contains = searched)
-        blog = Blog.objects.filter(title__contains = searched)
-        return render(request, 'search.html', {'searched': searched, 'projects':proj, 'blogs':blog})
+    if request.method == 'POST':
+        searched = request.POST['searched']
+        proj = Project.objects.filter(title__contains=searched)
+        blog = Blog.objects.filter(title__contains=searched)
+        user = CustomUser.objects.filter(username__contains=searched)
+        return render(request, 'search.html', {'searched': searched, 'projects': proj, 'blogs': blog, 'users': user})
     else:
-         return render(request, 'search.html')
+        return render(request, 'search.html')
 
 
 @login_required
 def personalArea(request):
     return render(request, 'personalArea.html')
 
+
 @login_required
-def logoutuser(request): #p
-    if request.method == 'POST':       #method post!!!
+def logoutuser(request):  # p
+    if request.method == 'POST':  # method post!!!
         logout(request)
-        return redirect('home')   #return home page after logout
+        return redirect('home')  # return home page after logout
+
 
 @login_required
 def userSettings(request):
-    user = get_object_or_404(CustomUser, pk = request.user.id)
-    if request.method =='GET':
+    user = get_object_or_404(CustomUser, pk=request.user.id)
+    if request.method == 'GET':
         form = UserSetting(instance=user)
-        return render(request, 'userSettings.html', {'user':user, 'form':form})
+        return render(request, 'userSettings.html', {'user': user, 'form': form})
     else:
         try:
-            form = UserSetting(request.POST, instance=user)
-            form.save(user)
+            form = UserSetting(request.POST, request.FILES, instance=user)
+            form.save()
             if validator(request.POST['password1'], request.POST['password2']):
                 user.set_password(request.POST['password1'])
                 user.save()
             return redirect('personalArea')
         except ValueError:
-            return render(request, 'userSettings.html', {'user':user, 'form':form, 'error': 'Bad info'}) 
+            return render(request, 'userSettings.html', {'user': user, 'form': form, 'error': 'Bad info'})
+
 
 def validator(val1, val2):
     if val1 != '' and val1 == val2:
         return True
-    return False    
+    return False
 
 
-def signupuser(request): 
+def signupuser(request):
     """
     Sign up func
 
@@ -96,40 +107,47 @@ def signupuser(request):
     # else:
     #     return render(request, 'signupuser.html', {'form':RegisterUserForm()})       
 
-
-
-
     if request.method == 'GET':
-        return render(request, 'signupuser.html', {'form':RegisterUserForm()})  #User creation form
+        return render(request, 'signupuser.html', {'form': RegisterUserForm()})  # User creation form
     else:
-        if request.POST['password1'] == request.POST['password2']:       #if first and second password equal create new user
+        if request.POST['password1'] == request.POST['password2']:  # if first and second password equal create new user
             try:
-                user = CustomUser.objects.create_user(request.POST['username'], password=request.POST['password1'], first_name = request.POST['first_name'], last_name = request.POST['last_name'],college = request.POST['college'], email = request.POST['email'], major = request.POST['major']) #create user
-                user.save()  #save user
+                user = CustomUser.objects.create_user(request.POST['username'], password=request.POST['password1'],
+                                                      first_name=request.POST['first_name'],
+                                                      last_name=request.POST['last_name'],
+                                                      college=request.POST['college'],
+                                                      date_of_birth=request.POST['date_of_birth'],
+                                                      gender=request.POST['gender'], email=request.POST['email'],
+                                                      major=request.POST['major'], )  # create user
+                user.save()  # save user
                 login(request, user)
-                messages.success(request, ("Registartion Successful!"))
-                return redirect('home')     #return current page
-            except IntegrityError : 
-                return render(request, 'signupuser.html', {'form':RegisterUserForm(), 'error':'That username has already been taken.Please try again'})
-                #if user create login that exist send error massege
-        else:  
-            return render(request, 'signupuser.html', {'form':RegisterUserForm(), 'error':'Passwords did not match'})      
+                messages.success(request, ("Registration Successful!"))
+                return redirect('home')  # return current page
+            except IntegrityError:
+                return render(request, 'signupuser.html', {'form': RegisterUserForm(),
+                                                           'error': 'That username has already been taken.Please try again'})
+                # if user create login that exist send error massege
+        else:
+            return render(request, 'signupuser.html', {'form': RegisterUserForm(), 'error': 'Passwords did not match'})
+
 
 def loginuser(request):
     if request.method == 'GET':
-        return render(request, 'loginuser.html', {'form':AuthenticationForm()}) #Authentication Form
+        return render(request, 'loginuser.html', {'form': AuthenticationForm()})  # Authentication Form
     else:
         user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
         if user is None:
-            return render(request, 'loginuser.html', {'form':AuthenticationForm(), 'error': 'Username and password did not match'})
+            return render(request, 'loginuser.html',
+                          {'form': AuthenticationForm(), 'error': 'Username and password did not match'})
         else:
             login(request, user)
             if user.is_superuser:
                 return redirect('/admin/')
             else:
-                return redirect('home') #return current page    
+                return redirect('home')  # return current page
 
-def contactus(request): 
+
+def contactus(request):
     """
     Contact US func
     Get request and return contactus page
@@ -155,11 +173,11 @@ def contactus(request):
         else:
             hasError = True
             message = 'Please make sure all fields are valid'
-            
-    return render(request, 'contactus.html', {'form': form, 'message': message, 'hasError': hasError })
+
+    return render(request, 'contactus.html', {'form': form, 'message': message, 'hasError': hasError})
 
 
-def contactadmin(request): 
+def contactadmin(request):
     """
     Contact US func
     Get request and return contactus page
@@ -177,28 +195,59 @@ def contactadmin(request):
             # form.fields['message'] = ''
             # subject = request.POST['subject']
             # message = request.POST['message']
-            #mail_to_admin = ContactAdmin(subject =subject,message = message)
-            #mail_to_admin.save()
-            
+            # mail_to_admin = ContactAdmin(subject =subject,message = message)
+            # mail_to_admin.save()
+
+        else:
+            hasError = True
+            message = 'Please make sure all fields are valid'
+
+    return render(request, 'contactus.html', {'form': form, 'message': message, 'hasError': hasError})
+
+
+def donations(request): 
+    """
+    Donations func
+    Get request and return donations page
+    """
+    if request.method == 'GET':
+        return render(request, 'donations.html')
+    else:
+        form = DonationsForm(request.POST)
+        message = 'Your donation was sent successfully!! Thanks!!'
+        hasError = False
+        if form.is_valid():
+            form.save()
+            form = DonationsForm()
+            form.fields['amount'] = ''
+            form.fields['scholarship'] = ''
+            form.fields['reason'] = ''
+            form.fields['email'] = ''
+            form.fields['message'] = ''
         else:
             hasError = True
             message = 'Please make sure all fields are valid'
             
-    return render(request, 'contactus.html', {'form': form, 'message': message, 'hasError': hasError })    
+    return render(request, 'donations.html', {'form': form, 'message': message, 'hasError': hasError })
 
 
 ### This funn from blog.views
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from blog.models import Blog
-from .models import SmmaryDataBank
+from app import models
 from blog.forms import BlogForm
 
 
-#x={'data':SmmaryDataBank.objects.all()}
+
 def SmmaryDataBank(request):
-    x={'data':models.SmmaryDataBank.objects.all()}
-    return render(request,'SmmaryDataBank.html',context=x)
+    if request.method == "GET":
+        name = request.GET.get('NameOfFile')
+        file = request.GET.get('AddFile')
+        data = models.SmmaryDataBank(name=name, file=file)
+        data.save()
+        return render(request, 'SmmaryDataBank.html')
+    return render(request, 'SmmaryDataBank.html', {'data': models.SmmaryDataBank.objects.all()})
 
 
 @login_required
@@ -250,7 +299,7 @@ def deleteBlog(request, blog_id):  # delete can do only user who create todo
     if request.method == 'POST':  # Post becouse we upload data to database
         Blog.delete(blog)  # delete blog
         return redirect('all_blogs')  # return page with current todos
-    #?????????????????????????????????????????????????
-    #/////////////////////////////////////////////////
+    # ?????????????????????????????????????????????????
+    # /////////////////////////////////////////////////
     # ?????????????????????????????????????????????????
     # /////////////////////////////////////////////////

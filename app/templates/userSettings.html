@@ -1,42 +1,21 @@
 {% extends 'global/page.html' %} {% block page_header_top %}
+{% load static %}
 <div class="header-top-content">
   <h1 class="h1-responsive font-weight-bold">User Settings</h1>
   {% include 'global/goBack.html' %}
 </div>
 {% endblock %} {% block page_content %}
-<form method="POST">
+
+<form method="POST" enctype="multipart/form-data">
   {% csrf_token %}
-  <div class="row">
-    <div class="col-md-6">
-      <div class="md-form mb-0">
-        <label for="major" class="">Major</label>
-        <input
-          type="text"
-          id="major"
-          name="major"
-          class="form-control"
-          value="{{form.major.value}}"
-        />
-        {%if form.errors.major %}
-        <p>{{ form.errors.major }}</p>
-        {% endif %}
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="md-form mb-0">
-        <label for="college" class="">College</label>
-        <input
-          type="text"
-          id="college"
-          name="college"
-          class="form-control"
-          value="{{form.college.value}}"
-        />
-        {%if form.errors.college %}
-        <p>{{ form.errors.college }}</p>
-        {% endif %}
-      </div>
-    </div>
+  
+  <div class="row my-3 p-3">
+    <img class="rounded-circle account-img" src="{{ user.user_avatar.url }}" style="cursor: pointer; width: 150px; height: 150px; padding: 0%;"/>
+    <div class="form-group">
+      <hr>
+      <label class="small mb-1">Change Avatar:</label>
+      {{ form.user_avatar }}
+  </div>
   </div>
   <div class="row">
     <div class="col-md-6">
@@ -70,6 +49,71 @@
       </div>
     </div>
   </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="md-form mb-0">
+        <label for="date_of_birth" class="">Date of birth</label>
+        <input
+          type="date"
+          id="date_of_birth"
+          name="date_of_birth"
+          class="form-control"
+          value="{{form.date_of_birth.value}}"
+        />
+        {%if form.errors.date_of_birth %}
+        <p>{{ form.errors.date_of_birth }}</p>
+        {% endif %}
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="md-form mb-0">
+        <label for="gender" class="">Gender</label>
+        <input
+          type="text"
+          id="gender"
+          name="gender"
+          class="form-control"
+          value="{{form.gender.value}}"
+        />
+        {%if form.errors.gender %}
+        <p>{{ form.errors.gender }}</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="md-form mb-0">
+        <label for="major" class="">Major</label>
+        <input
+          type="text"
+          id="major"
+          name="major"
+          class="form-control"
+          value="{{form.major.value}}"
+        />
+        {%if form.errors.major %}
+        <p>{{ form.errors.major }}</p>
+        {% endif %}
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="md-form mb-0">
+        <label for="college" class="">College</label>
+        <input
+          type="text"
+          id="college"
+          name="college"
+          class="form-control"
+          value="{{form.college.value}}"
+        />
+        {%if form.errors.college %}
+        <p>{{ form.errors.college }}</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  
   <div class="row">
     <div class="col-md-12">
       <div class="md-form mb-0">
@@ -114,6 +158,22 @@
       </div>
     </div>
   </div>
+  <div class="col-md-20">
+    <div class="md-form mb-0">
+      <label for="bio" class="">BIO</label>
+      <input
+        type="text"
+        id="bio"
+        name="bio"
+        class="form-control"
+        value="{{form.bio.value}}"
+      />
+      {%if form.errors.bio %}
+      <p>{{ form.errors.bio }}</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
   <button type="submit" class="btn btn-primary">Save</button>
 </form>
 {% endblock %}
