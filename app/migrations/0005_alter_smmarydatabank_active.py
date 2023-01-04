@@ -11,7 +11,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterField(
-            model_name='smmarydatabank',
+            model_name='SmmaryDataBank',
             name='active',
             field=models.BooleanField(default=True),
         ),

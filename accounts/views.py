@@ -12,4 +12,4 @@ def user_profile(request, user_id):
     blogs = Blog.objects.filter(user = user).order_by('-date')
     projects = Project.objects.filter(user = user)
     return render(request, 'user_profile.html', {'requested_user':user, 'blogs':blogs, 'projects':projects, 'user':request.user})
-    
+

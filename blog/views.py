@@ -2,10 +2,8 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Blog
 from .forms import BlogForm
+#from scholarship import models
 
-def SmmaryDataBank(request):
-    x={'data':SmmaryDataBank.SmmaryDataBank.all()}
-    return render(request,'SmmaryDataBank.html',context=x)
 
 
 @login_required

@@ -6,6 +6,7 @@ from django.db import models
 
 from django.contrib.auth.models import AbstractUser
 
+
 class CustomUser(AbstractUser):
     user_avatar = models.ImageField(upload_to='user_profile/avatars/',default='user_profile/avatars/default.jpg')
     is_student = models.BooleanField(default=False)
@@ -16,7 +17,7 @@ class CustomUser(AbstractUser):
     gender = models.CharField(max_length=10, null=True ,blank=True)
     date_of_birth = models.DateField(default=datetime.date.today)
     bio = models.TextField(max_length=350, null=True ,blank=True)
-   
+
     def delete(self, *args, **kwargs):
         # You have to prepare what you need before delete the model
         storage, path = self.image.storage, self.image.path
@@ -29,6 +30,5 @@ class CustomUser(AbstractUser):
         return self.username
 
     def get_absolute_url(self):
-        return reverse('user_profile.html')     
-
+        return reverse('user_profile.html')
 

@@ -42,19 +42,18 @@ INSTALLED_APPS = [
     'portfolio',
     'accounts',
     'comment',
-    'scholarship',
     'postman',
     'rest_framework',
 
 ]
 #delete comment
 AUTH_USER_MODEL = 'accounts.CustomUser'
+# AUTH_USER_MODEL = 'accounts.User'
 POSTMAN_AUTO_MODERATE_AS = True
 
 COMMENT_DEFAULT_PROFILE_PIC_LOC = '/media/user_profile/avatars/default.jpg'
 PROFILE_APP_NAME = 'accounts'
 PROFILE_MODEL_NAME = 'CustomUser'
-COMMENT_PROFILE_API_FIELDS = ( 'user_avatar')
 
 AJAX_LOOKUP_CHANNELS = {
     'postman_users': dict(model='CustomUser', search_field='username'),
@@ -79,7 +78,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR/"templates`"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
