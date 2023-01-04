@@ -14,12 +14,10 @@ class ContactAdminForm(forms.ModelForm):
         fields = ["subject", "message"]
 
 class UserSetting(forms.ModelForm):
+    
     class Meta:
         model = CustomUser
-        fields = ['major', 'college', 'first_name', 'last_name', 'email']
-        # widgets={
-        # 'password1':TextInput(attrs={'type':'password'})
-        # }
+        fields = ['major', 'college', 'first_name', 'last_name', 'email', 'user_avatar', 'date_of_birth', 'gender', 'bio']
 
 class DonationsForm(forms.ModelForm):
     class Meta:

@@ -1,0 +1,65 @@
+{% extends 'global/page.html' %} {% block page_header_top %}
+{% load static %}
+<div class="header-top-content">
+    <h1 class="h1-responsive font-weight-bold">{{ requested_user.username }}</h1>
+    {% include 'global/goBack.html' %}
+  </div>
+  {% endblock %} {% block page_content %}
+  
+  <div class="row my-3 p-3 justify-content-center">
+    
+    <img class="rounded-circle account-img" src="{{ requested_user.user_avatar.url }}" style="cursor: pointer; width: 150px; height: 150px; padding: 0;"/>
+    <div class="form-group row justify-content-center">
+      {% if requested_user.bio %} {{ requested_user.bio }} {% endif %}
+      <hr>
+      <div class="col-md-3 ">
+      <a href="{% url 'postman:write' %}?recipients={{requested_user.username}}" class="page-btn-link">send message</a>
+      </div>
+        
+        
+      
+  </div>
+  </div>
+
+  <div class="row">
+  {% if blogs %}
+  <div class="col-md-6">
+    <h4 class="mb-2">Blogs list:</h4>
+    {% for blog in blogs %}
+    <div class="card" style="width: 18rem">
+      <div class="card-body">
+        <h5 class="card-title">
+          <a href="{% url 'detail' blog.id %}">{{ blog.title }}</a>
+        </h5>
+        <p class="card-text">{{ blog.date|date:'M d Y'|upper }}</p>
+        <p class="card-text">
+          {{ blog.description|striptags|truncatechars:200 }}
+        </p>
+      </div>
+    </div>
+    
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  {% if projects %}
+<div class="col-md-6">
+  <h4 class="mb-2">Projects list:</h4>
+  {% for project in projects %}
+     <div class="card" style="width: 18rem">
+       <img class="card-img-top" src="{{ project.image.url }}" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title">
+          <a href="{% url 'detailp' project.id %}"><h2>{{ project.title }}</h2></a>
+        </h5>
+        <p class="card-text">{{ project.description }}</p>
+        {% if project.url %}
+          <p class="card-text"><br /><a href="{{ project.url }}">Link</a></p>
+        {% endif %} 
+      </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+</div>
+{% endblock %}

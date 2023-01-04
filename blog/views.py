@@ -2,10 +2,8 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Blog
 from .forms import BlogForm
+#from scholarship import models
 
-def SmmaryDataBank(request):
-    x={'data':SmmaryDataBank.SmmaryDataBank.all()}
-    return render(request,'SmmaryDataBank.html',context=x)
 
 
 @login_required
@@ -14,8 +12,13 @@ def all_blogs(request):
     return render(request, 'all_blogs.html', {'blogs':blogs})
 
 @login_required
+def blogs_page(request):
+    blogs = Blog.objects.order_by('-date')
+    return render(request, 'blogs_page.html', {'blogs':blogs})
+
+@login_required
 def detail(request, blog_id):
-    blog = get_object_or_404(Blog, pk=blog_id, user=request.user)
+    blog = get_object_or_404(Blog, pk=blog_id)
     return render(request, 'detail.html', {'blog':blog})      
 
 

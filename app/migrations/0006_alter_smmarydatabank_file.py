@@ -11,7 +11,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterField(
-            model_name='smmarydatabank',
+            model_name='SmmaryDataBank',
             name='file',
             field=models.FileField(upload_to='file/', verbose_name='summary files'),
         ),

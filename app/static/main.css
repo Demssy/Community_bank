@@ -183,13 +183,27 @@ section.page > .row {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-.page .page-btn:hover {
+.page .page-btn:hover, .page-btn-link:hover {
   background-color: black;
   color: white;
 }
 
 .edit-project .image-preview {
   max-width: 100px;
+}
+
+.page-btn-link {
+  display: block;
+  padding: 30px;
+  border-radius: 15px;
+  background-color: white;
+  transition: background-color 0.3s ease;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: center;
+  border: 1px solid black;
+  color: black;
+  text-decoration: none;
 }
 
 @media (max-width: 425px) {

@@ -1,23 +1,33 @@
 {% extends 'global/page.html' %}
 
 {% block page_header_top %}
+{#    <div class="search-container">#}
+{#    <form action="/action_page.php">#}
+{#      <input type="text" placeholder="Search.." name="search">#}
+{#      <button type="submit">Submit</button>#}
+{#    </form>#}
+{#  </div>#}
+ <details>
+    <summary>Add file</summary>
+     <form method="GET">
+{#         {% csrf_token %}#}
+    <input type="text" name="NameOfFile" id="NameOfFile">
+    <input type="file" name="AddFile" id="AddFile"><br>
+    <input type="submit" value="send">
+    </form></details>
 
-
-{% for x in data %}
-
-
-<h1><button onclick="myFunction()">{{ x.name }}</button><br></h1>
-
+    {% for x in data  %}
+<h1><button onclick="myFunction1()">{{ x.name }}</button><br></h1><br>
+<br>
 <script>
-function myFunction() {
-  document.open();
-  document.write("<br><h3>{{ x.file.url }}</h3>");
-  document.close();
+function myFunction1() {
+    document.open();
+    document().write("<br><h3>{{ x.file.url }}</h3>");
+    document.close();
 }
+
+
 </script>
 
-
-
     {% endfor %}
-
 {% endblock %}
