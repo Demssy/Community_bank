@@ -21,37 +21,24 @@ from django.conf import settings
 
 
 urlpatterns = [
+    path('', views.home, name='home'),
     path('admin/', admin.site.urls),
-    #Auth
     path('signup/', views.signupuser, name='signupuser'),
     path('login/', views.loginuser, name='loginuser'),
     path('logout/', views.logoutuser, name='logoutuser'),
-    #Home
-    path('', views.home, name='home'),
-    #Contactus
     path('contactus/', views.contactus, name='contactus'),
-    #contactAdmin
     path('contactadmin/', views.contactadmin, name='contactadmin'),
-    #Personal area
     path('personalArea/', views.personalArea, name='personalArea'),
     path('userSettings/', views.userSettings, name = 'userSettings'),
-    #app portfolio
     path('portfolio/', include('portfolio.urls')),
-    #app blog
     path('blog/', include('blog.urls'), name = 'blog'),
-    #comments
     path('comment/', include('comment.urls', namespace = 'comment')),
-    path('api/', include('comment.api.urls')),  # only required for API Framework
-    #search
+    path('api/', include('comment.api.urls')),
     path('search', views.search, name = 'search'),
-    #scholarship
-    #path('scholarship/', include('scholarship.urls'), name = 'scholarships'),
-    #path('SmmaryDataBank/', views.SmmaryDataBank, name='SmmaryDataBank'),
-    #messages
     path('messages/', include('postman.urls', namespace='postman')),
-    #user_profile
     path('user_profile/', include('accounts.urls'), name= 'accounts'),
     path('SmmaryDataBank/', views.SmmaryDataBank, name='SmmaryDataBank'),
+    path('donations/', views.donations, name='donations'),
     path('Scholarship/', views.Scholarship, name='Scholarship'),
 
 ]
