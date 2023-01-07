@@ -11,4 +11,6 @@ urlpatterns = [
     path('blogs_page', views.blogs_page, name = 'blogs_page'),
     path('SmmaryDataBank/', appviews.SmmaryDataBank, name='SmmaryDataBank'),
     path('Scholarship/',appviews.Scholarship,name='Scholarship'),
+    
+
 ]

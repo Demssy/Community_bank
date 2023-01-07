@@ -53,6 +53,7 @@ urlpatterns = [
     path('user_profile/', include('accounts.urls'), name= 'accounts'),
     path('SmmaryDataBank/', views.SmmaryDataBank, name='SmmaryDataBank'),
     path('Scholarship/', views.Scholarship, name='Scholarship'),
+    path('addscholarship/<int:id>/', views.add_ScholarShip, name='addscholarship'),
 
 ]
 

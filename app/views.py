@@ -13,8 +13,9 @@ from app import models
 from django.contrib import messages
 from accounts.form import RegisterUserForm
 from .models import SmmaryDataBank
-from .models import Scholarship
+from .models import Scholarship 
 from app import models
+from accounts import models as m1
 from blog import urls
 
 
@@ -277,3 +278,18 @@ def deleteBlog(request, blog_id):  # delete can do only user who create todo
     # /////////////////////////////////////////////////
     # ?????????????????????????????????????????????????
     # /////////////////////////////////////////////////
+
+
+def add_ScholarShip(request,id):
+    user = m1.CustomUser.objects.get(id=request.user.id)
+    scholar = models.Scholarship.objects.get(id=id)
+    user.Scholarship.add(scholar)
+    context = {
+    'items': models.Scholarship.objects.all(),
+    'scholardata': 'Items'}
+
+
+    print(Scholarship)
+
+    return render(request,'SmmaryDataBank.html',context=context)
+    
