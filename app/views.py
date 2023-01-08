@@ -5,7 +5,7 @@ from accounts.models import CustomUser
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail, mail_admins
-from .forms import ContactUsForm, UserSetting, ContactAdminForm
+from .forms import ContactUsForm, DonationsForm, UserSetting, ContactAdminForm
 from django.http import HttpResponse
 from portfolio.models import Project
 from blog.models import Blog
@@ -64,7 +64,7 @@ def userSettings(request):
     user = get_object_or_404(CustomUser, pk=request.user.id)
     if request.method == 'GET':
         form = UserSetting(instance=user)
-        return render(request, 'userSettings.html', {'user': user, 'form': form})
+        return render(request, 'userSettings.html', {'user':user, 'form':form})
     else:
         try:
             form = UserSetting(request.POST, request.FILES, instance=user)
@@ -74,7 +74,7 @@ def userSettings(request):
                 user.save()
             return redirect('personalArea')
         except ValueError:
-            return render(request, 'userSettings.html', {'user': user, 'form': form, 'error': 'Bad info'})
+            return render(request, 'userSettings.html', {'user':user, 'form':form, 'error': 'Bad info'})
 
 
 def validator(val1, val2):
@@ -204,6 +204,32 @@ def contactadmin(request):
             message = 'Please make sure all fields are valid'
 
     return render(request, 'contactus.html', {'form': form, 'message': message, 'hasError': hasError})
+
+
+def donations(request): 
+    """
+    Donations func
+    Get request and return donations page
+    """
+    if request.method == 'GET':
+        return render(request, 'donations.html')
+    else:
+        form = DonationsForm(request.POST)
+        message = 'Your donation was sent successfully!! Thanks!!'
+        hasError = False
+        if form.is_valid():
+            form.save()
+            form = DonationsForm()
+            form.fields['amount'] = ''
+            form.fields['scholarship'] = ''
+            form.fields['reason'] = ''
+            form.fields['email'] = ''
+            form.fields['message'] = ''
+        else:
+            hasError = True
+            message = 'Please make sure all fields are valid'
+            
+    return render(request, 'donations.html', {'form': form, 'message': message, 'hasError': hasError })
 
 
 ### This funn from blog.views
