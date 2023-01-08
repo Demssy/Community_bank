@@ -12,12 +12,12 @@
     <p>{{ blog.description|safe }}</p>
   </div>
 </div>
+{% if blog.user.id == user.id %}
 <form method="POST" action="{% url 'deleteBlog' blog.id %}" class="text-center">
   {% csrf_token %}
-  {% if blog.user.id == user.id %}
   <button class="btn btn-danger" type="submit">Delete post</button>
   <a class="btn btn-info" href="{% url 'editBlog' blog.id %}">Edit post</a>
-  {% endif %}
 </form>
+{% endif %}
 {% render_comments blog request %}
 {% endblock %}

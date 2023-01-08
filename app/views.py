@@ -63,7 +63,7 @@ def userSettings(request):
     user = get_object_or_404(CustomUser, pk=request.user.id)
     if request.method == 'GET':
         form = UserSetting(instance=user)
-        return render(request, 'userSettings.html', {'user': user, 'form': form})
+        return render(request, 'userSettings.html', {'user':user, 'form':form})
     else:
         try:
             form = UserSetting(request.POST, request.FILES, instance=user)
@@ -73,7 +73,7 @@ def userSettings(request):
                 user.save()
             return redirect('personalArea')
         except ValueError:
-            return render(request, 'userSettings.html', {'user': user, 'form': form, 'error': 'Bad info'})
+            return render(request, 'userSettings.html', {'user':user, 'form':form, 'error': 'Bad info'})
 
 
 def validator(val1, val2):

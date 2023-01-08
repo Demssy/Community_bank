@@ -58,8 +58,8 @@
           id="date_of_birth"
           name="date_of_birth"
           class="form-control"
-          value="{{form.date_of_birth.value}}"
-        />
+          value="{{form.date_of_birth.value|date:'Y-m-d'}}"
+          />
         {%if form.errors.date_of_birth %}
         <p>{{ form.errors.date_of_birth }}</p>
         {% endif %}
