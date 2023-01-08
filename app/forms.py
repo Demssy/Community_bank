@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import TextInput
-from .models import ContactUsModel, ContactAdmin, DonationsModel
+from .models import ContactUsModel, ContactAdmin, DonationsModel, DonationsModel
 from accounts.models import CustomUser
 
 class ContactUsForm(forms.ModelForm):
@@ -23,3 +23,8 @@ class UserSetting(forms.ModelForm):
                'placeholder': 'Select a date',
                'type': 'date'
               })}
+
+class DonationsForm(forms.ModelForm):
+    class Meta:
+        model = DonationsModel
+        fields = ["amount", "scholarship", "reason", "email", "message"]
