@@ -3,7 +3,8 @@ import datetime
 import os
 from django.conf import settings
 from django.db import models
-
+from app import models as m1
+ 
 from django.contrib.auth.models import AbstractUser
 
 
@@ -17,6 +18,7 @@ class CustomUser(AbstractUser):
     gender = models.CharField(max_length=10, null=True ,blank=True)
     date_of_birth = models.DateField(default=datetime.date.today)
     bio = models.TextField(max_length=350, null=True ,blank=True)
+    Scholarship = models.ManyToManyField(m1.Scholarship,blank=True)
 
 
     def create_user(username, email, password, first_name, last_name, college=None, major=None, gender=None, date_of_birth=None, bio=None, user_avatar=None):

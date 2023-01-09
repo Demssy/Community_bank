@@ -32,7 +32,6 @@ class Scholarship(models.Model):
     requirements = models.CharField(max_length=250)
     Amount = models.CharField(max_length=50)
     Hours = models.CharField(max_length=50)
-    image = models.ImageField(upload_to="scholarship/images")
 
     def delete(self, *args, **kwargs):
         # You have to prepare what you need before delete the model

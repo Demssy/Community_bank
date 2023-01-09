@@ -40,6 +40,7 @@ urlpatterns = [
     path('SmmaryDataBank/', views.SmmaryDataBank, name='SmmaryDataBank'),
     path('donations/', views.donations, name='donations'),
     path('Scholarship/', views.Scholarship, name='Scholarship'),
+    path('addscholarship/<int:id>/', views.add_ScholarShip, name='addscholarship'),
 
 ]
 
