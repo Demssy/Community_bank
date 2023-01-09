@@ -22,9 +22,8 @@
         {% if project.url %}
           <p class="card-text"><br /><a href="{{ project.url }}">Link</a></p>
         {% endif %} 
-        <p>
-            {{ project.user.username }}
-        </p>
+        <a href="{% url 'user_profile' project.user.id %}">
+          {{ project.user.username }}
       </div>
     </div>
     {% endfor %}

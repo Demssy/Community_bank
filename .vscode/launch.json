@@ -16,6 +16,19 @@
             ],
             "django": true,
             "justMyCode": true
+        },
+        {
+            "name": "Python: DjangoTest",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}\\manage.py",
+            "args": [
+                "test",
+                "accounts",
+                "portfolio"
+            ],
+            "django": true,
+            "justMyCode": true
         }
     ]
 }
