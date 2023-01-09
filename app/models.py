@@ -3,20 +3,24 @@ from django.contrib.auth.models import AbstractUser
 
 
 class ContactUsModel(models.Model):
-    name = models.CharField(max_length=100)
-    email = models.EmailField()
-    subject = models.CharField(max_length=100)
-    message = models.TextField(max_length=500)
+    name = models.CharField(max_length=100, blank=False, null=False)
+    email = models.EmailField(blank=False, null=False)
+    subject = models.CharField(max_length=100, blank=False, null=False)
+    message = models.TextField(max_length=500, blank=False, null=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
-    def __str__(self):  # func to see email inthe tasks list
+    def __str__(self):
         return self.email
 
 
 class ContactAdmin(models.Model):
-    subject = models.CharField(max_length=100)
-    message = models.TextField(max_length=500)
+    subject = models.CharField(max_length=100, blank=False, null=False)
+    message = models.TextField(max_length=500, blank=False, null=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
-    def __str__(self):  # func to see email inthe tasks list
+    def __str__(self):
         return self.subject
     #
 

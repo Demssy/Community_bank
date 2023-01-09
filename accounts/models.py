@@ -20,9 +20,28 @@ class CustomUser(AbstractUser):
     bio = models.TextField(max_length=350, null=True ,blank=True)
     Scholarship = models.ManyToManyField(m1.Scholarship,blank=True)
 
+
+    def create_user(username, email, password, first_name, last_name, college=None, major=None, gender=None, date_of_birth=None, bio=None, user_avatar=None):
+        user = CustomUser(
+            username=username,
+            email=email,
+            first_name=first_name,
+            last_name=last_name,
+            college=college,
+            major=major,
+            gender=gender,
+            date_of_birth=date_of_birth,
+            bio=bio,
+            user_avatar=user_avatar)
+        user.set_password(password)
+        user.save()
+        return user
+
+        
+
     def delete(self, *args, **kwargs):
         # You have to prepare what you need before delete the model
-        storage, path = self.image.storage, self.image.path
+        storage, path = self.user_avatar.storage, self.user_avatar.path
         # Delete the model before the file
         super(CustomUser, self).delete(*args, **kwargs)
         # Delete the file after the model
@@ -31,6 +50,13 @@ class CustomUser(AbstractUser):
     def __str__(self):            #func to see tittle name in the tasks list
         return self.username
 
+    def save(self, *args, **kwargs):
+        # Override the save method to automatically set the `is_student` field to True if the `college` field is filled in
+        if self.college:
+            self.is_student = True
+            super(CustomUser, self).save(*args, **kwargs)
+
     def get_absolute_url(self):
-        return reverse('user_profile.html')
+        # Return the URL for the user's profile page
+        return reverse('user_profile', args=[self.pk])
 
