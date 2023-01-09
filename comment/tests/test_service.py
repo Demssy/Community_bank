@@ -24,7 +24,7 @@ class TestDABEmailService(BaseAnonymousCommentTest):
         self.receivers = []
         self.sender = settings.COMMENT_FROM_EMAIL
         self.site = self.email_service.get_msg_context()['site']
-        self.content_object_url = f'http://{self.site.domain}{self.comment_obj.content_object.get_absolute_url()}'
+        self.content_object_url = f'http://{self.site.domain}{self.comment_obj.content_object.get_absolute_url}'
 
     @classmethod
     def setUpTestData(cls):

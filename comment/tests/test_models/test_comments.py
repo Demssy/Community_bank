@@ -279,18 +279,18 @@ class GetUrlTest(BaseCommentManagerTest):
     @patch.object(settings, 'COMMENT_PER_PAGE', 0)
     def test_with_pagination_disabled(self):
         comment = self.parent_comment_3
-        comment_url = comment.content_object.get_absolute_url() + '#' + comment.urlhash
+        comment_url = comment.content_object.get_absolute_url + '#' + comment.urlhash
 
         self.assertEqual(comment_url, comment.get_url(self.request))
 
     @patch.object(settings, 'COMMENT_PER_PAGE', 3)
     def test_comment_on_first_page(self):
         comment = self.parent_comment_3
-        comment_url = comment.content_object.get_absolute_url() + '#' + comment.urlhash
+        comment_url = comment.content_object.get_absolute_url + '#' + comment.urlhash
         self.assertEqual(comment_url, comment.get_url(self.request))
 
     @patch.object(settings, 'COMMENT_PER_PAGE', 3)
     def test_comment_not_on_first_page(self):
         comment = self.parent_comment_1
-        comment_url = comment.content_object.get_absolute_url() + '?page=2' + '#' + comment.urlhash
+        comment_url = comment.content_object.get_absolute_url + '?page=2' + '#' + comment.urlhash
         self.assertEqual(comment_url, comment.get_url(self.request))

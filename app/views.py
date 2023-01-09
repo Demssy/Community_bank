@@ -18,8 +18,6 @@ from app import models
 from blog import urls
 
 
-
-
 def Scholarship(request):
     # scholarship = Scholarship.objects.filter().order_by('title')
     return render(request, 'Scholarship.html', {'scholardata': models.Scholarship.objects.all()})
@@ -139,6 +137,7 @@ def loginuser(request):
         if user is None:
             return render(request, 'loginuser.html',
                           {'form': AuthenticationForm(), 'error': 'Username and password did not match'})
+
         else:
             login(request, user)
             if user.is_superuser:
@@ -213,7 +212,6 @@ from app import models
 from blog.forms import BlogForm
 
 
-
 def SmmaryDataBank(request):
     if request.method == "GET":
         name = request.GET.get('NameOfFile')
@@ -277,3 +275,12 @@ def deleteBlog(request, blog_id):  # delete can do only user who create todo
     # /////////////////////////////////////////////////
     # ?????????????????????????????????????????????????
     # /////////////////////////////////////////////////
+
+
+
+def AdminHome(request):
+    return render(request,'admin/AdminHome.html')
+
+
+def InvestorHome(request):
+    return render(request,'investor/InvestorHome.html')

@@ -40,15 +40,15 @@ INSTALLED_APPS = [
     'app',
     'blog',
     'portfolio',
-    'accounts',
     'comment',
     'postman',
     'rest_framework',
-
+    'accounts.apps.AccountsConfig',
+  #  'accounts',
 ]
 #delete comment
 AUTH_USER_MODEL = 'accounts.CustomUser'
-# AUTH_USER_MODEL = 'accounts.User'
+#AUTH_USER_MODEL = 'accounts.User'
 POSTMAN_AUTO_MODERATE_AS = True
 
 COMMENT_DEFAULT_PROFILE_PIC_LOC = '/media/user_profile/avatars/default.jpg'

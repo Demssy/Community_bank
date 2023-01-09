@@ -1,0 +1,106 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style >
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.navbar {
+  overflow: hidden;
+  background-color: #333;
+}
+
+.navbar a {
+  float: left;
+  font-size: 30px;
+  color: white;
+  text-align: center;
+  padding: 14px 20px;
+  text-decoration: none;
+}
+
+.dropdown {
+  float: left;
+  overflow: hidden;
+}
+
+.dropdown .dropbtn {
+  font-size: 30px;
+  border: none;
+  outline: none;
+  color: white;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+
+.navbar a:hover, .dropdown:hover .dropbtn {
+  background-color: red;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+</style>
+</head>
+<body>
+
+<div class="navbar" >
+  <a href="#home"><i class="fa fa-home" aria-hidden="true"></i></a>
+  <a href="#news" title="message"><i class="fa fa-commenting" aria-hidden="true"></i>
+</a>
+      <a href="#home" title="add scholarhip"><i class="fa fa-plus" aria-hidden="true"></i></a>
+      <a href="#home" title="donation"> <i class="fa fa-money" aria-hidden="true"></i>
+</a>
+
+  <div class="dropdown">
+    <button class="dropbtn"><i class="fa fa-user-circle-o" aria-hidden="true"></i>
+
+      <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-content">
+              <a href="#">contact admin</a>
+      <a href="#"><i class="fa fa-user" aria-hidden="true"></i>personal area</a>
+      <a href="#"><i class="fa fa-cog" aria-hidden="true"></i>setting</a>
+      <a ><i class="fa fa-sign-out" aria-hidden="true"></i>log out</a>
+    </div>
+  </div>
+    <div >
+    <a href="#home" title="infromtion about bank" class="navbar-right"><i class="fa fa-question-circle" aria-hidden="true"></i></a>
+
+</div>
+</div>
+
+
+<center><img src="https://cdn-icons-png.flaticon.com/512/6926/6926264.png" width="37%"></center>
+
+</body>
+</html>
+

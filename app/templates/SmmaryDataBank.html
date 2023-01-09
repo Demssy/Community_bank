@@ -10,7 +10,8 @@
  <details>
     <summary>Add file</summary>
      <form method="GET">
-{#         {% csrf_token %}#}
+         {% csrf_token %}
+
     <input type="text" name="NameOfFile" id="NameOfFile">
     <input type="file" name="AddFile" id="AddFile"><br>
     <input type="submit" value="send">
@@ -22,10 +23,8 @@
 <script>
 function myFunction1() {
     document.open();
-    document().write("<br><h3>{{ x.file.url }}</h3>");
-    document.close();
-}
-
+    document.write("<br><h3>{{ x.file.url }}</h3>");
+    document.close();}
 
 </script>
 

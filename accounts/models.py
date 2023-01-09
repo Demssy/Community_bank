@@ -3,8 +3,14 @@ import datetime
 import os
 from django.conf import settings
 from django.db import models
-
 from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import User
+
+
+# class User(AbstractUser):
+#     is_admin = models.BooleanField('is admin', default=False)
+#     is_customUser = models.BooleanField('is Student', default=False)
+#     is_investor = models.BooleanField('is investor', default=False)
 
 
 class CustomUser(AbstractUser):
@@ -29,6 +35,9 @@ class CustomUser(AbstractUser):
     def __str__(self):            #func to see tittle name in the tasks list
         return self.username
 
+    @property
     def get_absolute_url(self):
         return reverse('user_profile.html')
+
+
 

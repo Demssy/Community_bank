@@ -58,4 +58,14 @@ def deleteBlog(request, blog_id): #delete can do only user who create todo
     blog = get_object_or_404(Blog, pk = blog_id, user=request.user)   #find todo in database(import get_object_or_404), (user=request.user) check if todo belongs to user
     if request.method == 'POST': #Post becouse we upload data to database
         Blog.delete(blog)                       #delete blog
-        return redirect('all_blogs')     #return page with current todos    
+        return redirect('all_blogs')     #return page with current todos
+
+
+
+
+def AdminHome(request):
+    return render(request,'admin/AdminHome.html')
+
+
+def InvestorHome(request):
+    return render(request,'investor/InvestorHome.html')

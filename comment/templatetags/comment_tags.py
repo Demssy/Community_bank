@@ -47,7 +47,7 @@ def get_profile_url(obj):
         return get_gravatar_img(obj.email)
     profile = get_profile_instance(obj.user)
     if profile:
-        return profile.get_absolute_url()
+        return profile.get_absolute_url
     return get_gravatar_img(obj.email)
 
 

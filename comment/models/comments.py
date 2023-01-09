@@ -96,7 +96,7 @@ class Comment(models.Model):
         super(Comment, self).save(*args, **kwargs)
 
     def get_url(self, request):
-        page_url = self.content_object.get_absolute_url()
+        page_url = self.content_object.get_absolute_url
         comments_per_page = settings.COMMENT_PER_PAGE
         if comments_per_page:
             qs_all_parents = self.__class__.objects.filter_parents_by_object(
