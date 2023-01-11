@@ -13,10 +13,12 @@ from app import models
 from django.contrib import messages
 from accounts.form import RegisterUserForm
 from .models import SmmaryDataBank
-from .models import Scholarship 
+from .models import Scholarship
+# from .models import Register
 from app import models
 from accounts import models as m1
 from blog import urls
+from django.db.models import Sum
 
 
 
@@ -310,6 +312,7 @@ def add_ScholarShip(request,id):
     user = m1.CustomUser.objects.get(id=request.user.id)
     scholar = models.Scholarship.objects.get(id=id)
     user.Scholarship.add(scholar)
+    # models.Scholarship.objects.filter(id=id).delete()
     context = {
     'items': models.Scholarship.objects.all(),
     'scholardata': 'Items'}
@@ -317,5 +320,13 @@ def add_ScholarShip(request,id):
 
     print(Scholarship)
 
-    return render(request,'SmmaryDataBank.html',context=context)
-    
+    return render(request, 'reports.html',context=context)
+
+
+
+@login_required
+def reports(request):
+    return render(request, 'reports.html')
+
+
+

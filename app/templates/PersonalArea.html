@@ -29,7 +29,8 @@
           <div class="col-md-3 ">
             <a href="{% url 'postman:inbox' %}?unread" class="page-btn-link">Unread messages</a>
             </div>
-          
+          </div>
+        
     </div>
 </div>
 <div class="row justify-content-between">
@@ -45,6 +46,11 @@
   {% csrf_token %}
   <button class="page-btn" type="submit">User settings</button>
 </form>
+<form class="col text-center" action="{% url 'reports' %}" method="POST">
+  {% csrf_token %}
+  <button class="page-btn" type="submit">Volunteer hours</button>
+</form>
+
 </div>
 {% endblock %}
 

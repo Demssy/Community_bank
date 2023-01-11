@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 
+
 class ContactUsModel(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField()
@@ -18,9 +19,11 @@ class ContactAdmin(models.Model):
 
     def __str__(self):  # func to see email inthe tasks list
         return self.subject
-    #
+        #
 
 
+
+# from accounts.models import CustomUser
 class Scholarship(models.Model):
     title = models.CharField(max_length=150)
     content = models.TextField()
@@ -28,6 +31,13 @@ class Scholarship(models.Model):
     requirements = models.CharField(max_length=250)
     Amount = models.CharField(max_length=50)
     Hours = models.CharField(max_length=50)
+    # user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    # volunteer_hours = models.IntegerField(default=0)
+    # amount = models.DecimalField(max_digits=10, decimal_places=2)
+    # user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='scholarships')
+
+
+
 
     def delete(self, *args, **kwargs):
         # You have to prepare what you need before delete the model
@@ -40,6 +50,7 @@ class Scholarship(models.Model):
 
     def __str__(self):
         return self.title
+
 
 
 class SmmaryDataBank(models.Model):
@@ -58,3 +69,8 @@ class DonationsModel(models.Model):
     message = models.TextField(max_length=500, blank=True, null=True)
     def __str__(self):
         return self.reason
+
+
+
+
+
