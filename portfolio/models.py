@@ -7,7 +7,7 @@ from django.urls import reverse
 class Project(models.Model):
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=250)
-    image = models.ImageField(upload_to='portfolio/images/')
+    image = models.ImageField(upload_to='portfolio/images/', null=True, blank=False)
     url = models.URLField(blank=True)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE) #key that connect user and project that he created (import: from django.contrib.auth.models import User)
     comments = GenericRelation(Comment)

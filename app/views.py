@@ -5,7 +5,7 @@ from accounts.models import CustomUser
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail, mail_admins
-from .forms import ContactUsForm, DonationsForm, UserSetting, ContactAdminForm
+from .forms import ContactUsForm, UserSetting, ContactAdminForm ,DonationsForm
 from django.http import HttpResponse
 from portfolio.models import Project
 from blog.models import Blog
@@ -18,9 +18,14 @@ from .models import Scholarship
 from app import models
 from accounts import models as m1
 from blog import urls
+<<<<<<< HEAD
 from django.db.models import Sum
 
 
+=======
+from django.core.exceptions import ValidationError
+from blog.forms import BlogForm
+>>>>>>> 65c1db1e2e9552c49521e2f9038f6c132e936af6
 
 
 def Scholarship(request):
@@ -32,9 +37,9 @@ def Scholarship(request):
 def home(request):
     """
     Home page func
-    Get request and retrun home page
+    Get request and return home page
     """
-    return render(request, 'home.html')
+    return render(request, 'home.html', status=200)
 
 
 @login_required
@@ -44,14 +49,14 @@ def search(request):
         proj = Project.objects.filter(title__contains=searched)
         blog = Blog.objects.filter(title__contains=searched)
         user = CustomUser.objects.filter(username__contains=searched)
-        return render(request, 'search.html', {'searched': searched, 'projects': proj, 'blogs': blog, 'users': user})
+        return render(request, 'search.html', {'searched': searched, 'projects': proj, 'blogs': blog, 'users': user}, status=200)
     else:
-        return render(request, 'search.html')
+        return render(request, 'search.html', status=200)
 
 
 @login_required
 def personalArea(request):
-    return render(request, 'personalArea.html')
+    return render(request, 'personalArea.html', status=200)
 
 
 @login_required
@@ -79,6 +84,7 @@ def userSettings(request):
             return render(request, 'userSettings.html', {'user':user, 'form':form, 'error': 'Bad info'})
 
 
+
 def validator(val1, val2):
     if val1 != '' and val1 == val2:
         return True
@@ -90,25 +96,6 @@ def signupuser(request):
     Sign up func
 
     """
-    # if request.method == "POST":
-    #     form = RegisterUserForm(request.POST)
-    #     if form.is_valid():
-    #         form.save()
-    #         username = form.cleaned_data['username']
-    #         password = form.changed_data['password1']
-    #         try:
-    #             user = authenticate(username= username, password= password)
-    #             user.save()
-    #             login(request, user)
-    #             messages.success(request, ("Registration Successful!"))
-    #             return redirect('home')
-    #         except IntegrityError : 
-    #             return render(request, 'signupuser.html', {'form':RegisterUserForm(), 'error':'That username has already been taken.Please try again'})   
-    #     else:
-    #         form = RegisterUserForm()    
-    #         return render(request, 'signupuser.html', {'form':form})
-    # else:
-    #     return render(request, 'signupuser.html', {'form':RegisterUserForm()})       
 
     if request.method == 'GET':
         return render(request, 'signupuser.html', {'form': RegisterUserForm()})  # User creation form
@@ -121,17 +108,24 @@ def signupuser(request):
                                                       college=request.POST['college'],
                                                       date_of_birth=request.POST['date_of_birth'],
                                                       gender=request.POST['gender'], email=request.POST['email'],
-                                                      major=request.POST['major'], )  # create user
+                                                      major=request.POST['major'])  # create user
                 user.save()  # save user
                 login(request, user)
                 messages.success(request, ("Registration Successful!"))
                 return redirect('home')  # return current page
+            except ValidationError as e:
+                if 'email field must be unique' in e.error_message:
+                    return render(request, 'signupuser.html', {'form': RegisterUserForm(),
+                                                               'error': 'That email is already in use. Please try again.'})
+                else:
+                    return render(request, 'signupuser.html', {'form': RegisterUserForm(), 'error': e.error_message})
             except IntegrityError:
                 return render(request, 'signupuser.html', {'form': RegisterUserForm(),
-                                                           'error': 'That username has already been taken.Please try again'})
+                                                           'error': 'That username has already been taken. Please try again.'})
                 # if user create login that exist send error massege
         else:
             return render(request, 'signupuser.html', {'form': RegisterUserForm(), 'error': 'Passwords did not match'})
+
 
 
 def loginuser(request):
@@ -194,19 +188,13 @@ def contactadmin(request):
         if form.is_valid():
             form = ContactAdminForm(request.POST)
             form.save()
-            # form.fields['subject'] = ''
-            # form.fields['message'] = ''
-            # subject = request.POST['subject']
-            # message = request.POST['message']
-            # mail_to_admin = ContactAdmin(subject =subject,message = message)
-            # mail_to_admin.save()
+            
 
         else:
             hasError = True
             message = 'Please make sure all fields are valid'
 
-    return render(request, 'contactus.html', {'form': form, 'message': message, 'hasError': hasError})
-
+    return render(request, 'contactadmin.html', {'form': form, 'message': message, 'hasError': hasError})
 
 def donations(request): 
     """
@@ -232,15 +220,6 @@ def donations(request):
             message = 'Please make sure all fields are valid'
             
     return render(request, 'donations.html', {'form': form, 'message': message, 'hasError': hasError })
-
-
-### This funn from blog.views
-from django.shortcuts import redirect, render, get_object_or_404
-from django.contrib.auth.decorators import login_required
-from blog.models import Blog
-from app import models
-from blog.forms import BlogForm
-
 
 
 def SmmaryDataBank(request):
@@ -320,6 +299,7 @@ def add_ScholarShip(request,id):
 
     print(Scholarship)
 
+<<<<<<< HEAD
     return render(request, 'reports.html',context=context)
 
 
@@ -330,3 +310,7 @@ def reports(request):
 
 
 
+=======
+    return render(request,'SmmaryDataBank.html',context=context)
+    
+>>>>>>> 65c1db1e2e9552c49521e2f9038f6c132e936af6
