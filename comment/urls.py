@@ -23,8 +23,5 @@ urlpatterns = [
     path('toggle-blocking/', ToggleBlockingView.as_view(), name='toggle-blocking'),
     # javascript translations
     # The value returned by _get_version() must change when translations change.
-    path(
-        'jsi18n/',
-        cache_page(86400, key_prefix='js18n-%s' % __version__)(JavaScriptCatalog.as_view()),
-        name='javascript-catalog'),
+    path('jsi18n/',cache_page(86400, key_prefix='js18n-%s' % __version__)(JavaScriptCatalog.as_view()),name='javascript-catalog'),
 ]

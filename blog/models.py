@@ -10,7 +10,7 @@ class Blog(models.Model):
     description = models.TextField()
     date = models.DateField()
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE) #key that conect user and task that he created (import: from django.contrib.auth.models import User)
- #   comments = GenericRelation(Comment)
+    comments = GenericRelation(Comment)
     def __str__(self):            #func to see tittle name inthe tasks list
         return self.title    
     def get_absolute_url(self):

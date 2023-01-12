@@ -14,4 +14,6 @@ urlpatterns = [
     path('AdminHome/', views.AdminHome, name='AdminHome'),
      path('InvestorHome/', views.InvestorHome, name='InvestorHome'),
 
+
+
 ]

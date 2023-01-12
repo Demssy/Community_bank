@@ -110,6 +110,7 @@ nav .last button:hover {
 
 ul.errorlist {
   position: absolute;
+  white-space: nowrap;
   bottom: 0;
   color: var(--bs-red);
   font-size: 12px;
