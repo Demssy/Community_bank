@@ -4,6 +4,7 @@ import os
 from django.conf import settings
 from django.db import models
 from app import models as m1
+from app.models import Scholarship
  
 from django.contrib.auth.models import AbstractUser
 
@@ -57,9 +58,10 @@ class CustomUser(AbstractUser):
     gender = models.CharField(max_length=1,choices=GENDER_CHOICES ,null=True ,blank=True)
     date_of_birth = models.DateField()
     bio = models.TextField(max_length=350, null=True ,blank=True)
+    Scholarship = models.ManyToManyField(Scholarship,blank=True)
+  
 
-    class Meta(AbstractUser.Meta):
-        swappable = 'AUTH_USER_MODEL'
+
 
 
     def create_user(username, email, password, first_name, last_name, college=None, major=None, gender=None, date_of_birth=None, bio=None, user_avatar=None):
@@ -100,4 +102,10 @@ class CustomUser(AbstractUser):
     def get_absolute_url(self):
         # Return the URL for the user's profile page
         return reverse('user_profile', args=[self.pk])
+
+    def total_scholarship_amount(self):
+        total = 0
+        for scholarship in self.Scholarship.all():
+            total += scholarship.Amount
+        return total
 

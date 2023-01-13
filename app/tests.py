@@ -1,3 +1,23 @@
+
+from django.test import TestCase
+# # from accounts import models as m1
+from accounts.models import CustomUser
+
+class ScholarshipViewTestCase(TestCase):
+    def test_scholarship_view(self):
+        response = self.client.get('/scholarship/')
+        self.assertTemplateUsed(response, 'Scholarship.html')
+        self.assertContains(response, 'scholardata')
+
+class AddScholarShipViewTestCase(TestCase):
+    def test_add_scholarship_view(self):
+        user = CustomUser.objects.create(username='testuser')
+        scholarship = scholarship.objects.create(title='Test Scholarship')
+        self.client.force_login(user)
+        response = self.client.post('/add_scholarship/{}/'.format(scholarship.id))
+        self.assertContains(response, 'scholardata')
+        self.assertEqual(user.scholarships.count(), 1)
+
 import datetime
 from multiprocessing import AuthenticationError
 from django.core.exceptions import ValidationError
@@ -658,3 +678,4 @@ class ContactAdminViewTestCase(TestCase):
         # Assert that the message and hasError variables in the context are as expected
         self.assertEqual(response.context['message'], 'Please make sure all fields are valid')
         self.assertTrue(response.context['hasError'])    
+

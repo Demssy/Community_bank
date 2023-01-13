@@ -1,23 +1,5 @@
  {% extends 'global/page.html' %}
 
-<!-- {% block page_header_top %}
-
-{% for x in scholardata %}
-    <details>
-    <summary>{{ x.title}}</summary>
-         {% csrf_token %}
-           <h3>{{ x.content }}</h3><br>
-        <h3>{{ x.Location }}</h3><br>
-       <h3>{{ x.requirements }}</h3><br>
-        <h3>{{ x.Amount }}</h3><br>
-        <h3>{{ x.Hours }}</h3><br>
-
-    </details>
-
-    {% endfor %}
-
-{% endblock page_header_top %} --> -->
-
 {% block content %}
 {%load static%}
 
@@ -55,7 +37,7 @@
           <th>requirements</th>
           <th>Amount</th>
           <th>Hours</th> 
-          <th>Add</th> 
+          <th>Register</th> 
         </tr>
       </thead>
 
@@ -67,11 +49,34 @@
         <td>{{d.requirements}}</td>
         <td>{{d.Amount}}</td>
         <td>{{d.Hours}}</td>
-        <td>        <li>
-            <a href="{% url 'addscholarship' d.id %}"><span class="glyphicon glyphicon-circle-arrow-up"> </span></a></li></td>
+        <td>        
+    
+            <a href="{% url 'addscholarship' d.id %}"><span class="glyphicon glyphicon-circle-arrow-up"> </span></a></td>
       </tr>
+       <script>
+        function changeColor(item) {
+          if (item.style.backgroundColor === "yellow") {
+            item.style.backgroundColor = "";
+            item.innerHTML = "for Register";
+          } 
+          else {
+            item.style.backgroundColor = "yellow";
+            item.innerHTML = "Registered";
+            window.location.href = "/add_scholarship/" + item.id;
+         }
+       }
+        </script>
       {% endfor %}
     </table>
   </div>
 </div>
+
 {% endblock content %}
+{%load static%}
+
+
+
+
+
+
+

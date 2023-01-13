@@ -27,3 +27,5 @@ class DonationsForm(forms.ModelForm):
     class Meta:
         model = DonationsModel
         fields = ["amount", "scholarship", "reason", "email", "message"]
+
+
