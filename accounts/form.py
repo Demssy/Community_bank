@@ -3,9 +3,9 @@ from django.forms import SelectDateWidget
 from .models import CustomUser
 from django import forms
 from django.contrib.auth.models import User
+from django.forms import ModelChoiceField
 
-
-class RegisterUserForm(UserCreationForm):
+class RegisterUserForm(forms.ModelForm):
    
     email = forms.EmailField(required=True,widget=forms.TextInput(attrs={'placeholder': 'Email','class': 'form-control',}))
     first_name = forms.CharField(max_length=50, required=True, widget=forms.TextInput(attrs={'placeholder': 'First Name','class': 'form-control',}))

@@ -5,16 +5,21 @@
     {% include 'global/goBack.html' %}
   </div>
   {% endblock %} {% block page_content %}
-  
+  <center>
   <div class="row my-3 p-3 justify-content-center">
     
     <img class="rounded-circle account-img" src="{{ requested_user.user_avatar.url }}" style="cursor: pointer; width: 150px; height: 150px; padding: 0;"/>
     <div class="form-group row justify-content-center">
-      {% if requested_user.bio %} {{ requested_user.bio }} {% endif %}
+      <div class="col-md-8 justify-content-center">
+        {% if requested_user.bio %} 
+            <p class=" justify-content-center">{{ requested_user.bio }}</p> 
+        {% endif %}
       <hr>
-      <div class="col-md-3 ">
-      <a href="{% url 'postman:write' %}?recipients={{requested_user.username}}" class="page-btn-link">send message</a>
+      <center>
+      <div class="col-md-3 justify-content-center">
+      <a href="{% url 'postman:write' %}?recipients={{requested_user.username}}" class="btn btn-primary justify-content-center">Send Message</a>
       </div>
+    </center>
         
         
       
@@ -52,6 +57,7 @@
         <h5 class="card-title">
           <a href="{% url 'detailp' project.id %}"><h2>{{ project.title }}</h2></a>
         </h5>
+        <h6>{{ project.project_type }}</h6>
         <p class="card-text">{{ project.description }}</p>
         {% if project.url %}
           <p class="card-text"><br /><a href="{{ project.url }}">Link</a></p>
