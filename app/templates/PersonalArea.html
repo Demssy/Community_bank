@@ -3,6 +3,7 @@
 {% load postman_tags %}
 {% postman_unread as unread_count %}
 {% load static %}
+
 <div class="header-top-content">
   <h1 class="h1-responsive font-weight-bold my-4">Personal Area</h1>
   {% include 'global/goBack.html' %}
@@ -33,18 +34,24 @@
     </div>
 </div>
 <div class="row justify-content-between">
+  <div>
   <form class="col text-center" action="{% url 'userPortfolio' %}" method="POST">
   {% csrf_token %}
   <button class="page-btn" type="submit">Projects</button>
 </form>
+</div>
+<div>
 <form class="col text-center" action="{% url 'all_blogs' %}" method="POST">
   {% csrf_token %}
   <button class="page-btn" type="submit">Blog</button>
 </form>
+</div>
+<div>
 <form class="col text-center" action="{% url 'userSettings' %}" method="GET">
   {% csrf_token %}
   <button class="page-btn" type="submit">User settings</button>
 </form>
+</div>
 </div>
 {% endblock %}
 

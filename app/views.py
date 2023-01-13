@@ -127,14 +127,16 @@ def loginuser(request):
     else:
         user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
         if user is None:
-            return render(request, 'loginuser.html',
-                          {'form': AuthenticationForm(), 'error': 'Username and password did not match'})
+            messages.error(request, 'Username and password did not match')
+        elif not user.is_active:
+            messages.error(request, 'User is not active')
         else:
             login(request, user)
             if user.is_superuser:
                 return redirect('/admin/')
             else:
                 return redirect('home')  # return current page
+        return render(request, 'loginuser.html', {'form': AuthenticationForm()})
 
 
 def contactus(request):

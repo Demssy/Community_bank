@@ -83,46 +83,39 @@
           />
         </div>
         <div class="input-group mb-1">
-          <input
-            maxlength="150"
-            autocapitalize="none"
-            autocomplete="gender"
-            required
-            name="gender"
-            type="text"
-            class="form-control"
-            placeholder="gender"
-            aria-label="gender"
-            aria-describedby="basic-addon1"
-          />
-        </div>
-        <div class="input-group mb-1">
-          <input
-            maxlength="150"
-            autocapitalize="none"
-            autocomplete="college"
-            required
-            name="college"
-            type="text"
-            class="form-control"
-            placeholder="college"
-            aria-label="college"
-            aria-describedby="basic-addon1"
-          />
-        </div>
-          <div class="input-group mb-1">
-            <input
-              maxlength="150"
-              autocapitalize="none"
-              autocomplete="major"
-              required
-              name="major"
-              type="text"
-              class="form-control"
-              placeholder="major"
-              aria-label="major"
-              aria-describedby="basic-addon1"
-            />
+          <label for="gender" class="form-control" placeholder="Gender">Gender</label>
+          <select id="gender" name="gender" class="form-control">
+              {% for value, label in form.fields.gender.choices %}
+                  <option value="{{ value }}" {% if value == form.gender.value %}selected{% endif %}>{{ label }}</option>
+              {% endfor %}
+          </select>
+          {%if form.errors.gender %}
+          <p>{{ form.errors.gender }}</p>
+          {% endif %}
+      </div>
+      <p>Please fill this field just if you are a student</p>
+      <div class="input-group mb-1">
+        
+        <label for="college" class="form-control" placeholder="academic institution">academic institution</label>
+        <select id="college" name="college" class="form-control">
+            {% for value, label in form.fields.college.choices %}
+                <option value="{{ value }}" {% if value == form.college.value %}selected{% endif %}>{{ label }}</option>
+            {% endfor %}
+        </select>
+        {%if form.errors.college %}
+        <p>{{ form.errors.college }}</p>
+        {% endif %}
+    </div>
+    <div class="input-group mb-1">
+      <label for="major" class="form-control" placeholder="major">Major</label>
+      <select id="major" name="major" class="form-control">
+          {% for value, label in form.fields.major.choices %}
+              <option value="{{ value }}" {% if value == form.major.value %}selected{% endif %}>{{ label }}</option>
+          {% endfor %}
+      </select>
+      {%if form.errors.major %}
+      <p>{{ form.errors.major }}</p>
+      {% endif %}
         </div>
         <div class="input-group my-1">
           <input

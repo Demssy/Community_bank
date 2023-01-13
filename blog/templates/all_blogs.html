@@ -14,7 +14,11 @@
       {{ user.username }} has written
       {{blogs.count}}blog{{blogs.count|pluralize}}
     </h2>
-    <p><a href="{% url 'createBlog' %}">create blog</a></p>
+    <center>
+    <div class="col-md-3 ">
+      <a href="{% url 'createBlog' %}" class="page-btn-link">Create Blog</a>
+      </div>
+    </center>
   </div>
 </div>
 {% if blogs %}
