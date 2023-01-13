@@ -9,7 +9,7 @@
   {% include 'global/responseMessage.html' %}
   <div class="row content">
     <div class="card register-form">
-      <form method="post" class="form-container">
+      <form method="post" class="form-container" action="{% url 'signupuser' %}">
         {% csrf_token %}
         <div class="input-group mb-1">
           <input
@@ -135,6 +135,7 @@
             aria-describedby="basic-addon1"
           />
         </div>
+          
         <div class="text-dark" style="width: 95%">
           <span style="font-weight: 500">Note: </span>
           <span>Make sure your password fits following criteria</span>
@@ -159,6 +160,11 @@
             aria-describedby="basic-addon1"
           />
         </div>
+        <select name="user_type" id="user_type" required>
+          <option selected disabled>Choose a role</option>
+          <option value="student">Student</option>
+          <option value="investor">Investor</option>
+        </select>
         <button
           type="submit"
           class="btn btn-success"

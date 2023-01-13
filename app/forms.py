@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import TextInput
 from .models import ContactUsModel, ContactAdmin, DonationsModel, DonationsModel
-from accounts.models import CustomUser
+from accounts.models import CustomUser, Scholarship
 
 class ContactUsForm(forms.ModelForm):
     class Meta:
@@ -28,4 +28,9 @@ class DonationsForm(forms.ModelForm):
         model = DonationsModel
         fields = ["amount", "scholarship", "reason", "email", "message"]
 
+
+class ScholarshipForm(forms.ModelForm):
+    class Meta:
+        model = Scholarship
+        fields = ["title", "content", "Location", "requirements", "Amount", "Hours"]
 

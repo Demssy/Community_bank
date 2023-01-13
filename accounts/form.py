@@ -17,10 +17,12 @@ class RegisterUserForm(UserCreationForm):
     major = forms.CharField(max_length=30, required= False)
     date_of_birth = forms.DateField(required=True, widget=SelectDateWidget(years=[y for y in range(1930,2050)]))
     gender = forms.CharField(max_length=10)
+    is_student = forms.BooleanField(required=False)
+    is_investor = forms.BooleanField(required=False)
     class Meta:
         model = CustomUser
 
-        fields = ('username', 'first_name', 'last_name', 'email', 'date_of_birth', 'gender', 'college', 'major', 'password1', 'password2')
+        fields = ('username', 'first_name', 'last_name', 'email', 'date_of_birth', 'gender', 'college', 'major', 'password1', 'password2', 'is_student', 'is_investor')
 
 
     def clean_email(self):

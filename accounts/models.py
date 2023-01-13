@@ -19,7 +19,7 @@ class CustomUser(AbstractUser):
     gender = models.CharField(max_length=10, null=True ,blank=True)
     date_of_birth = models.DateField(default=datetime.date.today)
     bio = models.TextField(max_length=350, null=True ,blank=True)
-    Scholarship = models.ManyToManyField(Scholarship,blank=True)
+    Scholarship = models.ManyToManyField(Scholarship,related_name='users')
   
 
 
