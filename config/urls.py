@@ -42,11 +42,13 @@ urlpatterns = [
     path('Scholarship/', views.Scholarship, name='Scholarship'),
     path('addscholarship/<int:id>/', views.add_ScholarShip, name='addscholarship'),
     path('reports/', views.reports, name='reports'),
-    path('cancelScholarship/', views.cancelScholarship, name='cancelScholarship'),
+    path('cancel_scholarship/', views.cancel_scholarship, name='cancel_scholarship'),
     path('setingUsers/', views.setingUsers, name='setingUsers'),
     path('getScolarship/', views.getScolarship, name='getScolarship'),
     path('AddScholarshipINVESOR/', views.AddScholarshipINVESOR, name='AddScholarshipINVESOR'),
     path('selectOption/', views.selectOption, name='selectOption'),
+    path('scholarship_detail/', views.scholarship_detail, name='scholarship_detail'),
+
 
     
 ]

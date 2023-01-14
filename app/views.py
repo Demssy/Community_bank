@@ -335,19 +335,18 @@ def AddScholarshipINVESOR(request):
 
 
 
-def cancelScholarship(request, id):
-    if request.method == "POST":
-        user = request.user
-        scholarship = Scholarship.objects.get(id=id)
-        if user.is_authenticated:
-            # Check if user has permission to cancel the scholarship
-            user.scholarships.remove(scholarship) # remove the scholarship from user data
-            user.save()
-            return redirect('route_name')
-        else:
-            return redirect('login')
-    else:
-        return redirect('route_name')
+from django.http import JsonResponse
+
+def cancel_scholarship(request):
+    user_id = request.POST.get('user_id')
+    scholarship_id = request.POST.get('scholarship_id')
+
+    user = CustomUser.objects.get(id=user_id)
+    scholarship = Scholarship.objects.get(id=scholarship_id)
+    user.Scholarship.remove(scholarship)
+
+    return JsonResponse({'status': 'success'})
+
 
 def setingUsers(request):
     user = request.user
@@ -361,19 +360,7 @@ def getScolarship(request, id_scolar):
     context = {'users': users}
     return render(request, 'Scholarship.html', context=context)
 
-# def selectOption(request, custom_user):
-#     if request.method == 'POST':
-#         form = CustomUser(request.POST)
-#         if form.is_valid():
-#             if form.cleaned_data['user_type'] == '1':
-#                 custom_user.is_student = True
-#             elif form.cleaned_data['user_type'] == '2':
-#                 custom_user.is_investor = True
-#             custom_user.save()
-#             return redirect('success_url')
-#     else:
-#         form = selectOption()
-#     return render(request, 'select_option.html', {'form': form})
+
 
 
 def selectOption(request):
@@ -388,3 +375,45 @@ def selectOption(request):
                 custom_user.is_investor = True
             custom_user.save()
             return render(request, 'investorPageI.html', {'form': form})
+
+
+
+def scholarship_detail(request, scholarship_id):
+    scholarship = Scholarship.objects.get(id=scholarship_id)
+    student_count = scholarship.users.filter(is_student=True).count()
+    context = {'scholarship': scholarship, 'student_count': student_count}
+    return render(request, 'scholarship_detail.html', context)
+
+from django.http import FileResponse
+from reportlab.lib import colors
+from reportlab.lib.pagesizes import letter, landscape
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
+
+
+def scholarship_pdf(request, scholarship_id):
+    scholarship = Scholarship.objects.get(id=scholarship_id)
+    student_count = scholarship.users.filter(is_student=True).count()
+    # Create the HttpResponse object with the appropriate PDF headers.
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="scholarship.pdf"'
+    # Create the PDF object, using the response object as its "file."
+    p = SimpleDocTemplate(response, pagesize=letter)
+    # create a list of tables row
+    data = [['Title', scholarship.title],
+            ['Content', scholarship.content],
+            ['Student Count', student_count],
+            ]
+    # Create the table
+    t = Table(data)
+    t.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        ('BACKGROUND', (0, -1), (-1, -1), colors.beige),
+        ('GRID', (0, 0), (-1, -1), 1, colors.black)
+    ]))
+    # Add the table to the PDF
+    p.build([t])
+    return response
