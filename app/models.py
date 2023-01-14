@@ -32,13 +32,9 @@ class Scholarship(models.Model):
     title = models.CharField(max_length=150)
     content = models.TextField()
     Location = models.CharField(max_length=100)
-    requirements = models.CharField(max_length=250)
+    requirements = models.CharField(max_length=500)
     Amount = models.CharField(max_length=50)
     Hours = models.CharField(max_length=50)
-    # user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    # volunteer_hours = models.IntegerField(default=0)
-    # amount = models.DecimalField(max_digits=10, decimal_places=2)
-    # user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='scholarships')
 
 
 

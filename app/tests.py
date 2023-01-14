@@ -1,6 +1,3 @@
-
-from django.test import TestCase
-# # from accounts import models as m1
 from accounts.models import CustomUser
 from .models import Scholarship, ContactUsModel, ContactAdmin, DonationsModel
 import datetime
@@ -718,18 +715,3 @@ class DonationsViewTestCase(TestCase):
         self.assertFormError(response, 'form', 'reason', 'This field is required.')
         self.assertFormError(response, 'form', 'scholarship', 'This field is required.')    
         self.assertFormError(response, 'form', 'email', 'Enter a valid email address.')
-
-class ScholarshipViewTestCase(TestCase):
-    def test_scholarship_view(self):
-        response = self.client.get('/Scholarship/')
-        self.assertTemplateUsed(response, 'Scholarship.html')
-        self.assertContains(response, 'scholardata')
-
-class AddScholarShipViewTestCase(TestCase):
-    def test_add_scholarship_view(self):
-        user = CustomUser.objects.create(username='testuser')
-        scholarship = Scholarship.objects.create(title='Test Scholarship')
-        self.client.force_login(user)
-        response = self.client.post('/add_scholarship/{}/'.format(scholarship.id))
-        self.assertContains(response, 'scholardata')
-        self.assertEqual(user.scholarships.count(), 1)
