@@ -13,17 +13,17 @@ class RegisterUserForm(forms.ModelForm):
     username = forms.CharField(max_length=100,required=True, widget=forms.TextInput(attrs={'placeholder': 'Username','class': 'form-control',}))
     password1 = forms.CharField(max_length=50,required=True,widget=forms.PasswordInput(attrs={'placeholder': 'Password','class': 'form-control','data-toggle': 'password','id': 'password',}))
     password2 = forms.CharField(max_length=50, required=True,widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password','class': 'form-control','data-toggle': 'password','id': 'password',}))
-    college = forms.CharField(max_length=30, required=False)
-    major = forms.CharField(max_length=30, required= False)
-    date_of_birth = forms.DateField(required=True, widget=SelectDateWidget(years=[y for y in range(1930,2050)]))
-    gender = forms.CharField(max_length=10)
-    is_student = forms.BooleanField(required=False)
-    is_investor = forms.BooleanField(required=False)
+   
     class Meta:
         model = CustomUser
 
-        fields = ('username', 'first_name', 'last_name', 'email', 'date_of_birth', 'gender', 'college', 'major', 'password1', 'password2', 'is_student', 'is_investor')
-
+        fields = ['username', 'first_name', 'last_name', 'email', 'date_of_birth', 'gender', 'college', 'major', 'password1', 'password2']
+        widgets = {
+            'gender' : forms.Select(),
+            'college' : forms.Select(),
+            'major' : forms.Select(),
+            'date_of_births':forms.SelectDateWidget(years=[y for y in range(1930,2050)])
+        }
 
     def clean_email(self):
         if 'email' in self.cleaned_data:

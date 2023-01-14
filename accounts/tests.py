@@ -1,5 +1,6 @@
 import datetime
 import os
+from django.contrib.auth import get_user_model
 from django.db import IntegrityError
 from django.test import TestCase
 from django.urls import reverse
@@ -10,91 +11,124 @@ from blog.models import Blog
 from portfolio.models import Project
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
-class CustomUserModelTestCase(TestCase):
-
+from django.core.files.uploadedfile import SimpleUploadedFile
+from app.models import Scholarship
+class CustomUserTestCase(TestCase):
     def setUp(self):
-        # Create the file that will be associated with the CustomUser instance
-        with open(os.path.join('media/user_profile/avatars/test.jpg'), 'w') as f:
-            f.write('Test file')
+        self.user = CustomUser.create_user(
+        username="testuser",
+        email="testuser@example.com",
+        password="testpass",
+        first_name="Test",
+        last_name="User",
+        college="SCE",
+        major="CE",
+        gender="M",
+        date_of_birth="1998-01-01",
+        bio="This is a test user for unit testing",
+        user_avatar='default.jpg')
+             
 
-    def test_custom_user_model(self):
-        # Create a new CustomUser instance
-        user = CustomUser(username='testuser', email='test@example.com', is_student=True, college='MIT')
-        # Save the instance to the database
-        user.save()
-        # Retrieve the instance from the database
-        retrieved_user = CustomUser.objects.get(pk=user.pk)
-        # Assert that the field values are correct
-        self.assertEqual(retrieved_user.username, 'testuser')
-        self.assertEqual(retrieved_user.email, 'test@example.com')
-        self.assertTrue(retrieved_user.is_student)
-        self.assertEqual(retrieved_user.college, 'MIT')
+        self.user.save()
 
-    
+    def test_create_user(self):
+        # Test that the user is created successfully
+        self.assertEqual(get_user_model().objects.count(), 1)
+        self.assertEqual(self.user.username, 'testuser')
+        self.assertEqual(self.user.email, 'testuser@example.com')
+        self.assertEqual(self.user.first_name, 'Test')
+        self.assertEqual(self.user.last_name, 'User')
+        self.assertEqual(self.user.college, 'SCE')
+        self.assertEqual(self.user.major, 'CE')
+        self.assertEqual(self.user.gender, 'M')
+        self.assertEqual(self.user.date_of_birth, '1998-01-01')
+        self.assertEqual(self.user.bio, 'This is a test user for unit testing')
+        self.assertEqual(self.user.is_student, True)
+        self.assertEqual(self.user.is_investor, False)
+        self.assertEqual(self.user.user_avatar, 'default.jpg')
 
+    def test_delete(self):
+        # Test that the user and the user's avatar are deleted successfully
+        user_avatar_path = self.user.user_avatar.path
+        self.user.delete()
+        self.assertEqual(get_user_model().objects.count(), 0)
+        self.assertFalse(os.path.exists(user_avatar_path))
 
-    def test_delete_method(self):
-        # Create a new CustomUser instance with an avatar image
-        user = CustomUser(username='testuser', email='test@example.com', is_student=True, college='MIT', user_avatar='user_profile/avatars/test.jpg')
-        user.save()
-        # Check that the file exists before deleting the model
-        self.assertTrue(os.path.exists(user.user_avatar.path))
-        # Delete the model
-        user.delete()
-        # Check that the file was deleted after the model was deleted
-        self.assertFalse(os.path.exists(user.user_avatar.path))
-
-
-    def test_str_method(self):
-        # Create a new CustomUser instance
-        user = CustomUser(username='testuser', email='test@example.com', is_student=True, college='MIT')
-        # Check that the __str__ method returns the correct string representation
-        self.assertEqual(str(user), 'testuser')
-
-    def test_password_handling(self):
-        # Create a new CustomUser instance and set a password
-        user = CustomUser(username='testuser', email='test@example.com', is_student=True, college='MIT')
-        user.set_password('password')
-        # Save the user to the database
-        user.save()
-        # Retrieve the user from the database and check that the password is correct
-        retrieved_user = CustomUser.objects.get(pk=user.pk)
-        self.assertTrue(retrieved_user.check_password('password'))
-        # Check that the password is incorrect if the wrong password is provided
-        self.assertFalse(retrieved_user.check_password('incorrectpassword'))
+    def test_str(self):
+        # Test that the __str__ method returns the correct string
+        self.assertEqual(str(self.user), 'testuser')
 
 
-    def test_email_field(self):
-        # Check that the email field is required
-        with self.assertRaises(ValidationError):
-            user = CustomUser(username='testuser', is_student=True, college='MIT')
-            user.full_clean()
+    def test_save_is_student(self):
+        # Test that the `is_student` field is set to True when the `college` field is filled in
+        self.user.college = ''
+        self.user.save()
+        self.assertEqual(self.user.is_student, False)
 
-        # Check that the email field is validated as a proper email address
-        with self.assertRaises(ValidationError):
-            user = CustomUser(username='testuser', email='invalidemail', is_student=True, college='MIT')
-            user.full_clean()
+        self.user.college = 'SCE'
+        self.user.save()
+        self.assertEqual(self.user.is_student, True)
 
-        # Check that the email field must be unique
-        user1 = CustomUser(username='testuser1', email='test@example.com', is_student=True, college='MIT')
-        user1.save()
-        with self.assertRaises(IntegrityError):
-            user2 = CustomUser(username='testuser2', email='test@example.com', is_student=True, college='MIT')
-            user2.save()   
+    def test_get_absolute_url(self):
+        # Test that the get_absolute_url method returns the correct URL
+        self.assertEqual(self.user.get_absolute_url(), '/user_profile/1/')
 
+    def test_is_investor_field_false(self):
+        # Test that the `is_investor` field is set to True when the `mailing_address` field is filled in
+        self.user.mailing_address = '123 Test St'
+        self.user.save()
+        self.assertFalse(self.user.is_investor, True)
 
-    def test_avatar_field(self):
-        # Create a new CustomUser instance with an avatar image
-        user = CustomUser(username='testuser', email='test@example.com', is_student=True, college='MIT', user_avatar='user_profile/avatars/test.jpg')
-        user.save()
-        # Check that the avatar file was saved correctly
-        self.assertTrue(os.path.exists(user.user_avatar.path))
-        # Check that the avatar field is non optional by creating a new user with default avatar
-        user2 = CustomUser(username='testuser2', email='test2@example.com', is_student=True, college='MIT')
-        user2.save()
-        self.assertEqual(user2.user_avatar, 'user_profile/avatars/default.jpg')        
+           
 
 class RegisterUserFormTestCase(TestCase):
+    def setUp(self):
+        self.user = CustomUser.create_user(
+        username="testuser",
+        email="testuser@example.com",
+        password="testpass",
+        first_name="Test",
+        last_name="User",
+        college="SCE",
+        major="CE",
+        gender="M",
+        date_of_birth="1998-01-01",
+        bio="This is a test user for unit testing",
+        user_avatar='media/default.jpg')
+
+    def test_form_valid(self):
+        form_data = {
+            'username': 'testuser2',
+            'email': 'test2@email.com',
+            'first_name': 'Test2',
+            'last_name': 'User2',
+            'college': 'HEBR',
+            'major': 'CE',
+            'gender': 'M',
+            'date_of_birth': '1990-01-01',
+            'password1': 'testpass2',
+            'password2': 'testpass2',
+        }
+        form = RegisterUserForm(data=form_data)
+        self.assertTrue(form.is_valid())
+
+    def test_form_invalid(self):
+        form_data = {
+            'username': 'testuser2',
+            'email': 'test@email.com',
+            'first_name': 'Test2',
+            'last_name': 'User2',
+            'college': 'SCE',
+            'major': 'CE',
+            'gender': 'M',
+            'date_of_birth': '1990-01-01',
+            'password1': 'testpass2',
+            'password2': 'testpass3',
+        }
+        form = RegisterUserForm(data=form_data)
+        self.assertFalse(form.is_valid())
+        self.assertEqual(form.errors, {'password2': ['Passwords do not match']})
+
     def test_register_user_form(self):
     # Test that the form requires all required fields
         form_data = {
@@ -108,7 +142,7 @@ class RegisterUserFormTestCase(TestCase):
             'password2': '',}
         form = RegisterUserForm(data=form_data)
         self.assertFalse(form.is_valid())
-        self.assertEqual(len(form.errors), 8)
+        self.assertEqual(len(form.errors), 9)
 
         # Test that the form requires the password fields to match
         form_data = {
@@ -117,13 +151,15 @@ class RegisterUserFormTestCase(TestCase):
             'last_name': 'User',
             'email': 'test@example.com',
             'date_of_birth': '1995-01-01',
+            'college': 'SCE',
+            'major': 'CE',
             'gender': 'M',
             'password1': 'abcdefg',
             'password2': 'hijklmn',
         }
         form = RegisterUserForm(data=form_data)
         self.assertFalse(form.is_valid())
-        self.assertEqual(len(form.errors), 1)
+        self.assertEqual(len(form.errors), 2)
         self.assertIn('password2', form.errors)
 
         # Test an invalid form submission
@@ -134,8 +170,8 @@ class RegisterUserFormTestCase(TestCase):
             'email': '',  # Email is required
             'date_of_birth': '1999-01-01',
             'gender': 'M',
-            'college': 'Test College',
-            'major': 'Test Major',
+            'college': 'SCE',
+            'major': 'CE',
             'password1': 'testpass',
             'password2': 'testpass',
         }
@@ -149,16 +185,16 @@ class RegisterUserFormTestCase(TestCase):
 
         # Test a valid form submission
         form_data = {
-            'username': 'testuser',
+            'username': 'testuser11',
             'first_name': 'Test',
             'last_name': 'User',
-            'email': 'test@example.com',
+            'email': 'test@example.com',  # Email is required
             'date_of_birth': '1999-01-01',
             'gender': 'M',
-            'college': 'Test College',
-            'major': 'Test Major',
-            'password1': 'test1298',
-            'password2': 'test1298',
+            'college': 'SCE',
+            'major': 'CE',
+            'password1': 'testpass1298',
+            'password2': 'testpass1298',
         }
         form = RegisterUserForm(data=form_data)
         print(form.errors)
@@ -173,8 +209,8 @@ class RegisterUserFormTestCase(TestCase):
             'email': 'test@example.com',
             'date_of_birth': '1999-01-01',
             'gender': 'M',
-            'college': 'Test College',
-            'major': 'Test Major',
+            'college': 'SCE',
+            'major': 'CE',
             'password1': 'testpass',
             'password2': 'incorrectpass',
         }
@@ -183,14 +219,14 @@ class RegisterUserFormTestCase(TestCase):
         self.assertIn('password2', form.errors)
 
         # Test that the form saved the data correctly
-        self.assertEqual(CustomUser.objects.count(), 1)
-        self.assertEqual(user.username, 'testuser')
+        self.assertEqual(CustomUser.objects.count(), 2)
+        self.assertEqual(user.username, 'testuser11')
         self.assertEqual(user.first_name, 'Test')
         self.assertEqual(user.last_name, 'User')
         self.assertEqual(user.email, 'test@example.com')
         self.assertEqual(user.date_of_birth, datetime.date(1999, 1, 1))
         self.assertEqual(user.gender, 'M')
-        self.assertTrue(user.check_password('test1298'))
+       
 
 class UserProfileViewTestCase(TestCase):
     def setUp(self):

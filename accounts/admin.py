@@ -36,54 +36,6 @@ class MyUserCreationForm(UserCreationForm):
 
 
 
-# def export_pdf(modeladmin, request, queryset):
-#     # Retrieve request parameters
-#     is_student = request.GET.get('is_student', True)
-#     fields = request.GET.getlist('fields', ['first_name', 'last_name', 'email', 'last_login', 'date_joined'])
-
-#     # Retrieve user data
-#     users = CustomUser.objects.filter(is_student=is_student ).values(*fields)
-
-#     # Create the HttpResponse object with the appropriate PDF headers.
-#     response = HttpResponse(content_type='application/pdf')
-#     content_disposition = request.GET.get('content_disposition', 'attachment')
-#     response['Content-Disposition'] = f"{content_disposition}; filename=users.pdf"
-
-#     # Create the PDF object
-#     doc = SimpleDocTemplate(response, pagesize=landscape(letter))
-
-#     # Container for the 'Flowable' objects
-#     elements = []
-
-#     # Add user data to the PDF
-#     data = [['Full Name', 'Email', 'Last Login', 'Date Joined']]
-#     for user in users:
-#         data.append([
-#             f"{user['first_name']} {user['last_name']}",
-#             user['email'],
-#             user['last_login'],
-#             user['date_joined'],
-#         ])
-#     table = Table(data, colWidths=[2*inch, 2*inch, 3*inch, 3*inch])
-#     table.setStyle(TableStyle([
-#         ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
-#         ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
-#         ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
-#         ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
-#         ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
-#         ('BACKGROUND', (0, -1), (-1, -1), colors.beige),
-#         ('GRID', (0, 0), (-1, -1), 1, colors.black),
-#     ]))
-#     elements.append(table)
-
-#     # Write the PDF document to the response object
-#     doc.build(elements)
-
-#     return response
-
-# export_pdf.short_description = "Export selected objects as PDF"
-
-
 
 class CustomUserAdmin(UserAdmin):
     actions = ['export_users_pdf', 'export_students_pdf', 'export_investors_pdf', 'export_staff_pdf', 'export_is_Active_pdf']
