@@ -18,14 +18,9 @@ from .models import Scholarship
 from app import models
 from accounts import models as m1
 from blog import urls
-<<<<<<< HEAD
 from django.db.models import Sum
-
-
-=======
 from django.core.exceptions import ValidationError
 from blog.forms import BlogForm
->>>>>>> 65c1db1e2e9552c49521e2f9038f6c132e936af6
 
 
 def Scholarship(request):
@@ -299,8 +294,7 @@ def add_ScholarShip(request,id):
 
     print(Scholarship)
 
-<<<<<<< HEAD
-    return render(request, 'reports.html',context=context)
+    return render(request,'SmmaryDataBank.html',context=context)
 
 
 
@@ -310,7 +304,3 @@ def reports(request):
 
 
 
-=======
-    return render(request,'SmmaryDataBank.html',context=context)
-    
->>>>>>> 65c1db1e2e9552c49521e2f9038f6c132e936af6
