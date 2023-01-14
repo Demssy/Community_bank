@@ -5,7 +5,7 @@ from accounts.models import CustomUser
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail, mail_admins
-from .forms import ContactUsForm, UserSetting, ContactAdminForm ,DonationsForm
+from .forms import ContactUsForm, UserSetting, ContactAdminForm ,DonationsForm, ScholarshipForm
 from django.http import HttpResponse
 from portfolio.models import Project
 from blog.models import Blog
@@ -36,7 +36,13 @@ def home(request):
     Home page func
     Get request and return home page
     """
-    return render(request, 'home.html', status=200)
+    if request.user.is_investor:
+        return render(request,'investorPage.html', status=200)
+    else:
+        return render(request, 'home.html', status=200)
+        
+
+    
 
 
 @login_required
@@ -106,10 +112,19 @@ def signupuser(request):
                                                       date_of_birth=request.POST['date_of_birth'],
                                                       gender=request.POST['gender'], email=request.POST['email'],
                                                       major=request.POST['major'])  # create user
+                if request.POST['user_type']:
+                    user_type = request.POST['user_type']
+                    if user_type == 'student':
+                        user.is_student = True
+                    elif user_type == 'investor':
+                        print('yohohohohohohoho')
+                        user.is_investor = True
+                    
                 user.save()  # save user
                 login(request, user)
                 messages.success(request, ("Registration Successful!"))
-                return redirect('home')  # return current page
+
+                return redirect('home')
             except ValidationError as e:
                 if 'email field must be unique' in e.error_message:
                     return render(request, 'signupuser.html', {'form': RegisterUserForm(),
@@ -294,11 +309,11 @@ def add_ScholarShip(request,id):
     context = {
     'items': models.Scholarship.objects.all(),
     'scholardata': 'Items'}
-
-
     print(Scholarship)
-
-    return render(request, 'reports.html',context=context)
+    if request.user.is_investor:
+        return render(request,'investorPage.html', status=200)
+    else:
+        return render(request, 'Regester.html',context=context)
 
 
 
@@ -307,5 +322,69 @@ def reports(request):
     return render(request, 'reports.html')
 
 
-    
+@login_required
+def AddScholarshipINVESOR(request):
+    form = ScholarshipForm(request.POST)
+    message = 'Message was sent successfully'
+    hasError = False
+    if form.is_valid():
+        form = ScholarshipForm(request.POST)
+        form.save()
+    return render(request, 'addScholarI.html')
 
+
+
+
+def cancelScholarship(request, id):
+    if request.method == "POST":
+        user = request.user
+        scholarship = Scholarship.objects.get(id=id)
+        if user.is_authenticated:
+            # Check if user has permission to cancel the scholarship
+            user.scholarships.remove(scholarship) # remove the scholarship from user data
+            user.save()
+            return redirect('route_name')
+        else:
+            return redirect('login')
+    else:
+        return redirect('route_name')
+
+def setingUsers(request):
+    user = request.user
+    scholarships = user.scholarships.all()
+    context = {'scholarships': scholarships}
+    return render(request, 'template.html', context)
+
+def getScolarship(request, id_scolar):
+    scholarship = models.Scholarship.objects.get(id=id_scolar)
+    users = scholarship.users.all()
+    context = {'users': users}
+    return render(request, 'Scholarship.html', context=context)
+
+# def selectOption(request, custom_user):
+#     if request.method == 'POST':
+#         form = CustomUser(request.POST)
+#         if form.is_valid():
+#             if form.cleaned_data['user_type'] == '1':
+#                 custom_user.is_student = True
+#             elif form.cleaned_data['user_type'] == '2':
+#                 custom_user.is_investor = True
+#             custom_user.save()
+#             return redirect('success_url')
+#     else:
+#         form = selectOption()
+#     return render(request, 'select_option.html', {'form': form})
+
+
+def selectOption(request):
+    if request.method == 'POST':
+        form = RegisterUserForm(request.POST)
+        if form.is_valid():
+            custom_user = form.save()
+            if form.cleaned_data['is_student']:
+                custom_user.is_student = True
+                return render(request, 'home.html', {'form': form})
+            elif form.cleaned_data['is_investor']:
+                custom_user.is_investor = True
+            custom_user.save()
+            return render(request, 'investorPageI.html', {'form': form})

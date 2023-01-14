@@ -26,7 +26,7 @@ class ContactAdmin(models.Model):
         #
 
 
-
+# from app.models import Scholarship
 # from accounts.models import CustomUser
 class Scholarship(models.Model):
     title = models.CharField(max_length=150)

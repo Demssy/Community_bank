@@ -1,0 +1,107 @@
+{% extends 'global/page.html' %}
+{% block content %}
+{%load static%}
+<head>
+
+ <h1 class="h1-responsive font-weight-bold">Register</h1>
+ <p class="text-center w-responsive mx-auto">
+   Congratulations! you have successfully registered for the scholarship. 
+    
+ We look forward to seeing you next Sunday at the community event where we will give you details about the
+  continuation of the scholarship.
+ </p>
+
+
+ </p>
+
+<html>
+<body>
+
+<div class="row">
+ <div class="col-md-12 mb-md-0 mb-5">
+   <form id="contact-form" name="contact-form" method="POST">
+     {% csrf_token %}
+     <div class="row">
+       <div class="col-md-6">
+         <div class="md-form mb-0">
+           <label for="name" class="">Name</label>
+           <input
+             type="text"
+             id="name"
+             name="name"
+             class="form-control"
+             value="{{form.name.value}}"
+           />
+           {%if form.errors.name %}
+           <p>{{ form.errors.name }}</p>
+           {% endif %}
+         </div>
+       </div>
+       <div class="col-md-6">
+         <div class="md-form mb-0">
+           <label for="email" class="">Email</label>
+           <input
+             type="text"
+             id="email"
+             name="email"
+             class="form-control"
+             value="{{form.email.value}}"
+           />
+           {%if form.errors.email %}
+           <p>{{ form.errors.email }}</p>
+           {% endif %}
+         </div>
+       </div>
+     </div>
+     <label class="">Study permit</label>
+     files:</h3>
+     <form action="/action_page.php">
+       <label for="myfile">Select files:</label>
+       <input type="file" id="myfile" name="myfile" multiple><br><br>
+     </body>
+     </html>
+     </div>
+     <div class="row">
+       <div class="col-md-12">
+         <div class="md-form">
+           <label for="message">Message</label>
+           <textarea
+             type="text"
+             id="message"
+             name="message"
+             rows="2"
+             class="form-control md-textarea"
+             value="{{form.message.value}}"
+           ></textarea>
+           {%if form.errors.message %}
+           <p>{{ form.errors.message }}</p>
+           {% endif %}
+         </div>
+       </div>
+     </div>
+   </form>
+   <div class="text-center text-md-left">
+     <a
+       class="btn btn-primary"
+       onclick="document.getElementById('contact-form').submit();"
+       >Send</a
+     >
+   </div>
+   <div class="status"></div>
+ </div>
+</div>
+ </div>
+   </div>
+
+</form>
+
+
+{% endblock content %}
+{%load static%}
+
+
+
+
+
+
+
