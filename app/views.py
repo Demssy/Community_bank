@@ -19,8 +19,6 @@ from app import models
 from accounts import models as m1
 from blog import urls
 from django.db.models import Sum
-
-
 from django.core.exceptions import ValidationError
 from blog.forms import BlogForm
 

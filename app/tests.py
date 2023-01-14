@@ -1,24 +1,5 @@
-
-# from django.test import TestCase
-# # # from accounts import models as m1
-# from accounts.models import CustomUser
-# from .models import Scholarship
-
-# class ScholarshipViewTestCase(TestCase):
-#     def test_scholarship_view(self):
-#         response = self.client.get('/Scholarship/')
-#         self.assertTemplateUsed(response, 'Scholarship.html')
-#         self.assertContains(response, 'scholardata')
-
-# class AddScholarShipViewTestCase(TestCase):
-#     def test_add_scholarship_view(self):
-#         user = CustomUser.objects.create(username='testuser')
-#         scholarship = Scholarship.objects.create(title='Test Scholarship')
-#         self.client.force_login(user)
-#         response = self.client.post('/add_scholarship/{}/'.format(scholarship.id))
-#         self.assertContains(response, 'scholardata')
-#         self.assertEqual(user.scholarships.count(), 1)
-
+from accounts.models import CustomUser
+from .models import Scholarship, ContactUsModel, ContactAdmin, DonationsModel
 import datetime
 from multiprocessing import AuthenticationError
 from django.core.exceptions import ValidationError
@@ -27,10 +8,9 @@ from django.urls import reverse
 from django.contrib.auth.forms import AuthenticationForm
 from accounts.form import RegisterUserForm
 from .forms import UserSetting
-from .models import ContactUsModel, ContactAdmin
 from portfolio.models import Project
 from blog.models import Blog
-from accounts.models import CustomUser
+from decimal import Decimal
 
 class ContactUsModelTestCase(TestCase):
     def setUp(self):
@@ -56,8 +36,6 @@ class ContactUsModelTestCase(TestCase):
         self.assertEqual(str(john), 'john@example.com')
         self.assertEqual(str(jane), 'jane@example.com')
 
-    
-
     def test_contact_us_model_fields(self):
         john = ContactUsModel.objects.get(name='John Smith')
         jane = ContactUsModel.objects.get(name='Jane Doe')
@@ -77,7 +55,6 @@ class ContactUsModelTestCase(TestCase):
     def test_updated_at_field(self):
         hello = ContactUsModel.objects.get(subject='Hello')
         self.assertIsInstance(hello.updated_at, datetime.datetime)
-
 
 class ContactAdminTestCase(TestCase):
     
@@ -113,8 +90,6 @@ class ContactAdminTestCase(TestCase):
         hello = ContactAdmin.objects.get(subject='Hello')
         self.assertIsInstance(hello.updated_at, datetime.datetime)
     
-
-
 class UserSettingFormTestCase(TestCase):
     def test_form_has_required_fields(self):
         form = UserSetting()
@@ -158,7 +133,31 @@ class UserSettingFormTestCase(TestCase):
         form = UserSetting(data=form_data)
         self.assertFalse(form.is_valid())        
 
-    
+class DonationsModelTestCase(TestCase):
+    def setUp(self):
+        DonationsModel.objects.create(
+            amount= 250.5,
+            reason= 'The reason test',
+            scholarship= 'The scholarship test',
+            email= '',
+            message= ''
+        )
+
+    # check that amount doesn't allow decimal places
+    def test_amount_decimal_places(self):
+        model = DonationsModel.objects.get(reason='The reason test')
+        self.assertFalse(model.amount == Decimal('250.5'))
+
+    # check that email can be blank
+    def test_email_blank(self):
+        model = DonationsModel.objects.get(reason='The reason test')
+        self.assertEqual(model.email, '')
+
+    # check that message can be blank
+    def test_message_blank(self):
+        model = DonationsModel.objects.get(reason='The reason test')
+        self.assertEqual(model.message, '')
+
 
 
 class HomeViewTestCase(TestCase):
@@ -192,7 +191,6 @@ class HomeViewTestCase(TestCase):
         # Check that the view is using the correct template
         self.assertTemplateUsed(response, 'home.html')
             
-
 class SearchViewTestCase(TestCase):
     def setUp(self):
         self.client = Client()
@@ -257,7 +255,6 @@ class SearchViewTestCase(TestCase):
         self.assertContains(response, 'testuser1')
         self.assertContains(response, 'testuser2')
     
-
 class PersonalAreaViewTestCase(TestCase):
     def setUp(self):
         # Create a user that can be logged in to access the view
@@ -290,9 +287,6 @@ class PersonalAreaViewTestCase(TestCase):
        
         # Check that the view is using the correct template
         self.assertTemplateUsed(response, 'personalArea.html')     
-
-
-
 
 class UserSettingsViewTestCase(TestCase):
     def setUp(self):
@@ -367,8 +361,6 @@ class UserSettingsViewTestCase(TestCase):
         self.assertEqual(response['location'], '/personalArea/')
        
         #self.assertRedirects(response, 'personalArea.html')
-
-
 
 class SignupViewTestCase(TestCase):
     def setUp(self):
@@ -465,8 +457,6 @@ class SignupViewTestCase(TestCase):
         # Check that the view displays an error message
         self.assertContains(response, 'That username has already been taken. Please try again.')    
 
-
-
 class LoginViewTestCase(TestCase):
     def setUp(self):
         # Create a user to log in
@@ -534,9 +524,6 @@ class LoginViewTestCase(TestCase):
         
         # Check that the user is not logged in
         self.assertFalse(response.wsgi_request.user.is_authenticated)
-
-
-
 
 class ContactUsViewTestCase(TestCase):        
     def setUp(self):
@@ -608,8 +595,6 @@ class ContactUsViewTestCase(TestCase):
         self.assertFormError(response, 'form', 'subject', 'This field is required.')    
         self.assertFormError(response, 'form', 'message', 'This field is required.')
 
-
-
 class ContactAdminViewTestCase(TestCase):
 
     def setUp(self):
@@ -680,3 +665,53 @@ class ContactAdminViewTestCase(TestCase):
         self.assertEqual(response.context['message'], 'Please make sure all fields are valid')
         self.assertTrue(response.context['hasError'])    
 
+class DonationsViewTestCase(TestCase):        
+    def test_donations_view_get(self):
+        # Send a GET request to the contactus view
+        response = self.client.get('/donations/')
+
+        # Assert that the response status code is 200 (OK)
+        self.assertEqual(response.status_code, 200)
+
+        # Assert that the rendered context contains the correct template
+        self.assertTemplateUsed(response, 'donations.html')
+
+
+    def test_donations_view(self):
+        # Send a POST request to the contactus view with valid form data
+        response = self.client.post('/donations/', {
+            'amount': '250',
+            'reason': 'The Reason',
+            'scholarship': 'The scholarship',
+            'email': 'testuser@example.com',
+            'message': 'The Message'
+        })
+
+        # Assert that the response status code is 200
+        self.assertEqual(response.status_code, 200)
+
+        # Assert that the rendered context contains the correct template
+        self.assertTemplateUsed(response, 'donations.html')
+
+
+    def test_donations_view_with_invalid_form_data(self):
+        # Send a POST request to the contactus view with invalid form data
+        response = self.client.post('/donations/', {
+            'amount': '10000', # max digits 4
+            'reason': '', # reason is required but left blank
+            'scholarship': '', # scholarship is required but left blank
+            'email': 'invalid@.', # Invalid email format
+            'message': '' 
+        })
+
+        # Assert that the response status code is 200 (OK)
+        self.assertEqual(response.status_code, 200)
+
+        # Assert that the rendered context contains the correct template
+        self.assertTemplateUsed(response, 'donations.html')
+
+        # Assert that the rendered context contains the expected form errors
+        self.assertFormError(response, 'form', 'amount', 'Ensure that there are no more than 4 digits in total.')
+        self.assertFormError(response, 'form', 'reason', 'This field is required.')
+        self.assertFormError(response, 'form', 'scholarship', 'This field is required.')    
+        self.assertFormError(response, 'form', 'email', 'Enter a valid email address.')
