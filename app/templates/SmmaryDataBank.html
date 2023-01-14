@@ -1,33 +1,31 @@
 {% extends 'global/page.html' %}
 
 {% block page_header_top %}
-{#    <div class="search-container">#}
-{#    <form action="/action_page.php">#}
-{#      <input type="text" placeholder="Search.." name="search">#}
-{#      <button type="submit">Submit</button>#}
-{#    </form>#}
-{#  </div>#}
+    <form method="get" action="{% url 'searchSmmary' %}">
+     <input class="form-control me-2" type = "search"  name="q" placeholder="search...">
+        <button class="btn btn-outline-secondary" type="submit" class="search-label-icon">Search</button>
+    </form>
  <details>
-    <summary>Add file</summary>
+    <summary class="page-btn-link">Add file</summary>
+
      <form method="GET">
 {#         {% csrf_token %}#}
-    <input type="text" name="NameOfFile" id="NameOfFile">
+         <center>
+    <input type="text" name="NameOfFile" id="NameOfFile" title="subject name" ><br>
     <input type="file" name="AddFile" id="AddFile"><br>
     <input type="submit" value="send">
-    </form></details>
+    </center></form></details>
 
     {% for x in data  %}
-<h1><button onclick="myFunction1()">{{ x.name }}</button><br></h1><br>
-<br>
-<script>
-function myFunction1() {
-    document.open();
-    document().write("<br><h3>{{ x.file.url }}</h3>");
-    document.close();
-}
-
+        <div class="col-md-3 "><a href="#" class="page-btn-link" onclick="myFunction()">{{ x.name }}</a></div>
+<script>function myFunction(file) {
+    const myWindow = window.open();
+    myWindow.document.open();
+    myWindow.document.write(`<h1><a href="{x.file}" download>Download the {{ x.name }} file</a></h1>`);
+    myWindow.document.close();}
 
 </script>
+  {% endfor %}
 
-    {% endfor %}
+
 {% endblock %}
