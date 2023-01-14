@@ -167,7 +167,7 @@ def contactus(request):
         return render(request, 'contactus.html')
     else:
         form = ContactUsForm(request.POST)
-        message = 'Message was sent successfully'
+        messagedisplay = 'Message was sent successfully'
         hasError = False
         if form.is_valid():
             form.save()
@@ -185,7 +185,7 @@ def contactus(request):
             hasError = True
             message = 'Please make sure all fields are valid'
 
-    return render(request, 'contactus.html', {'form': form, 'message': message, 'hasError': hasError})
+    return render(request, 'contactus.html', {'form': form, 'message': messagedisplay, 'hasError': hasError})
 
 
 def contactadmin(request):
