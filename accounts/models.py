@@ -58,7 +58,7 @@ class CustomUser(AbstractUser):
     gender = models.CharField(max_length=1,choices=GENDER_CHOICES ,null=True ,blank=True)
     date_of_birth = models.DateField()
     bio = models.TextField(max_length=350, null=True ,blank=True)
-    Scholarship = models.ManyToManyField(Scholarship,blank=True)
+    #Scholarship = models.ManyToManyField(Scholarship,blank=True)
   
 
 
@@ -98,6 +98,10 @@ class CustomUser(AbstractUser):
         if self.college:
             self.is_student = True
             super(CustomUser, self).save(*args, **kwargs)
+        else:
+            self.is_investor = True
+            self.is_student = False    
+            super(CustomUser, self).save(*args, **kwargs)    
 
     def get_absolute_url(self):
         # Return the URL for the user's profile page

@@ -11,22 +11,50 @@ import tempfile             # for setting up tempdir for media
 
 class ProjectModelTestCase(TestCase):
     def setUp(self):
-        user = CustomUser.create_user(
+        self.user = CustomUser.create_user(
         username="testuser",
         email="testuser@example.com",
         password="testpass",
         first_name="Test",
         last_name="User",
-        college="Test University",
-        major="Computer Science",
-        gender="Male",
+        college="SCE",
+        major="CE",
+        gender="M",
         date_of_birth="1998-01-01",
         bio="This is a test user for unit testing",
         user_avatar='media/default.jpg'
     )
+        self.image = InMemoryUploadedFile(
+            BytesIO(base64.b64decode(TEST_IMAGE)),            
+            field_name='tempfile',
+            name='tempfile.png',
+            content_type='image/png',
+            size=len(TEST_IMAGE),
+            charset='utf-8',
+        )
 
-        Project.objects.create(title = 'Test Project', description = 'This is a test project for unit testing', image = 'user_profile/avatars/test.jpg', url = 'www.test.url', user = user)
+        self.project = Project.objects.create(
+            title='Test Project', 
+            description='This is a test project for testing the Project model.',
+            user=self.user,
+            image = self.image,
+            url = 'www.test.url',
+            project_type='WEB_DEV'
+        )
 
+    def test_project_creation(self):
+        # Check if the project was created successfully
+        self.assertTrue(isinstance(self.project, Project))
+        self.assertEqual(self.project.__str__(), self.project.title)
+
+    def test_project_type_name(self):
+        # Check if the get_project_type_name method returns the correct project type name
+        self.assertEqual(self.project.get_project_type_name(self.project.project_type), 'Web Development')
+
+    def test_project_deletion(self):
+        # Delete the project and check if it was deleted successfully
+        self.project.delete()
+        self.assertFalse(Project.objects.filter(title='Test Project').exists())    
 
     def test_project_title(self):
         """Test that the title of the project is set correctly"""
@@ -36,12 +64,27 @@ class ProjectModelTestCase(TestCase):
     def test_project_description(self):
         """Test that the description of the project is set correctly"""
         project = Project.objects.get(title="Test Project")
-        self.assertEqual(project.description, "This is a test project for unit testing")
+        self.assertEqual(project.description, "This is a test project for testing the Project model.")
 
     def test_project_image(self):
         """Test that the image of the project is set correctly"""
-        project = Project.objects.get(title="Test Project")
-        self.assertEqual(project.image, 'user_profile/avatars/test.jpg')
+        image = InMemoryUploadedFile(
+            BytesIO(base64.b64decode(TEST_IMAGE)),            
+            field_name='tempfile',
+            name='tempfile.png',
+            content_type='image/png',
+            size=len(TEST_IMAGE),
+            charset='utf-8',
+        )
+        self.project = Project.objects.create(
+            title='Test Project', 
+            description='This is a test project for testing the Project model.',
+            user=self.user,
+            image = 'media/default.jpg',
+            url = 'www.test.url',
+            project_type='WEB_DEV'
+        )
+        self.assertEqual(self.project.image, 'media/default.jpg')
 
     def test_project_url(self):
         """Test that the user of the project is set correctly"""
@@ -65,14 +108,21 @@ class ProjectModelTestCase(TestCase):
 
 
 class ProjectFormTestCase(TestCase):
-    def test_form_valid(self):
-    
-        form_data = {
-            'title': 'Test Project',
-            'description': 'This is a test project',
-            'url': 'http://example.com/test-project'
-        }
-        image = InMemoryUploadedFile(
+    def setUp(self):
+        self.user = CustomUser.create_user(
+        username="testuser",
+        email="testuser@example.com",
+        password="testpass",
+        first_name="Test",
+        last_name="User",
+        college="SCE",
+        major="CE",
+        gender="M",
+        date_of_birth="1998-01-01",
+        bio="This is a test user for unit testing",
+        user_avatar='media/default.jpg')
+
+        self.image = InMemoryUploadedFile(
             BytesIO(base64.b64decode(TEST_IMAGE)),            
             field_name='tempfile',
             name='tempfile.png',
@@ -80,33 +130,35 @@ class ProjectFormTestCase(TestCase):
             size=len(TEST_IMAGE),
             charset='utf-8',
         )
-        form = PortfolioForm(data=form_data, files={'image':image})
+        self.form_data = {
+            'title': 'Test Project',
+            'description': 'This is a test project for testing the PortfolioForm.',
+            'image': 'image',
+            'url': 'https://www.testproject.com',
+            'project_type': 'WEB_DEV'
+        }
+    def test_valid_form(self):
+        form = PortfolioForm(data=self.form_data, files={'image':self.image})
         self.assertTrue(form.is_valid())
     
     
-    def test_form_invalid_without_title(self):
-        """Test that the form is invalid if the title field is left blank"""
-        form_data = {
-            'title': '',
-            'description': 'This is a test project',
-            'url': 'http://example.com/test-project'
-        }
-        image = InMemoryUploadedFile(
-            BytesIO(base64.b64decode(TEST_IMAGE)),            
-            field_name='tempfile',
-            name='tempfile.png',
-            content_type='image/png',
-            size=len(TEST_IMAGE),
-            charset='utf-8',
-        )
-        form = PortfolioForm(data=form_data, files={'image':image})
+    def test_invalid_form(self):
+        # Test for missing required fields
+        form_data = {'title': 'Test Project'}
+        form = PortfolioForm(data=form_data)
         self.assertFalse(form.is_valid())
+
+    def test_form_save(self):
+        form = PortfolioForm(data=self.form_data, files={'image':self.image})
+        project = form.save()
+        self.assertEqual(project.title, self.form_data['title'])    
     
     def test_form_invalid_without_image(self):
         """Test that the form is invalid if the image field is left blank"""
         form_data = {
             'title': 'Test Project',
             'description': 'This is a test project',
+            'project_type': 'WEB_DEV',
             'url': 'http://example.com/test-project'
         }
         form = PortfolioForm(data=form_data)
@@ -114,11 +166,6 @@ class ProjectFormTestCase(TestCase):
 
     def test_form_valid_without_url(self):
         """Test that the form is valid if the url field is left blank"""
-        form_data = {
-            'title': 'Test Project',
-            'description': 'This is a test project',
-            'url': ''
-        }
         image = InMemoryUploadedFile(
             BytesIO(base64.b64decode(TEST_IMAGE)),            
             field_name='tempfile',
@@ -127,6 +174,13 @@ class ProjectFormTestCase(TestCase):
             size=len(TEST_IMAGE),
             charset='utf-8',
         )
+        form_data = {
+            'title': 'Test Project',
+            'description': 'This is a test project',
+            'project_type': 'WEB_DEV',
+            'url': ''
+        }
+        
         form = PortfolioForm(data=form_data, files={'image':image})
         self.assertTrue(form.is_valid())   
     
@@ -135,6 +189,7 @@ class ProjectFormTestCase(TestCase):
         form_data = {
             'title': 'Test Project',
             'description': '',
+            'project_type': 'WEB_DEV',
             'image': 'media/avatars/default.jpg',
             'url': 'http://example.com/test-project'
         }
@@ -154,37 +209,39 @@ class ProjectFormTestCase(TestCase):
 class UserPortfolioViewTestCase(TestCase):
     def setUp(self):
         self.client = Client()
+        self.user = CustomUser.create_user(
+        username="testuser",
+        email="testuser@example.com",
+        password="testpass",
+        first_name="Test",
+        last_name="User",
+        college="SCE",
+        major="CE",
+        gender="M",
+        date_of_birth="1998-01-01",
+        bio="This is a test user for unit testing",
+        user_avatar='media/default.jpg'
+    )
+
+        Project.objects.create(title = 'Test Project', description = 'This is a test project for unit testing',project_type = 'WEB_DEV' , image = 'user_profile/avatars/test.jpg', url = 'https://www.testproject.com', user = self.user)
         self.url = reverse('userPortfolio')
-        user = CustomUser.create_user(
-            username="testuser",
-            email="testuser@example.com",
-            password="testpass",
-            first_name="Test",
-            last_name="User",
-            college="Test University",
-            major="Computer Science",
-            gender="Male",
-            date_of_birth="1998-01-01",
-            bio="This is a test user for unit testing",
-            user_avatar= 'media/default.jpg'
-        )
-        Project.objects.create(title = 'Test Project', description = 'This is a test project for unit testing', image = 'user_profile/avatars/test.jpg', url = 'www.test.url', user = user)
         self.client.login(username="testuser", password="testpass")
     
-    def test_view_url_exists_at_desired_location_p(self):
-        """Test that the view URL exists at the desired location"""
-        response = self.client.get(self.url)
-        self.assertEqual(response.status_code, 200)
+    def test_view_returns_correct_data_p(self):
+        
+        # Check if the view returns the correct data
+        response = self.client.get(reverse('userPortfolio'))
+        self.assertEqual(response.context['projects'].first().title, 'Test Project')
     
     def test_view_url_accessible_by_name_p(self):
         """Test that the view URL is accessible by name"""
         response = self.client.get(reverse('userPortfolio'))
         self.assertEqual(response.status_code, 200)
     
-    def test_view_uses_correct_template_p(self):
-        """Test that the view uses the correct template"""
-        response = self.client.get(self.url)
-        self.assertEqual(response.status_code, 200)
+    def test_view_uses_correct_template(self):
+        # Log the test user in
+        # Check if the view uses the correct template
+        response = self.client.get(reverse('userPortfolio'))
         self.assertTemplateUsed(response, 'userPortfolio.html')
     
     def test_view_returns_correct_context_p(self):
@@ -194,27 +251,32 @@ class UserPortfolioViewTestCase(TestCase):
         self.assertEqual(response.context['projects'][0].title, "Test Project")        
         self.assertContains(response, 'Test Project')
 
+    def test_view_returns_correct_data(self):
+        # Check if the view returns the correct data
+        response = self.client.get(reverse('userPortfolio'))
+        self.assertEqual(response.context['projects'].first().title, 'Test Project')    
+
 
 class ProjectsPageViewTestCase(TestCase):
     def setUp(self):
-        self.client = Client()
-        self.url = reverse('projects_page')
         user = CustomUser.create_user(
-            username="testuser",
-            email="testuser@example.com",
-            password="testpass",
-            first_name="Test",
-            last_name="User",
-            college="Test University",
-            major="Computer Science",
-            gender="Male",
-            date_of_birth="1998-01-01",
-            bio="This is a test user for unit testing",
-            user_avatar='media/default.jpg'
-        )
-        Project.objects.create(title = 'Test Project', description = 'This is a test project for unit testing', image = 'user_profile/avatars/test.jpg', url = 'www.test.url', user = user)
+        username="testuser",
+        email="testuser@example.com",
+        password="testpass",
+        first_name="Test",
+        last_name="User",
+        college="SCE",
+        major="CE",
+        gender="M",
+        date_of_birth="1998-01-01",
+        bio="This is a test user for unit testing",
+        user_avatar='media/default.jpg'
+    )
+
+        Project.objects.create(title = 'Test Project', description = 'This is a test project for unit testing',project_type = 'WEB_DEV' , image = 'user_profile/avatars/test.jpg', url = 'www.test.url', user = user)
+        self.url = reverse('projects_page') 
         self.client.login(username="testuser", password="testpass")
-    
+
     def test_view_url_exists_at_desired_location_pp(self):
         """Test that the view URL exists at the desired location"""
         response = self.client.get(self.url)
@@ -242,21 +304,22 @@ class ProjectsPageViewTestCase(TestCase):
 
 class DetailpViewTestCase(TestCase):
     def setUp(self):
-        self.client = Client()
         user = CustomUser.create_user(
-            username="testuser",
-            email="testuser@example.com",
-            password="testpass",
-            first_name="Test",
-            last_name="User",
-            college="Test University",
-            major="Computer Science",
-            gender="Male",
-            date_of_birth="1998-01-01",
-            bio="This is a test user for unit testing",
-            user_avatar='media/default.jpg'
-        )
-        self.project =Project.objects.create(title = 'Test Project', description = 'This is a test project for unit testing', image = 'user_profile/avatars/test.jpg', url = 'www.test.url', user = user)
+        username="testuser",
+        email="testuser@example.com",
+        password="testpass",
+        first_name="Test",
+        last_name="User",
+        college="SCE",
+        major="CE",
+        gender="M",
+        date_of_birth="1998-01-01",
+        bio="This is a test user for unit testing",
+        user_avatar='media/default.jpg'
+    )
+
+        self.project = Project.objects.create(title = 'Test Project', description = 'This is a test project for unit testing',project_type = 'WEB_DEV' , image = 'user_profile/avatars/test.jpg', url = 'www.test.url', user = user)
+
         self.client.login(username="testuser", password="testpass")
         self.url = reverse('detailp', kwargs={'project_id': self.project.pk})
     
@@ -288,21 +351,22 @@ class DetailpViewTestCase(TestCase):
 class CreateProjectViewTestCase(TestCase):
     @override_settings(MEDIA_ROOT=tempfile.gettempdir())
     def setUp(self):
-        self.client = Client()
+        user = CustomUser.create_user(
+        username="testuser",
+        email="testuser@example.com",
+        password="testpass",
+        first_name="Test",
+        last_name="User",
+        college="SCE",
+        major="CE",
+        gender="M",
+        date_of_birth="1998-01-01",
+        bio="This is a test user for unit testing",
+        user_avatar='media/default.jpg'
+    )
+
+        #Project.objects.create(title = 'Test Project', description = 'This is a test project for unit testing',project_type = 'WEB_DEV' , image = 'user_profile/avatars/test.jpg', url = 'www.test.url', user = user)
         self.url = reverse('createPortfolio')
-        self.user = CustomUser.create_user(
-            username="testuser",
-            email="testuser@example.com",
-            password="testpass",
-            first_name="Test",
-            last_name="User",
-            college="Test University",
-            major="Computer Science",
-            gender="Male",
-            date_of_birth="1998-01-01",
-            bio="This is a test user for unit testing",
-            user_avatar='media/default.jpg'
-        )
         self.client.login(username="testuser", password="testpass")
     
     def test_view_url_exists_at_desired_location_cp(self):
@@ -334,6 +398,7 @@ class CreateProjectViewTestCase(TestCase):
         data = {
             'title': 'Test Project',
             'description': 'This is a test project',
+            'project_type': 'WEB_DEV',
             'image': image,
             'url': 'http://example.com/test-project'
         }
@@ -348,6 +413,7 @@ class CreateProjectViewTestCase(TestCase):
         data = {
             'title': '',
             'description': 'This is a test project',
+            'project_type': 'WEB_DEV',
             'image': 'media/avatars/default.jpg',
             'url': 'http://example.com/test-project'
         }
@@ -360,21 +426,22 @@ class CreateProjectViewTestCase(TestCase):
 
 class EditProjectViewTestCase(TestCase):
     def setUp(self):
-        self.client = Client()
         user = CustomUser.create_user(
-            username="testuser",
-            email="testuser@example.com",
-            password="testpass",
-            first_name="Test",
-            last_name="User",
-            college="Test University",
-            major="Computer Science",
-            gender="Male",
-            date_of_birth="1998-01-01",
-            bio="This is a test user for unit testing",
-            user_avatar='media/default.jpg'
-        )
-        self.project =Project.objects.create(title = 'Test Project', description = 'This is a test project for unit testing', image = 'user_profile/avatars/test.jpg', url = 'www.test.url', user = user)
+        username="testuser",
+        email="testuser@example.com",
+        password="testpass",
+        first_name="Test",
+        last_name="User",
+        college="SCE",
+        major="CE",
+        gender="M",
+        date_of_birth="1998-01-01",
+        bio="This is a test user for unit testing",
+        user_avatar='media/default.jpg'
+    )
+
+        self.project = Project.objects.create(title = 'Test Project', description = 'This is a test project for unit testing',project_type = 'WEB_DEV' , image = 'user_profile/avatars/test.jpg', url = 'www.test.url', user = user)
+
         self.url = reverse('editProject', kwargs={'project_id': self.project.pk})
         self.client.login(username="testuser", password="testpass")
     
@@ -407,6 +474,7 @@ class EditProjectViewTestCase(TestCase):
         data = {
             'title': 'Updated Test Project',
             'description': 'This is an updated test project for unit testing',
+            'project_type': 'WEB_DEV',
             'image': image,
             'url': 'http://example.com/test-project'
         }
@@ -427,6 +495,7 @@ class EditProjectViewTestCase(TestCase):
         data = {
             'title': '',
             'description': 'This is an updated test project for unit testing',
+            'project_type': 'WEB_DEV',
             'image': image,
             'url': 'http://example.com/test-project'
         }
@@ -436,21 +505,22 @@ class EditProjectViewTestCase(TestCase):
 
 class DeleteProjectViewTestCase(TestCase):
     def setUp(self):
-        self.client = Client()
         user = CustomUser.create_user(
-            username="testuser",
-            email="testuser@example.com",
-            password="testpass",
-            first_name="Test",
-            last_name="User",
-            college="Test University",
-            major="Computer Science",
-            gender="Male",
-            date_of_birth="1998-01-01",
-            bio="This is a test user for unit testing",
-            user_avatar='media/default.jpg'
-        )
-        self.project =Project.objects.create(title = 'Test Project', description = 'This is a test project for unit testing', image = 'user_profile/avatars/test.jpg', url = 'www.test.url', user = user)
+        username="testuser",
+        email="testuser@example.com",
+        password="testpass",
+        first_name="Test",
+        last_name="User",
+        college="SCE",
+        major="CE",
+        gender="M",
+        date_of_birth="1998-01-01",
+        bio="This is a test user for unit testing",
+        user_avatar='media/default.jpg'
+    )
+
+        self.project = Project.objects.create(title = 'Test Project', description = 'This is a test project for unit testing',project_type = 'WEB_DEV' , image = 'user_profile/avatars/test.jpg', url = 'www.test.url', user = user)
+
         self.url = reverse('deleteProject', kwargs={'project_id': self.project.pk})
         self.client.login(username="testuser", password="testpass") 
 
@@ -473,9 +543,9 @@ class DeleteProjectViewTestCase(TestCase):
             password="otherpass",
             first_name="Other",
             last_name="User",
-            college="Test University",
-            major="Computer Science",
-            gender="Male",
+            college="BGU",
+            major="CE",
+            gender="F",
             date_of_birth="1998-01-01",
             bio="This is a test user for unit testing",
             user_avatar='media/default.jpg'
