@@ -2,13 +2,15 @@
 {% load comment_tags %}  
 {% include_bootstrap %} 
 <div class="header-top-content">
-  <h1 class="h1-responsive font-weight-bold">{{ project.title }}</h1>
+  <h1 class="h1-responsive font-weight-bold">{{ project.title }} - {{ project.project_type_name }}</h1>
+ 
   {% include 'global/goBack.html' %}
 </div>
 {% endblock %} {% block page_content %}
 <div class="card">
   <img class="card-img-top" src="{{ project.image.url }}" alt="project image" />
   <div class="card-body">
+    
     <p class="card-text">{{ project.description|safe }}</p>
     {% if project.url %}
     <p class="card-text"><a href="{{ project.url }}">Link</a></p>

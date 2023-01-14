@@ -17,12 +17,14 @@ def projects_page(request):
 @login_required
 def detailp(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
+    project.project_type_name = project.get_project_type_name(project.project_type)
     return render(request, 'detailp.html', {'project':project}) 
 
 @login_required
 def createPortfolio(request):
     if request.method == 'GET':
-        return render(request, 'createPortfolio.html')
+        form = PortfolioForm()
+        return render(request, 'createPortfolio.html', {'form': form})
     else:
         try:
             form = PortfolioForm(request.POST, request.FILES)       #edit form

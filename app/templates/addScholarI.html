@@ -1,0 +1,131 @@
+{% extends 'global/page.html' %} {% block page_header_top %}
+<div class="header-top-content">
+  <div>
+    <h1 class="h1-responsive font-weight-bold">Contact Us</h1>
+    <p class="text-center w-responsive mx-auto">
+      Do you like helping students?  Do you like contributing to the community?  
+    </p>
+    <p class="text-center w-responsive mx-auto">
+      That's what we're here for, to help students who have financial difficulties, 
+      even with one shekel you can donate! 
+    </p>
+{% endblock %} {% block page_content %}
+<div class="row">
+  <div class="col-md-12 mb-md-0 mb-5">
+    <form id="contact-form" name="contact-form" method="POST">
+      {% csrf_token %}
+      <div class="row">
+        <div class="col-md-6">
+          <div class="md-form mb-0">
+            <label for="Title" class="">Title</label>
+            <input
+              type="text"
+              id="Title"
+              name="Title"
+              class="form-control"
+              value="{{form.Title.value}}"
+            />
+            {%if form.errors.Title %}
+            <p>{{ form.errors.Title }}</p>
+            {% endif %}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="md-form">
+              <label for="Description">Description</label>
+              <textarea
+                type="text"
+                id="Description"
+                name="Description"
+                rows="2"
+                class="form-control md-textarea"
+                value="{{form.Description.value}}"
+              ></textarea>
+              {%if form.errors.Description %}
+              <p>{{ form.errors.Description}}</p>
+              {% endif %}
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="md-form mb-0">
+            <label for="Location" class="">Location</label>
+            <input
+              type="text"
+              id="Location"
+              name="Location"
+              class="form-control"
+              value="{{form.Location.value}}"
+            />
+            {%if form.errors.Location %}
+            <p>{{ form.errors.Location }}</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="md-form">
+            <label for="requirements">requirements</label>
+            <textarea
+              type="text"
+              id="requirements"
+              name="requirements"
+              rows="2"
+              class="form-control md-textarea"
+              value="{{form.requirements.value}}"
+            ></textarea>
+            {%if form.errors.requirements %}
+            <p>{{ form.errors.requirements }}</p>
+            {% endif %}
+          </div>
+        </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="md-form mb-0">
+      <label for="Amount" class="">Amount</label>
+      <input
+        type="text"
+        id="Amount"
+        name="Amount"
+        class="form-control"
+        value="{{form.Amount.value}}"
+      />
+      {%if form.errors.Amount %}
+      <p>{{ form.errors.Amount }}</p>
+      {% endif %}
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="md-form mb-0">
+            <label for="Hours" class="">Hours</label>
+            <input
+              type="text"
+              id="Hours"
+              name="Hours"
+              class="form-control"
+              value="{{form.Hours.value}}"
+            />
+            {%if form.errors.Amount %}
+            <p>{{ form.errors.Amount }}</p>
+            {% endif %}
+    </form>
+    <div class="text-center text-md-left">
+      <a
+        class="btn btn-primary"
+        onclick="document.getElementById('contact-form').submit();"
+        >Send</a
+      >
+    </div>
+    <div class="status"></div>
+  </div>
+</div>
+{% endblock %}
+
+

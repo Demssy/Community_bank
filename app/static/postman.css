@@ -1,0 +1,44 @@
+.pm_btn {
+    padding: 0.2rem 0.5rem;
+    border: 1px solid #565656 ;
+    border-radius: 10px;
+    transition: background-color 0.4s ;
+  }
+
+.pm_btn:hover{
+    background-color: #a5d9e8;
+} 
+
+#pm_buttons{
+    display: flex;
+    margin: 0.5rem 0;
+    justify-content: space-between;
+}
+#pm_messages{
+    width: 100%;
+}
+#pm_messages thead th{
+    text-align: center;
+    padding: 0.2rem 0.5rem;
+}
+#pm_messages thead th:nth-child(3){
+    width: 50%;
+}
+#pm_messages thead{
+    border-bottom: 1px solid #565656;
+}
+
+#pm_messages tbody td{
+    
+    padding: 0.2rem 0.5rem;
+}
+#postman{
+    width: 45%;
+}
+.pm_by-mode{
+    font-size: 1.5rem;
+    font-weight: 500;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 0.2rem;
+    text-transform: capitalize;
+}

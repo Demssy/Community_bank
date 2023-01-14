@@ -15,8 +15,24 @@
       <hr>
       <label class="small mb-1">Change Avatar:</label>
       {{ form.user_avatar }}
+      <hr>
   </div>
+  <div>
+    <p>In the bio section, please provide a brief description about yourself. This could include information about your background, interests, and any relevant experience you may have. Keep in mind that this will be visible to other users, so make sure to write something that accurately represents you and what you want to share with the community</p>
   </div>
+  <div class="bio-box">
+    <label for="bio" class="">Bio</label>
+    <textarea
+        type="text"
+        id="bio"
+        name="bio"
+        class="form-control"
+        value="{{form.bio.value}}"
+    ></textarea>
+    {%if form.errors.bio %}
+        <p>{{ form.errors.bio }}</p>
+    {% endif %}
+</div>
   <div class="row">
     <div class="col-md-6">
       <div class="md-form mb-0">
@@ -65,16 +81,15 @@
         {% endif %}
       </div>
     </div>
+    <div class="row">
     <div class="col-md-6">
       <div class="md-form mb-0">
         <label for="gender" class="">Gender</label>
-        <input
-          type="text"
-          id="gender"
-          name="gender"
-          class="form-control"
-          value="{{form.gender.value}}"
-        />
+        <select id="gender" name="gender" class="form-control">
+          {% for value, label in form.fields.gender.choices %}
+                  <option value="{{ value }}" {% if value == form.gender.value %}selected{% endif %}>{{ label }}</option>
+              {% endfor %}
+          </select>
         {%if form.errors.gender %}
         <p>{{ form.errors.gender }}</p>
         {% endif %}
@@ -85,34 +100,34 @@
     <div class="col-md-6">
       <div class="md-form mb-0">
         <label for="major" class="">Major</label>
-        <input
-          type="text"
-          id="major"
-          name="major"
-          class="form-control"
-          value="{{form.major.value}}"
-        />
+        <select id="major" name="major" class="form-control">
+          {% for value, label in form.fields.major.choices %}
+          <option value="{{ value }}" {% if value == form.major.value %}selected{% endif %}>{{ label }}</option>
+      {% endfor %}
+          </select>
         {%if form.errors.major %}
         <p>{{ form.errors.major }}</p>
         {% endif %}
       </div>
     </div>
+  
+      </div>
+    </div>
+    <div class="row">
     <div class="col-md-6">
       <div class="md-form mb-0">
         <label for="college" class="">College</label>
-        <input
-          type="text"
-          id="college"
-          name="college"
-          class="form-control"
-          value="{{form.college.value}}"
-        />
+        <select id="college" name="college" class="form-control">
+          {% for value, label in form.fields.college.choices %}
+          <option value="{{ value }}" {% if value == form.college.value %}selected{% endif %}>{{ label }}</option>
+      {% endfor %}
+          </select>
         {%if form.errors.college %}
         <p>{{ form.errors.college }}</p>
         {% endif %}
       </div>
     </div>
-  </div>
+  
   
   <div class="row">
     <div class="col-md-12">
@@ -130,6 +145,9 @@
         {% endif %}
       </div>
     </div>
+  </div>
+  <div>
+    <p>To change your password, please enter your new password in the first field and confirm it by re-entering it in the second field. </p>
   </div>
   <div class="row">
     <div class="col-md-6">
@@ -158,22 +176,14 @@
       </div>
     </div>
   </div>
-  <div class="col-md-20">
-    <div class="md-form mb-0">
-      <label for="bio" class="">BIO</label>
-      <input
-        type="text"
-        id="bio"
-        name="bio"
-        class="form-control"
-        value="{{form.bio.value}}"
-      />
-      {%if form.errors.bio %}
-      <p>{{ form.errors.bio }}</p>
-      {% endif %}
-    </div>
-  </div>
+  
+  
 </div>
+
   <button type="submit" class="btn btn-primary">Save</button>
 </form>
 {% endblock %}
+
+
+
+

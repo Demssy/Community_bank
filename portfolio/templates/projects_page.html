@@ -18,6 +18,7 @@
         <h5 class="card-title">
           <a href="{% url 'detailp' project.id %}"><h2>{{ project.title }}</h2></a>
         </h5>
+        <h6>{{ project.project_type }}</h6>
         <p class="card-text">{{ project.description }}</p>
         {% if project.url %}
           <p class="card-text"><br /><a href="{{ project.url }}">Link</a></p>

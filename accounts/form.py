@@ -3,9 +3,9 @@ from django.forms import SelectDateWidget
 from .models import CustomUser
 from django import forms
 from django.contrib.auth.models import User
+from django.forms import ModelChoiceField
 
-
-class RegisterUserForm(UserCreationForm):
+class RegisterUserForm(forms.ModelForm):
    
     email = forms.EmailField(required=True,widget=forms.TextInput(attrs={'placeholder': 'Email','class': 'form-control',}))
     first_name = forms.CharField(max_length=50, required=True, widget=forms.TextInput(attrs={'placeholder': 'First Name','class': 'form-control',}))
@@ -17,10 +17,12 @@ class RegisterUserForm(UserCreationForm):
     major = forms.CharField(max_length=30, required= False)
     date_of_birth = forms.DateField(required=True, widget=SelectDateWidget(years=[y for y in range(1930,2050)]))
     gender = forms.CharField(max_length=10)
+    is_student = forms.BooleanField(required=False)
+    is_investor = forms.BooleanField(required=False)
     class Meta:
         model = CustomUser
 
-        fields = ('username', 'first_name', 'last_name', 'email', 'date_of_birth', 'gender', 'college', 'major', 'password1', 'password2')
+        fields = ('username', 'first_name', 'last_name', 'email', 'date_of_birth', 'gender', 'college', 'major', 'password1', 'password2', 'is_student', 'is_investor')
 
 
     def clean_email(self):

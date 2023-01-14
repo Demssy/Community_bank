@@ -1,0 +1,39 @@
+{% extends 'global/page.html' %} 
+{% block page_header_top %}
+<div class="header-top-content justify-content-center">
+  <h1 class="h1-responsive font-weight-bold my-4">Home</h1>
+</div>
+{% endblock %} {% block page_content %}
+<div>
+<form class="col text-center" action="{% url 'personalArea' %}" method="GET">
+  {% csrf_token %}
+  <button class="page-btn" type="submit">Personal area</button>
+</form>
+</div>
+<div>
+<form class="col text-center" action="{% url 'Scholarship' %}" method="GET">
+  {% csrf_token %}
+  <button class="page-btn" type="submit">Scholarship</button>
+</form>
+</div>
+<div>
+  <form class="col text-center" action="{% url 'AddScholarshipINVESOR' %}" method="GET">
+    {% csrf_token %}
+    <button class="page-btn" type="submit">Add Scholarship</button>
+  </form>
+  <div>
+    <form class="col text-center" action="{% url 'blogs_page' %}" method="GET">
+      {% csrf_token %}
+      <button class="page-btn" type="submit">Blogs</button>
+    </form>
+  </div>
+  <div>
+  </div>
+    <div>
+
+
+
+    </div>
+
+
+{% endblock %}

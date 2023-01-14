@@ -56,6 +56,20 @@
     </div>
   </div>
   <div class="row">
+    <div class="col-md-6">
+      <div class="md-form mb-0">
+        <label for="project_type" class="">Project type</label>
+        <select id="project_type" name="project_type" class="form-control">
+          {% for value, label in form.fields.project_type.choices %}
+          <option value="{{ value }}" {% if value == form.project_type.value %}selected{% endif %}>{{ label }}</option>
+      {% endfor %}
+          </select>
+        {%if form.errors.project_type %}
+        <p>{{ form.errors.project_type }}</p>
+        {% endif %}
+      </div>
+    </div>
+  <div class="row">
     <div class="col-md-12">
       <div class="md-form mb-0">
         <label for="description" class="">Description</label>
