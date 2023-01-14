@@ -48,7 +48,7 @@ urlpatterns = [
     path('AddScholarshipINVESOR/', views.AddScholarshipINVESOR, name='AddScholarshipINVESOR'),
     path('selectOption/', views.selectOption, name='selectOption'),
     path('scholarship_detail/', views.scholarship_detail, name='scholarship_detail'),
-
+    
 
     
 ]

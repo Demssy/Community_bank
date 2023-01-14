@@ -1,6 +1,7 @@
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Blog
+from app.models import SmmaryDataBank
 from .forms import BlogForm
 #from scholarship import models
 
@@ -59,3 +60,9 @@ def deleteBlog(request, blog_id): #delete can do only user who create todo
     if request.method == 'POST': #Post becouse we upload data to database
         Blog.delete(blog)                       #delete blog
         return redirect('all_blogs')     #return page with current todos    
+
+
+def searchSmmary(request):
+    query = request.GET.get('q')
+    results = SmmaryDataBank.objects.filter(name__contains=query)
+    return render(request, 'search_results.html', {'results': results})
