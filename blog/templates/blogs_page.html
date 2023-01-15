@@ -9,10 +9,10 @@
   </div>
   {% endblock %} {% block page_content %}
   {% if blogs %}
+  <h4 class="mb-2">Blogs list:</h4>
   <div class="cards p-0">
-    <h4 class="mb-2">Blogs list:</h4>
     {% for blog in blogs %}
-    <div class="card" style="width: 30rem">
+    <div class="card">
       <div class="card-body">
         <h5 class="card-title">
           <a href="{% url 'detail' blog.id %}">{{ blog.title }}</a>

@@ -42,6 +42,14 @@ class CustomUserAdmin(UserAdmin):
     form = MyUserChangeForm
     add_form = MyUserCreationForm
 
+
+    def get_scholarships(self, obj):
+        if obj.Scholarship.all():
+            return list(obj.Scholarship.all().values_list('title', flat=True))
+        else:
+            return 'NA'
+
+
     def export_users_pdf(self, request, queryset):
         
         status_query = Q(is_student=True) | Q(is_staff=True) | Q(is_investor=True) | Q(is_superuser=True)
@@ -423,7 +431,7 @@ class CustomUserAdmin(UserAdmin):
     
     list_display = (
          'username', 'id', 'email', 'first_name', 'last_name', 'is_staff',
-        'is_investor', 'is_student', 'mailing_address', 'date_of_birth', 'gender','user_avatar', 'bio')
+        'is_investor', 'is_student', 'mailing_address', 'date_of_birth', 'gender','user_avatar', 'bio', 'total_scholarships', 'total_scholarship_amount')
 
     list_filter = ('is_student',
                    'is_investor',

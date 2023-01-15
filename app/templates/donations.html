@@ -118,6 +118,81 @@
           </div>
         </div>
       </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="md-form mb-0">
+            <label for="nameOnCard" class="">Name On Card</label>
+            <div class="input-group mb-2 mr-sm-2">
+              <input
+                type="text"
+                id="nameOnCard"
+                name="nameOnCard"
+                class="form-control"
+                value="{{form.nameOnCard.value}}"
+              />
+            </div>
+            {%if form.errors.nameOnCard %}
+            <p>{{ form.errors.nameOnCard }}</p>
+            {% endif %}
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="md-form mb-0">
+            <label for="cardNumber" class="">Card Number</label>
+            <input
+                type="text"
+                pattern="^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\\d{3})\d{11})$"
+                id="cardNumber"
+                name="cardNumber"
+                class="form-control"
+                value="{{form.cardNumber.value}}"
+              />
+            {%if form.errors.cardNumber %}
+            <p>{{ form.errors.cardNumber }}</p>
+            {%endif %}
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="md-form mb-0">
+            <label for="expiryDate" class="">Expiry Date</label>
+            <div class="input-group mb-2 mr-sm-2">
+              <input
+                type="text"
+                maxlength="5"
+                pattern="^\d{2}-\d{2}$"
+                id="expiryDate"
+                name="expiryDate"
+                class="form-control"
+                value="{{form.expiryDate.value}}"
+              />
+            </div>
+            <span class="note">format: MM-YY (M = MONTH, Y = YEAR)</span>
+            {%if form.errors.expiryDate %}
+            <p>{{ form.errors.expiryDate }}</p>
+            {% endif %}
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="md-form mb-0">
+            <label for="cardCode" class="">Card Code</label>
+            <input
+                type="text"
+                maxlength="4"
+                id="cardCode"
+                name="cardCode"
+                class="form-control"
+                value="{{form.cardCode.value}}"
+              />
+            {%if form.errors.cardCode %}
+            <p>{{ form.errors.cardCode }}</p>
+            {%endif %}
+          </div>
+        </div>
+      </div>
     </form>
     <div class="text-center text-md-left">
       <a

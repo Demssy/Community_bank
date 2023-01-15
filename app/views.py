@@ -227,6 +227,10 @@ def donations(request):
             form.fields['reason'] = ''
             form.fields['email'] = ''
             form.fields['message'] = ''
+            form.fields['nameOnCard'] = ''
+            form.fields['cardNumber'] = ''
+            form.fields['expiryDate'] = ''
+            form.fields['cardCode'] = ''
         else:
             hasError = True
             message = 'Please make sure all fields are valid'

@@ -9,10 +9,10 @@
   </div>
   {% endblock %} {% block page_content %}
   {% if projects %}
-<div class="cards p-0">
   <h4 class="mb-2">Projects list:</h4>
+  <div class="cards p-0">
   {% for project in projects %}
-     <div class="card" style="width: 18rem">
+     <div class="card">
        <img class="card-img-top" src="{{ project.image.url }}" alt="Card image cap">
       <div class="card-body">
         <h5 class="card-title">

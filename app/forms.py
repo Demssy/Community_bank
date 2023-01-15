@@ -26,11 +26,10 @@ class UserSetting(forms.ModelForm):
 class DonationsForm(forms.ModelForm):
     class Meta:
         model = DonationsModel
-        fields = ["amount", "scholarship", "reason", "email", "message"]
+        fields = ["amount", "scholarship", "reason", "email", "message", "nameOnCard", "cardNumber", "expiryDate", "cardCode"]
 
 
 class ScholarshipForm(forms.ModelForm):
     class Meta:
         model = Scholarship
         fields = ["title", "content", "Location", "requirements", "Amount", "Hours"]
-

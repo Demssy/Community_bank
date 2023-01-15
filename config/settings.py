@@ -37,13 +37,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.utils.translation',
     'app',
     'blog',
     'portfolio',
     'accounts',
     'comment',
     'postman',
-    'rest_framework',
+    'rest_framework'
 
 ]
 #delete comment

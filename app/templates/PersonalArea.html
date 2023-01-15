@@ -34,29 +34,33 @@
         
     </div>
 </div>
-<div class="row justify-content-between">
-  <div>
+<div class="row justify-content-between content">
+  <h4>Do something else:</h4>
+<div class="cards">
+    <div class="card">
   <form class="col text-center" action="{% url 'userPortfolio' %}" method="POST">
   {% csrf_token %}
   <button class="page-btn" type="submit">Projects</button>
 </form>
 </div>
-<div>
+<div class="card">
 <form class="col text-center" action="{% url 'all_blogs' %}" method="POST">
   {% csrf_token %}
   <button class="page-btn" type="submit">Blog</button>
 </form>
 </div>
-<div>
+<div class="card">
 <form class="col text-center" action="{% url 'userSettings' %}" method="GET">
   {% csrf_token %}
   <button class="page-btn" type="submit">User settings</button>
 </form>
-<form class="col text-center" action="{% url 'reports' %}" method="POST">
+</div>
+<div class="card">
+  <form class="col text-center" action="{% url 'reports' %}" method="POST">
   {% csrf_token %}
   <button class="page-btn" type="submit">Volunteer hours</button>
 </form>
-
+</div>
 </div>
 </div>
 {% endblock %}

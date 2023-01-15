@@ -161,6 +161,16 @@ section.page > .row {
   flex-wrap: wrap;
   column-gap: 15px;
   justify-content: center;
+  width: 100%;
+}
+
+.page .content .cards {
+  display: flex;
+  justify-content: space-between;
+  column-gap: 15px;
+}
+.page .content .cards .card {
+  flex: 1;
 }
 
 .page .content > .card {
@@ -183,7 +193,8 @@ section.page > .row {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-.page .page-btn:hover, .page-btn-link:hover {
+.page .page-btn:hover,
+.page-btn-link:hover {
   background-color: black;
   color: white;
 }
@@ -206,6 +217,10 @@ section.page > .row {
   text-decoration: none;
 }
 
+.note {
+  font-size: 10px;
+}
+
 @media (max-width: 425px) {
   body {
     padding-top: 1rem;
@@ -222,130 +237,124 @@ section.page > .row {
 .account-img {
   float: left;
   margin-right: 20px;
-  }
-  
-  .bio {
+}
+
+.bio {
   float: left;
   width: 60%;
   margin-left: 20px;
-  }
-  
-  img.rounded-circle {
+}
+
+img.rounded-circle {
   border-radius: 50%;
-  }
-  
-  hr {
+}
+
+hr {
   clear: both;
-  }
-  
-  .form-group {
+}
+
+.form-group {
   padding: 10px;
-  }
-  
-  .bio textarea {
+}
+
+.bio textarea {
   width: 100%;
   height: 100px;
-  }
-  
-  .form-control {
+}
+
+.form-control {
   border-radius: 0;
   box-shadow: none;
   font-size: 14px;
-  }
-  
-  label {
+}
+
+label {
   font-size: 14px;
-  }
-  
-  input[type="submit"] {
+}
+
+input[type="submit"] {
   border-radius: 0;
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   padding: 12px 20px;
   border: none;
   cursor: pointer;
   width: 100%;
-  }
-  
-  input[type="submit"]:hover {
+}
+
+input[type="submit"]:hover {
   background-color: #45a049;
-  }
-  
-  .form-control:focus {
-  border-color: #4CAF50;
+}
+
+.form-control:focus {
+  border-color: #4caf50;
   box-shadow: none;
-  }
-  
-  select {
+}
+
+select {
   font-size: 14px;
-  }
-  
-  input[type=date]::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  display: none;
-  }
-  
-  input[type=date]::-webkit-calendar-picker-indicator {
-  -webkit-appearance: none;
-  display: none;
-  }
-  
-  
-  
-  input[type=time]::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  display: none;
-  }
-  
-  input[type=time]::-webkit-calendar-picker-indicator {
-  -webkit-appearance: none;
-  display: none;
-  }
-  .account-img {
-    float: left;
-    margin-right: 20px;
-    }
-    
-    .bio-box {
-    float: left;
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    }
-    .account-img {
-      width: 200px;
-      height: 200px;
-      margin-right: 20px;
-  }
-  
-  .card {
-      margin-bottom: 20px;
-  }
-  
-  .card-title a {
-      font-size: 20px;
-      color: #333;
-      text-decoration: none;
-  }
-  
-  .card-title a:hover {
-      color: #00bcd4;
-  }
-  
-  .card-text {
-      font-size: 16px;
-      color: #666;
-      line-height: 1.5;
-      margin-bottom: 10px;
-  }
-  
-  .page-btn-link{
-      text-decoration: none;
-      font-size: 16px;
-      color: #00bcd4;
-  }
+}
 
-  
+input[type="date"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  display: none;
+}
 
+input[type="date"]::-webkit-calendar-picker-indicator {
+  -webkit-appearance: none;
+  display: none;
+}
 
+input[type="time"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  display: none;
+}
+
+input[type="time"]::-webkit-calendar-picker-indicator {
+  -webkit-appearance: none;
+  display: none;
+}
+.account-img {
+  float: left;
+  margin-right: 20px;
+}
+
+.bio-box {
+  float: left;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.account-img {
+  width: 200px;
+  height: 200px;
+  margin-right: 20px;
+}
+
+.card {
+  margin-bottom: 20px;
+}
+
+.card-title a {
+  font-size: 20px;
+  color: #333;
+  text-decoration: none;
+}
+
+.card-title a:hover {
+  color: #00bcd4;
+}
+
+.card-text {
+  font-size: 16px;
+  color: #666;
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+.page-btn-link {
+  text-decoration: none;
+  font-size: 16px;
+  color: #00bcd4;
+}

@@ -5,9 +5,9 @@ from django.conf import settings
 from django.db import models
 from app import models as m1
 from app.models import Scholarship
- 
 from django.contrib.auth.models import AbstractUser
-
+from decimal import Decimal
+from django.db.models import Sum
 
 
 
@@ -107,9 +107,10 @@ class CustomUser(AbstractUser):
         # Return the URL for the user's profile page
         return reverse('user_profile', args=[self.pk])
 
+    def total_scholarships(self):
+        return self.Scholarship.count()
+
     def total_scholarship_amount(self):
-        total = 0
-        for scholarship in self.Scholarship.all():
-            total += scholarship.Amount
+        total = self.Scholarship.aggregate(TOTAL = Sum('Amount'))['TOTAL']
         return total
 
