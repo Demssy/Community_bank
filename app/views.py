@@ -315,7 +315,7 @@ def add_ScholarShip(request,id):
     if request.user.is_investor:
         return render(request,'investorPage.html', status=200)
     else:
-        return render(request, 'Regester.html',context=context)
+        return render(request, 'Register.html',context=context)
 
 
 
@@ -339,15 +339,12 @@ def AddScholarshipINVESOR(request):
 
 from django.http import JsonResponse
 
-def cancel_scholarship(request):
-    user_id = request.POST.get('user_id')
-    scholarship_id = request.POST.get('scholarship_id')
-
+def cancel_scholarship(request, scholarship_id):
+    user_id = request.user.id
     user = CustomUser.objects.get(id=user_id)
-    scholarship = Scholarship.objects.get(id=scholarship_id)
+    scholarship = models.Scholarship.objects.get(id=scholarship_id)
     user.Scholarship.remove(scholarship)
-
-    return JsonResponse({'status': 'success'})
+    return Scholarship(request)
 
 
 def setingUsers(request):

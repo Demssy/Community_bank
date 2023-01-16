@@ -1,32 +1,15 @@
- {% extends 'global/page.html' %}
-
-{% block content %}
-{%load static%}
-
-<head>
-  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-
-  <style media="screen">
-    a:link {
-      text-decoration: none;
-    }
-
-    h6 {
-      text-align: center;
-    }
-
-    .row {
-      margin: 100px;
-    }
-  </style>
-</head>
+{% extends 'global/page.html' %} {% block page_header_top %}
+<div class="header-top-content text-center justify-content-center">
+  <div>
+    <h1 class="h1-responsive font-weight-bold">Scholarships</h1>
+    <p class="text-center w-responsive mx-auto">
+      Click on the register button to enroll
+    </p>
+  </div>
+</div>
+{% endblock %} {% block page_content %}
 <div class="container">
   <div class="panel panel-primary">
-    <div class="panel-heading">
-      <h6 class="panel-title">Scholarships</h6>
-    </div>
     <table class="table table-hover" id="dev-table">
       <thead>
         <tr>
@@ -49,10 +32,7 @@
         <td>{{d.requirements}}</td>
         <td>{{d.Amount}}</td>
         <td>{{d.Hours}}</td>
-        <td>        
-    
-            <a href="{% url 'addscholarship' d.id %}"><span class="glyphicon glyphicon-circle-arrow-up"> </span></a></td>
-
+        <td><a href="{% url 'addscholarship' d.id %}"><i class="fas fa-arrow-circle-up"></i></a></td>
       </tr>
        <script>
         function changeColor(item) {
@@ -71,9 +51,7 @@
     </table>
   </div>
 </div>
-
-{% endblock content %}
-{%load static%}
+{% endblock %}
 
 
 
